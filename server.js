@@ -119,7 +119,7 @@ var parseServers = cron.job("*/30 * * * * *", function(){
             var hostname = r[1];
             var players = r[2];
 
-            log('[S] > ' + ip + ' : ' + hostname + ' : ' + players);
+            log('[S] > ' + ip + ' : "' + hostname + '" : ' + players);
 
             //Offline or busy check
             if((contains(hostname, "offline") || contains(hostname, "LIVE") || (contains(hostname, "NEED") && !contains(hostname, "10"))) && onlServers.contains(ip)){
