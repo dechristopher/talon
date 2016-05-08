@@ -2,8 +2,11 @@
 The backend node microservices that make up the talon system for the KIWI PUG network.
 
 mon.js    - Monitors the messages per second sent into the backend with a cool bar graph.
+
 server.js - The RPC communication app that talks to the clients, processes heartbeats, manages the queues, and
 facilitates messaging and friends.
+
+stats.js  - A module that interfaces with the backend to check for and parse match stats after matches finish.
 
 Player.js - An abstract class for managing player objects throughout the applications.
 
