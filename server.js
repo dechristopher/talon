@@ -8,8 +8,6 @@ var ArrayList = require("arraylist");
 var HashMap = require("hashmap");
 var requestify = require('requestify');
 var cron = require('cron');
-var crypto = require('crypto');
-var fmt = require('biguint-format');
 var datetime = require('node-datetime');
 var S = require('string');
 
@@ -17,8 +15,9 @@ var inm = redis.createClient(6379, "kiir.us");
 inm.auth("KIWICLIENTREDISPASSWORDTHATISWAYTOOLONGTOGUESSBUTSTILLFEASIBLETOGETBYDECRYPTINGOURCLIENTSOKUDOSTOYOUIFYOUDIDLOLJKPLEASETELLUSTHISISSCARY");
 
 var servers = new ArrayList();
-servers.add("198.50.130.217:27020");
-servers.add("198.50.130.217:27023");
+servers.add("beak.tech");
+//servers.add("198.50.130.217:27020");
+//servers.add("198.50.130.217:27023");
 var onlServers = new ArrayList();
 
 var displayServers = false;
@@ -38,18 +37,19 @@ var hbChance = new HashMap();
 log("~ TALON v0.4");
 
 inm.on("subscribe", function (channel, count) {
-    pList.set("talon", new Player("talon", "this"));
+    pList.set("talon", new Player("talon", "", "this"));
     log("~ Listening: " + channel + "\n");
 });
 
 inm.on("message", function (channel, message) {
     var parts = message.split("￮");
     var chan = parts[0];
-    var from = parts[1];
-    var command = parts[2];
+    var sid = parts[1];
+    var from = parts[2];
+    var command = parts[3];
 
     if(command != ''){
-        parse(chan, from, command);
+        parse(chan, sid, from, command);
     }else{
         log("NULL: " + channel + " -> " + from);
     }
@@ -65,7 +65,7 @@ var showOnline = cron.job("*/15 * * * * *", function() {
 
 //Checks player and server statuses every 15 seconds and
 //pops the queue if 10 players and >= 1 server is available.
-var parseQueue = cron.job("*/15 * * * * *", function(){
+var parseQueue = cron.job("*/5 * * * * *", function(){
     currS = onlServers.size();
     currQ = qList.count();
     if(onlServers.size() >= 1) {
@@ -75,8 +75,8 @@ var parseQueue = cron.job("*/15 * * * * *", function(){
             //Select 10 payers randomly. Store in selected[].
             for (var i = 0; i < qSize; i++) {
                 selected[i] = players[random(0, players.length-1)];
-                var k = qList.search(selected[i]);
-                qList.remove(k);
+                var tp = qList.search(selected[i]);
+                qList.remove(tp);
                 players = qList.values();
             }
 
@@ -85,19 +85,67 @@ var parseQueue = cron.job("*/15 * * * * *", function(){
             var server = onlServers.get(srvNum);
             onlServers.remove(server);
 
-            requestify.get('https://kiir.us/api.php/?key=2F6E713BD4BA889A21166251DEDE9&ip=' + server + "&rcon=q&cmd=q").then(function(response) {
+            //Build API call
+            //https://kiir.us/api.php/?key=2F6E713BD4BA889A21166251DEDE9&cmd=q&rcon=q&ip={SERVER}&p1=ABC&p2=ABC&p3=ABC&p4=ABC&p5=ABC&p6=ABC&p7=ABC&p8=ABC&p9=ABC&p10=ABC&t1n=team_drop&t2n=team_sparks&numPl=5
+            var call = "";
+            if(qSize == 10 ){
+                for(var j = 1; j <= qSize; j++){
+                    call += "&p" + j + "=" + selected[j-1].sid;
+                }
+                call += "&t1n=team_" + selected[0].nm;
+                call += "&t2n=team_" + selected[5].nm;
+            }else if(qSize == 8){
+                call += "&p1=" + selected[0].sid;
+                call += "&p2=" + selected[1].sid;
+                call += "&p3=" + selected[2].sid;
+                call += "&p4=" + selected[3].sid;
+                call += "&p6=" + selected[4].sid;
+                call += "&p7=" + selected[5].sid;
+                call += "&p8=" + selected[6].sid;
+                call += "&p9=" + selected[7].sid;
+                call += "&t1n=team_" + selected[0].nm;
+                call += "&t2n=team_" + selected[4].nm;
+            }else if(qSize == 6){
+                call += "&p1=" + selected[0].sid;
+                call += "&p2=" + selected[1].sid;
+                call += "&p3=" + selected[2].sid;
+                call += "&p6=" + selected[3].sid;
+                call += "&p7=" + selected[4].sid;
+                call += "&p8=" + selected[5].sid;
+                call += "&t1n=team_" + selected[0].nm;
+                call += "&t2n=team_" + selected[3].nm;
+            }else if(qSize == 4){
+                call += "&p1=" + selected[0].sid;
+                call += "&p2=" + selected[1].sid;
+                call += "&p6=" + selected[2].sid;
+                call += "&p7=" + selected[3].sid;
+                call += "&t1n=team_" + selected[0].nm;
+                call += "&t2n=team_" + selected[2].nm;
+            }else if(qSize == 2){
+                call += "&p1=" + selected[0].sid;
+                call += "&p6=" + selected[1].sid;
+                call += "&t1n=team_" + selected[0].nm;
+                call += "&t2n=team_" + selected[1].nm;
+            }
+            call += "&numPl=" + (qSize /2);
+
+            var apiCall = "https://kiir.us/api.php/?key=2F6E713BD4BA889A21166251DEDE9&cmd=q&rcon=q&ip=" + server + call;
+            log("[Q]->> Built API call: " + apiCall);
+
+            requestify.get(apiCall).then(function(response) {
                 var pass = response.getBody();
                 if(pass != "failed"){
                     log('[Q]->> Server spawn COMPLETE >> ' + server + ' : ' + pass);
-                    for (var j = 0; j < selected.length; j++) {
-                        log('POP >>' + selected[j]);
-                        reply(selected[j], "p~" + server + "~"+ pass);
+                    for (var k = 0; k < selected.length; k++) {
+                        log('POP >>' + selected[k].channel);
+                        reply(selected[k].channel, "p~" + server + "~"+ pass);
                     }
                 }else{
                     log('[Q]->> Server spawn FAILED >> ' + server);
                 }
             });
 
+            currQ = qList.count();
         }else{
             log('[Q]{S: ' + currS + '/' + totS + '}(P: ' + currQ + '/10)->> Waiting for players');
         }
@@ -108,7 +156,7 @@ var parseQueue = cron.job("*/15 * * * * *", function(){
 
 //Checks server status every 30 seconds for matches still
 //going on and adds/removes them from onlServers[]
-var parseServers = cron.job("*/30 * * * * *", function(){
+var parseServers = cron.job("*/2 * * * * *", function(){
     for(var i = 0; i < servers.length; i++){
         var ip = servers.get(i);
 
@@ -119,7 +167,7 @@ var parseServers = cron.job("*/30 * * * * *", function(){
             var hostname = r[1];
             var players = r[2];
 
-            log('[S] > ' + ip + ' : "' + hostname + '" : ' + players);
+            //log('[S] > ' + ip + ' : "' + hostname + '" : ' + players);
 
             //Offline or busy check
             if((contains(hostname, "offline") || contains(hostname, "LIVE") || (contains(hostname, "NEED") && !contains(hostname, "10"))) && onlServers.contains(ip)){
@@ -128,7 +176,7 @@ var parseServers = cron.job("*/30 * * * * *", function(){
             }
 
             //Online or freshly spawned check
-            if((hostname == "KIWI :: " || contains(hostname, "NEED 10")) && players == "0" && !onlServers.contains(ip)){
+            if((hostname == "KIWI::OFF" || contains(hostname, "NEED 10")) && players == "1" && !onlServers.contains(ip) && hostname != "KIWI::LIVE"){
                 onlServers.add(ip);
                 log('[S] > ADDED: ' + ip);
             }
@@ -178,7 +226,7 @@ var parseHeartbeats = cron.job("*/30 * * * * *", function(){
     log('[HBC] >> OFFENDERS: ' + i);
 });
 
-function parse(channel, from, input){
+function parse(channel, sid, from, input){
 
     var command;
 
@@ -193,7 +241,7 @@ function parse(channel, from, input){
     switch(command) {
         //http://kiir.us/api.php/?cmd=l&key=(KEY)&un=(USERNAME)&pw=(PASSWORD)
         case "li":
-            var p = new Player(from, channel);
+            var p = new Player(from, sid, channel);
             if(pList.has(p.nm)){
                 pList.remove(p.nm);
                 if(qList.has(p.nm)){
@@ -203,7 +251,7 @@ function parse(channel, from, input){
             }
             pList.set(p.nm, p);
             hbCheck.set(p.nm, true);
-            log("PLYR: --> "+ p.nm + ":[" + p.channel + "] created.");
+            log("PLYR: --> "+ p.nm + ":[" + p.channel + " - " + p.sid + "] created.");
             break;
 
         case "lo":
@@ -215,6 +263,7 @@ function parse(channel, from, input){
                     currQ = qList.count();
                     bcast("q~" + currQ + "~" + currS);
                     bcast("l~" + currQ + "~" + from);
+                    log(from + " >> LOG OUT");
                 }
             }
             break;
@@ -259,6 +308,74 @@ function parse(channel, from, input){
             }
             break;
 
+        case "stats":
+            requestify.get('https://kiir.us/api.php/?cmd=stats&key=2F6E713BD4BA889A21166251DEDE9&name=' + from).then(function(response) {
+                var r = response.getBody();
+                //kr~xp~wins~losses
+                var stats = r.split('~');
+                var rank = function(xp){
+                    if(xp < 30){
+                        return "♟ Pawn";
+                    }else if(xp >= 30 && xp < 74){
+                        return "♙ Pawn+";
+                    }else if(xp >= 75 && xp < 104){
+                        return "♝ Bishop";
+                    }else if(xp >= 105 && xp < 144){
+                        return "♗ Bishop+";
+                    }else if(xp >= 145 && xp < 174){
+                        return "♜ Rook";
+                    }else if(xp >= 175 && xp < 249){
+                        return "♖ Rook+";
+                    }else if(xp >= 250 && xp < 299){
+                        return "♞ Knight";
+                    }else if(xp >= 300 && xp < 374){
+                        return "♘ Knight+";
+                    }else if(xp >= 375 && xp < 449){
+                        return "♛ Queen";
+                    }else if(xp >= 450 && xp < 899){
+                        return "♕ Queen+";
+                    }else if(xp >= 900 && xp < 1336){
+                        return "♚ King";
+                    }else if(xp >= 1337 && xp < 1699){
+                        return "♔ King+";
+                    }else if(xp >= 1700){
+                        return "Ⓛ Legend";
+                    }
+                };
+                var xptot = function(xp){
+                    if(xp < 30){
+                        return xp + " / 30";
+                    }else if(xp >= 30 && xp < 74){
+                        return xp + " / 75";
+                    }else if(xp >= 75 && xp < 104){
+                        return xp + " / 105";
+                    }else if(xp >= 105 && xp < 144){
+                        return xp + " / 145";
+                    }else if(xp >= 145 && xp < 174){
+                        return xp + " / 175";
+                    }else if(xp >= 175 && xp < 249){
+                        return xp + " / 250";
+                    }else if(xp >= 250 && xp < 299){
+                        return xp + " / 300";
+                    }else if(xp >= 300 && xp < 374){
+                        return xp + " / 375";
+                    }else if(xp >= 375 && xp < 449){
+                        return xp + " / 450";
+                    }else if(xp >= 450 && xp < 899){
+                        return xp + " / 900";
+                    }else if(xp >= 900 && xp < 1336){
+                        return xp + " / 1337";
+                    }else if(xp >= 1337 && xp < 1699){
+                        return xp + " / 1700";
+                    }else if(xp >= 1700){
+                        return xp;
+                    }
+                };
+                reply(channel, "s~" + rank(/*stats[0]*/7) + "~KR: " + /*stats[1]*/12.4 + " (+- 0.1)~XP: " + xptot(/*stats[2]*/7) + "~" + /*stats[3]*/2 + "~" + /*&stats[4]*/1);
+            });
+
+            break;
+
         /*case "qwertyuiop":
             console.log("! EXITING THREAD !");
             inm.unsubscribe();
@@ -295,8 +412,8 @@ function bcast(msg){
     var players = pList.values();
 
     for(var i = 0; i < players.length; i++){
-        var p = players[i];
-        pub.publish(p.channel, msg);
+        pub.publish(players[i].channel, msg);
+        //log(players[i].channel + "/" + msg);
     }
     log("BCST: " + msg);
     pub.quit();
@@ -327,16 +444,11 @@ function procQueue(user, channel){
         return false;
     //User joins queue
     }else{
-        qList.set(user, channel);
+        qList.set(user, pList.get(user));
         currQ = qList.count();
         log('QUEUE: >> ' + user + ' >> joined');
         return true;
     }
-}
-
-function randomC (qty) {
-    var x = crypto.randomBytes(qty);
-    return fmt(x, 'dec');
 }
 
 function random(min, max) {

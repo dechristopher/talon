@@ -17,12 +17,9 @@ var servers = new ArrayList();
 servers.add("198.50.130.217:27020");
 servers.add("198.50.130.217:27023");
 
-
 log("~ TALON STATS v0.4");
 
-
 //TODO WORK...
-
 
 function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;

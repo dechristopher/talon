@@ -14,13 +14,17 @@
     "biguint-format": "^1.0.0",
     "cron": "^1.1.0",
     "crypto": "0.0.3",
+    "gulp-util": "^3.0.7",
     "hashmap": "^2.0.5",
+    "minimatch": "^3.0.0",
     "moment": "^2.13.0",
     "node-datetime": "^1.0.0",
     "randomstring": "^1.1.4",
+    "recursive-readdir": "^2.0.0",
     "redis": "^2.6.0-1",
     "requestify": "^0.1.17",
     "string": "^3.3.1",
-    "stringpad": "^1.0.0"
+    "stringpad": "^1.0.0",
+    "sys": "0.0.1"
   }
 }

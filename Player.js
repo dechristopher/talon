@@ -11,15 +11,20 @@ function depositMinusFee(num) {
 // Public
 module.exports = Player;
 
-function Player(n, c) {
-    this.id = playerCount;
+function Player(n, s, c) {
+    //this.id = playerCount;
     this.nm = n;
+    this.sid = s;
     this.channel = c;
     playerCount++;
 }
 
 Player.prototype.getName = function() {
     return this.nm;
+};
+
+Player.prototype.getSid = function() {
+    return this.sid;
 };
 
 Player.prototype.getChannel = function() {
