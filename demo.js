@@ -39,7 +39,7 @@ function contains (a, b) {
 //Returns size of file given by filename
 function getFilesizeInBytes(filename) {
     var stats = fs.statSync(filename);
-    return stats["size"];
+    return stats['size'];
 }
 
 //Ignores a file if it isn't a demo file
@@ -59,13 +59,13 @@ function getDemoName(filename) {
 
 //Echos some bs on rsync
 function puts(error, stdout, stderr) {
-    if(stdout != null) {
+    if(stdout !== null) {
         log(gutil.colors.green(stdout));
     }
-    if(stderr != null) {
+    if(stderr !== null) {
         log(gutil.colors.red(stderr));
     }
-    if(error != null) {
+    if(error !== null) {
         log(gutil.colors.red(error));
     }
 }
@@ -73,7 +73,7 @@ function puts(error, stdout, stderr) {
 //Deletes the demo from the local drive
 function deleteDemo(code, filename) {
     log('DELETE?: ' + code + " - " + filename);
-    if(code == true){
+    if(code === true){
         fs.exists(filename, function (exists) {
             if (exists) {
                 //Show in green
@@ -122,7 +122,7 @@ var checkForDemos = cron.job("*/20 * * * * *", function() {
     //Fine new demo files
     recursive("V:\\STEAM\\steamapps\\common\\Counter-Strike Global Offensive\\csgo\\demos\\kiwi", /*[ignoreFunc],*/ function (err, files) {
     //recursive("/home/drop/csgo", /*[ignoreFunc],*/ function (err, files) {
-        if(err != null) {
+        if(err !== null) {
             log(gutil.colors.red('Errors: ' + err));
         }
         // Files is an array of filename
@@ -169,6 +169,6 @@ var checkToDelete = cron.job("*/5 * * * * *", function(){
     }
 });
 
-//checkForDemos.start();
-//checkDemoGrowth.start();
+checkForDemos.start();
+checkDemoGrowth.start();
 checkToDelete.start();

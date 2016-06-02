@@ -77,7 +77,7 @@ var parseDataSec = cron.job("*/1 * * * * *", function(){
 
     mps = (mps + temp) / 2;
 
-    if(mps == 0){
+    if(mps === 0){
         mpsGraph = "| = 0";
     }else if(mps <= 10){
         mpsGraph = "▓▓▓▓▓ <=10";

@@ -1,15 +1,16 @@
 /**
  * Created by Drew on 4/22/2016.
  */
-var redis = require("redis");
-var moment = require("moment");
-var Player = require('./Player');
-var ArrayList = require("arraylist");
-var HashMap = require("hashmap");
-var requestify = require('requestify');
-var cron = require('cron');
-var datetime = require('node-datetime');
-var S = require('string');
+const redis = require("redis");
+const moment = require("moment");
+const Player = require('./Player');
+const user = require('./user');
+const ArrayList = require("arraylist");
+const HashMap = require("hashmap");
+const requestify = require('requestify');
+const cron = require('cron');
+const datetime = require('node-datetime');
+const S = require('string');
 
 var inm = redis.createClient(6379, "kiir.us");
 inm.auth("KIWICLIENTREDISPASSWORDTHATISWAYTOOLONGTOGUESSBUTSTILLFEASIBLETOGETBYDECRYPTINGOURCLIENTSOKUDOSTOYOUIFYOUDIDLOLJKPLEASETELLUSTHISISSCARY");
@@ -20,13 +21,13 @@ servers.add("beak.tech");
 //servers.add("198.50.130.217:27023");
 var onlServers = new ArrayList();
 
-var displayServers = false;
+const displayServers = false;
 
 var currQ = 0;
 var currS = 0;
 var totS = servers.size();
 
-const qSize = 10;
+const qSize = 2;
 
 var pList = new HashMap();
 var qList = new HashMap();
@@ -48,7 +49,7 @@ inm.on("message", function (channel, message) {
     var from = parts[2];
     var command = parts[3];
 
-    if(command != ''){
+    if(command !== ''){
         parse(chan, sid, from, command);
     }else{
         log("NULL: " + channel + " -> " + from);
@@ -65,7 +66,7 @@ var showOnline = cron.job("*/15 * * * * *", function() {
 
 //Checks player and server statuses every 15 seconds and
 //pops the queue if 10 players and >= 1 server is available.
-var parseQueue = cron.job("*/5 * * * * *", function(){
+var parseQueue = cron.job("*/10 * * * * *", function(){
     currS = onlServers.size();
     currQ = qList.count();
     if(onlServers.size() >= 1) {
@@ -147,47 +148,20 @@ var parseQueue = cron.job("*/5 * * * * *", function(){
 
             currQ = qList.count();
         }else{
-            log('[Q]{S: ' + currS + '/' + totS + '}(P: ' + currQ + '/10)->> Waiting for players');
+            log('[Q]{S: ' + currS + '/' + totS + '}(P: ' + currQ + '/' + qSize + ')->> Waiting for players');
         }
     }else{
-        log('[Q]{S: ' + currS + '/' + totS + '}(P: ' + currQ + '/10)->> No servers');
+        log('[Q]{S: ' + currS + '/' + totS + '}(P: ' + currQ + '/' + qSize + ')->> No servers');
     }
 });
 
-//Checks server status every 30 seconds for matches still
+//Checks server status every 3 seconds for matches still
 //going on and adds/removes them from onlServers[]
-var parseServers = cron.job("*/2 * * * * *", function(){
-    for(var i = 0; i < servers.length; i++){
+var parseServers = cron.job("*/3 * * * * *", function(){
+    for(var i = 0; i < totS; i++){
         var ip = servers.get(i);
-
-        //Get hostname and players
-        requestify.get('https://kiir.us/api.php/?key=2F6E713BD4BA889A21166251DEDE9&ip=' + ip + '&cmd=both').then(function(response) {
-            var r = response.getBody().split('~');
-            var ip = r[0];
-            var hostname = r[1];
-            var players = r[2];
-
-            //log('[S] > ' + ip + ' : "' + hostname + '" : ' + players);
-
-            //Offline or busy check
-            if((contains(hostname, "offline") || contains(hostname, "LIVE") || (contains(hostname, "NEED") && !contains(hostname, "10"))) && onlServers.contains(ip)){
-                onlServers.remove(ip);
-                log('[S] > REMOVED: ' + ip);
-            }
-
-            //Online or freshly spawned check
-            if((hostname == "KIWI::OFF" || contains(hostname, "NEED 10")) && players == "1" && !onlServers.contains(ip) && hostname != "KIWI::LIVE"){
-                onlServers.add(ip);
-                log('[S] > ADDED: ' + ip);
-            }
-        });
-    }
-
-    currS = onlServers.size();
-    bcast("q~" + currQ + "~" + currS);
-
-    if(displayServers){
-        log('[S] >> AVAILABLE: ' + onlServers.length);
+        //Get hostname and ÷≥≥players
+        requestify.get('https://kiir.us/api.php/?key=2F6E713BD4BA889A21166251DEDE9&ip=' + ip + '&cmd=both').then(response => parseServerAPIResponse(response));
     }
 });
 
@@ -198,12 +172,12 @@ var parseHeartbeats = cron.job("*/30 * * * * *", function(){
     var i = 0;
     hbCheck.forEach(function(value, key){
         //log('Checking ' + key + ' -> ' + value);
-        if(value == false){
+        if(value === false){
             if(!hbChance.has(key)){
                 hbChance.set(key, 2);
             }else{
                 var chance = hbChance.get(key);
-                if(chance == 0){
+                if(chance === 0){
                     hbCheck.remove(key);
                     hbChance.remove(key);
                     log('[HBC] REM >> ' + key);
@@ -371,7 +345,7 @@ function parse(channel, sid, from, input){
                         return xp;
                     }
                 };
-                reply(channel, "s~" + rank(/*stats[0]*/7) + "~KR: " + /*stats[1]*/12.4 + " (+- 0.1)~XP: " + xptot(/*stats[2]*/7) + "~" + /*stats[3]*/2 + "~" + /*&stats[4]*/1);
+                reply(channel, "s~" + rank(stats[1]) + "~KR:  " + stats[0] + " (+- 0.1)~XP:  " + xptot(stats[1]) + "~" + stats[2] + "~" + stats[3]);
             });
 
             break;
@@ -415,7 +389,7 @@ function bcast(msg){
         pub.publish(players[i].channel, msg);
         //log(players[i].channel + "/" + msg);
     }
-    log("BCST: " + msg);
+    //log("BCST: " + msg);
     pub.quit();
 }
 
@@ -451,6 +425,48 @@ function procQueue(user, channel){
     }
 }
 
+function parseServerAPIResponse(response) {
+    var r, hostname, ip, players;
+    if(contains(response.getBody(), "~")){
+        //console.log(response.getBody());
+        r = response.getBody().split('~');
+        ip = r[0];
+        hostname = r[1];
+        players = r[2];
+        //Offline or busy check
+        if((players !== "1" || contains(hostname, "LIVE")) || contains(response.getBody(), "offline") && onlServers.contains(ip)){
+            onlServers.remove(ip);
+            console.log('[S] > REMOVED: ' + ip);
+        }
+        //Online or freshly spawned check
+        if(hostname === "KIWI::OFF" && players === "1" && !onlServers.contains(ip) && hostname !== "KIWI :: LIVE"){
+            onlServers.add(ip);
+            console.log('[S] > ADDED: ' + ip);
+        }
+    }else{
+        //console.log(response.getBody());
+        r = response.getBody().split('|');
+        ip = r[0];
+        hostname = "";
+        players = "";
+
+        if(onlServers.contains(ip)){
+            onlServers.remove(ip);
+            console.log('[S] > REMOVED: ' + ip);
+        }
+    }
+
+    //console.log('[S] > ' + ip + ' : "' + hostname + '" : ' + players);
+	//console.log('[S] Online Servers:', onlServers);
+
+    currS = onlServers.size();
+    bcast("q~" + currQ + "~" + currS);
+
+    if(displayServers){
+        log('[S] >> AVAILABLE: ' + onlServers.length);
+    }
+}
+
 function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -471,7 +487,7 @@ function contains (a, b) {
 inm.subscribe("talon");
 
 //Starts tasks
-showOnline.start();
+//showOnline.start();
 parseQueue.start();
 parseServers.start();
 parseHeartbeats.start();

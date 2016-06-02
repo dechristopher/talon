@@ -1,53 +1,29 @@
-/**
- * Created by Drew on 4/22/2016.
- */
-var redis = require("redis");
-var rstring = require("randomstring");
-var pub = redis.createClient(6379, "192.168.1.128");
-var inm = redis.createClient(6379, "192.168.1.128");
-var name = "drop";
-var queue = rstring.generate({
-    length: 12,
-    charset: 'alphabetic'
-});
+exports.testUserFactory = function(test){
+    test.expect(9);
 
-var stdin = process.openStdin();
+    const user = require("./user");
+    
+    //Set up a normally created user object
+    const testuser = user('testuser', 'STEAM_0:0:TESTING', 'TESTCHANNEL');
+    //Set up a user object and pass blank arguments
+    const testuser2 = user('', '', '');
+    //Set up a user object and pass no arguments
+    const testuser3 = user();
 
-inm.on("subscribe", function (channel, count) {
-    process.stdout.write("LSTN: " + channel + " : " + count + "\nBEAKCore >>");
-});
+    //Perform normal tests on first testuser
+    test.strictEqual(testuser.getUsername(), "testuser", "Tests that getUsername() function returns proper username.");
+    test.strictEqual(testuser.getSteamID(), "STEAM_0:0:TESTING", "Tests that getSteamID() function returns proper SteamID.");
+    test.strictEqual(testuser.getChannel(), "TESTCHANNEL", "Tests that getChannel() function returns proper channel.");
 
+    //Perform checks to see if constructor logic returns undefined fields
+    test.strictEqual(testuser2.getUsername(), Object.undefined, "Tests that getUsername() function returns undefined when blank arguments are passed to the user constructor.");
+    test.strictEqual(testuser2.getSteamID(), Object.undefined, "Tests that getSteamID() function returns undefined when blank arguments are passed to the user constructor.");
+    test.strictEqual(testuser2.getChannel(), Object.undefined, "Tests that getChannel() function returns undefined when blank arguments are passed to the user constructor.");
 
-/**
- *
- * FIX THE WAY THAT THE CONSOLE LISTENER CALLBACK PARSES INPUT SO WE CAN DO PROPER MESSAGES
- * 
- */
+    //Perform tests on blank constructor to verify Object.undefined returns
+    test.strictEqual(testuser3.getUsername(), Object.undefined, "Tests that getUsername() function returns undefined when no arguments are passed to the user constructor.");
+    test.strictEqual(testuser3.getSteamID(), Object.undefined, "Tests that getSteamID() function returns undefined when no arguments are passed to the user constructor.");
+    test.strictEqual(testuser3.getChannel(), Object.undefined, "Tests that getChannel() function returns undefined when no arguments are passed to the user constructor.");
 
-
-stdin.addListener("data", function(d) {
-    var input = d.toString().trim();
-    // note:  d is an object, and when converted to a string it will
-    // end with a linefeed.  so we (rather crudely) account for that
-    // with toString() and then trim()
-    if (input != "q") {
-        if (input == "latency") {
-            var now = new Date().getTime();
-            pub.publish("talon", queue + "~" + name + "~latency~" + now);
-            console.log("SENT: [" + now + "] to 'talon'");
-        }else {
-            pub.publish("talon", queue + "~" + name + "~" + input);
-            console.log("SENT: [" + input + "] to 'talon'");
-        }
-    } else {
-        pub.publish("talon", queue + "~" + name + "~q");
-        pub.quit();
-        process.stdin.destroy();
-    }
-});
-
-inm.on("message", function (channel, message) {
-        console.log("RPLY: --> " + message);
-});
-
-inm.subscribe(queue);
+    test.done();
+};
