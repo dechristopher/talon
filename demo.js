@@ -20,8 +20,6 @@ var checkdList = new HashMap();
 //HashMap of demos to check for on the server to delete if they've been uploaded
 var delList = new HashMap();
 
-//delList.set("V:\\STEAM\\steamapps\\common\\Counter-Strike Global Offensive\\csgo\\demos\\kiwi\\1v3.dem", 0);
-
 log("~ TALON DEMO PARSER v0.4");
 
 //Wraps console.log for printing date in front
@@ -119,13 +117,12 @@ function demoExistsOnCDN (Url, callback, filename) {
 //after their file size has stopped increasing
 var checkForDemos = cron.job("*/20 * * * * *", function() {
     log(gutil.colors.green('Checking for demos...'));
-    //Fine new demo files
-    recursive("V:\\STEAM\\steamapps\\common\\Counter-Strike Global Offensive\\csgo\\demos\\kiwi", /*[ignoreFunc],*/ function (err, files) {
-    //recursive("/home/drop/csgo", /*[ignoreFunc],*/ function (err, files) {
+    //Find new demo files
+    recursive("C:\\KIWI", /*[ignoreFunc],*/ function (err, files) {
         if(err !== null) {
             log(gutil.colors.red('Errors: ' + err));
         }
-        // Files is an array of filename
+        // Files is an array of filenames
         for(var i = 0; i < files.length; i++){
             if(!dList.has(files[i]) && contains(files[i], ".dem")){
                 log(gutil.colors.blue('ADDED: ' + files[i]));

@@ -35,7 +35,7 @@ var qList = new HashMap();
 var hbCheck = new HashMap();
 var hbChance = new HashMap();
 
-log("~ TALON v0.5");
+log("~ TALON v0.6");
 
 inm.on("subscribe", function (channel, count) {
     pList.set("talon", new Player("talon", "", "this"));
@@ -213,7 +213,6 @@ function parse(channel, sid, from, input){
     }
 
     switch(command) {
-        //http://kiir.us/api.php/?cmd=l&key=(KEY)&un=(USERNAME)&pw=(PASSWORD)
         case "li":
             var p = new Player(from, sid, channel);
             if(pList.has(p.nm)){
@@ -475,6 +474,7 @@ function populateServers(file, list){
                     list.add(line);
                 }
             });
+            totS = servers.size();
             console.log('FILLED:', list);
         }else{
             log('FILE:', file, 'DOES NOT EXIST! HALTING');
