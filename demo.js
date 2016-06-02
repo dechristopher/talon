@@ -20,7 +20,7 @@ var checkdList = new HashMap();
 //HashMap of demos to check for on the server to delete if they've been uploaded
 var delList = new HashMap();
 
-delList.set("V:\\STEAM\\steamapps\\common\\Counter-Strike Global Offensive\\csgo\\demos\\kiwi\\1v3.dem", 0);
+//delList.set("V:\\STEAM\\steamapps\\common\\Counter-Strike Global Offensive\\csgo\\demos\\kiwi\\1v3.dem", 0);
 
 log("~ TALON DEMO PARSER v0.4");
 

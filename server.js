@@ -11,14 +11,14 @@ const requestify = require('requestify');
 const cron = require('cron');
 const datetime = require('node-datetime');
 const S = require('string');
+const fs = require('fs');
 
 var inm = redis.createClient(6379, "kiir.us");
 inm.auth("KIWICLIENTREDISPASSWORDTHATISWAYTOOLONGTOGUESSBUTSTILLFEASIBLETOGETBYDECRYPTINGOURCLIENTSOKUDOSTOYOUIFYOUDIDLOLJKPLEASETELLUSTHISISSCARY");
 
 var servers = new ArrayList();
-servers.add("beak.tech");
-//servers.add("198.50.130.217:27020");
-//servers.add("198.50.130.217:27023");
+//servers.add("beak.tech");
+populateServers("conf/na-e.txt", servers);
 var onlServers = new ArrayList();
 
 const displayServers = false;
@@ -27,7 +27,7 @@ var currQ = 0;
 var currS = 0;
 var totS = servers.size();
 
-const qSize = 2;
+const qSize = 10;
 
 var pList = new HashMap();
 var qList = new HashMap();
@@ -35,7 +35,7 @@ var qList = new HashMap();
 var hbCheck = new HashMap();
 var hbChance = new HashMap();
 
-log("~ TALON v0.4");
+log("~ TALON v0.5");
 
 inm.on("subscribe", function (channel, count) {
     pList.set("talon", new Player("talon", "", "this"));
@@ -465,6 +465,22 @@ function parseServerAPIResponse(response) {
     if(displayServers){
         log('[S] >> AVAILABLE: ' + onlServers.length);
     }
+}
+
+function populateServers(file, list){
+    fs.exists(file, function(exists) {
+        if(exists){
+            fs.readFileSync(file).toString().split('\n').forEach(function(line){
+                if(line !== ''){
+                    list.add(line);
+                }
+            });
+            console.log('FILLED:', list);
+        }else{
+            log('FILE:', file, 'DOES NOT EXIST! HALTING');
+            process.exit();
+        }
+    });
 }
 
 function random(min, max) {
