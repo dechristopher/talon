@@ -1,6 +1,9 @@
 /**
  * Created by Drew on 4/22/2016.
  */
+
+//TODO Roll over the Player class to the user factory
+
 const redis = require("redis");
 const moment = require("moment");
 const Player = require('./Player');
@@ -17,9 +20,9 @@ var inm = redis.createClient(6379, "kiir.us");
 inm.auth("KIWICLIENTREDISPASSWORDTHATISWAYTOOLONGTOGUESSBUTSTILLFEASIBLETOGETBYDECRYPTINGOURCLIENTSOKUDOSTOYOUIFYOUDIDLOLJKPLEASETELLUSTHISISSCARY");
 
 var servers = new ArrayList();
+var onlServers = new ArrayList();
 //servers.add("beak.tech");
 populateServers("conf/na-e.txt", servers);
-var onlServers = new ArrayList();
 
 const displayServers = false;
 
@@ -287,60 +290,56 @@ function parse(channel, sid, from, input){
                 //kr~xp~wins~losses
                 var stats = r.split('~');
                 var rank = function(xp){
-                    if(xp < 30){
+                    if(xp < 27){
                         return "♟ Pawn";
-                    }else if(xp >= 30 && xp < 74){
+                    }else if(xp >= 27 && xp < 45){
                         return "♙ Pawn+";
-                    }else if(xp >= 75 && xp < 104){
-                        return "♝ Bishop";
-                    }else if(xp >= 105 && xp < 144){
-                        return "♗ Bishop+";
-                    }else if(xp >= 145 && xp < 174){
-                        return "♜ Rook";
-                    }else if(xp >= 175 && xp < 249){
-                        return "♖ Rook+";
-                    }else if(xp >= 250 && xp < 299){
+                    }else if(xp >= 45 && xp < 70){
                         return "♞ Knight";
-                    }else if(xp >= 300 && xp < 374){
+                    }else if(xp >= 70 && xp < 105){
                         return "♘ Knight+";
-                    }else if(xp >= 375 && xp < 449){
+                    }else if(xp >= 105 && xp < 136){
+                        return "♝ Bishop";
+                    }else if(xp >= 136 && xp < 180){
+                        return "♗ Bishop+";
+                    }else if(xp >= 180 && xp < 221){
+                        return "♜ Rook";
+                    }else if(xp >= 221 && xp < 270){
+                        return "♖ Rook+";
+                    }else if(xp >= 270 && xp < 330){
                         return "♛ Queen";
-                    }else if(xp >= 450 && xp < 899){
+                    }else if(xp >= 330 && xp < 420){
                         return "♕ Queen+";
-                    }else if(xp >= 900 && xp < 1336){
-                        return "♚ King";
-                    }else if(xp >= 1337 && xp < 1699){
-                        return "♔ King+";
-                    }else if(xp >= 1700){
+                    }else if(xp >= 420 && xp < 461){
+                        return "♔ King";
+                    }else if(xp >= 461){
                         return "Ⓛ Legend";
                     }
                 };
                 var xptot = function(xp){
-                    if(xp < 30){
-                        return xp + " / 30";
-                    }else if(xp >= 30 && xp < 74){
-                        return xp + " / 75";
-                    }else if(xp >= 75 && xp < 104){
-                        return xp + " / 105";
-                    }else if(xp >= 105 && xp < 144){
-                        return xp + " / 145";
-                    }else if(xp >= 145 && xp < 174){
-                        return xp + " / 175";
-                    }else if(xp >= 175 && xp < 249){
-                        return xp + " / 250";
-                    }else if(xp >= 250 && xp < 299){
-                        return xp + " / 300";
-                    }else if(xp >= 300 && xp < 374){
-                        return xp + " / 375";
-                    }else if(xp >= 375 && xp < 449){
-                        return xp + " / 450";
-                    }else if(xp >= 450 && xp < 899){
-                        return xp + " / 900";
-                    }else if(xp >= 900 && xp < 1336){
-                        return xp + " / 1337";
-                    }else if(xp >= 1337 && xp < 1699){
-                        return xp + " / 1700";
-                    }else if(xp >= 1700){
+                    if(xp < 27){
+                        return xp + " / 27";
+                    }else if(xp >= 27 && xp < 45){
+                        return xp + " / 45";
+                    }else if(xp >= 45 && xp < 70){
+                        return xp + " / 70";
+                    }else if(xp >= 70 && xp < 105){
+                        return xp + " / 205";
+                    }else if(xp >= 105 && xp < 136){
+                        return xp + " / 136";
+                    }else if(xp >= 136 && xp < 180){
+                        return xp + " / 180";
+                    }else if(xp >= 180 && xp < 221){
+                        return xp + " / 221";
+                    }else if(xp >= 221 && xp < 270){
+                        return xp + " / 270";
+                    }else if(xp >= 270 && xp < 330){
+                        return xp + " / 330";
+                    }else if(xp >= 330 && xp < 420){
+                        return xp + " / 420";
+                    }else if(xp >= 420 && xp < 461){
+                        return xp + " / 460";
+                    }else if(xp >= 461){
                         return xp;
                     }
                 };
