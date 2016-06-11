@@ -20,7 +20,7 @@ var checkdList = new HashMap();
 //HashMap of demos to check for on the server to delete if they've been uploaded
 var delList = new HashMap();
 
-log("~ TALON DEMO PARSER v0.4");
+log("~ TALON DEMO PARSER v0.7");
 
 //Wraps console.log for printing date in front
 function log(message) {

@@ -13,7 +13,7 @@ var queue = rstring.generate({
 
 var stdin = process.openStdin();
 
-inm.on("subscribe", function (channel, count) {
+inm.on("subscribe", function(channel, count) {
     process.stdout.write("LSTN: " + channel + " : " + count + "\nBEAKCore >>");
 });
 
@@ -21,7 +21,7 @@ inm.on("subscribe", function (channel, count) {
 /**
  *
  * FIX THE WAY THAT THE CONSOLE LISTENER CALLBACK PARSES INPUT SO WE CAN DO PROPER MESSAGES
- * 
+ *
  */
 
 
@@ -35,7 +35,7 @@ stdin.addListener("data", function(d) {
             var now = new Date().getTime();
             pub.publish("talon", queue + "~" + name + "~latency~" + now);
             console.log("SENT: [" + now + "] to 'talon'");
-        }else {
+        } else {
             pub.publish("talon", queue + "~" + name + "~" + input);
             console.log("SENT: [" + input + "] to 'talon'");
         }
@@ -46,8 +46,8 @@ stdin.addListener("data", function(d) {
     }
 });
 
-inm.on("message", function (channel, message) {
-        console.log("RPLY: --> " + message);
+inm.on("message", function(channel, message) {
+    console.log("RPLY: --> " + message);
 });
 
 inm.subscribe(queue);

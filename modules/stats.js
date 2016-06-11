@@ -26,13 +26,13 @@ function random(min, max) {
 }
 
 //Wraps console.log for printing date in front
-function log(message){
+function log(message) {
     var dt = datetime.create();
     var time = dt.format('m/d/y H:M:S');
     console.log('[' + time + '] ' + message);
 }
 
 //Wrapper for indexOf
-function contains (a, b) {
+function contains(a, b) {
     return S(a).contains(b);
 }
