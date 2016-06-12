@@ -5,9 +5,11 @@
 //TODO Roll over the Player class to the user factory
 //
 // GOODLUCK
+// TRIFORCE
 //    ▲
 //   ▲ ▲
-// TRIFORCE
+// PRAY FOR
+// NO CRASH
 //
 //import libraries
 const redis = require("redis");
@@ -21,6 +23,7 @@ const cron = require('cron');
 const datetime = require('node-datetime');
 const S = require('string');
 const fs = require('fs');
+const os = require("os");
 
 //TALON version
 var version = "0.7";
@@ -77,7 +80,7 @@ log("~ TALON v" + version);
 //Subscribe local talon redis client to global message queue
 inm.on("subscribe", function(channel, count) {
     pList.set("talon", new Player("talon", "", "this"));
-    log("~ Listening: " + channel + "\n");
+    log("~ Listening: " + channel + os.EOL);
 });
 
 //Run this event every time a message is received from a client
@@ -565,9 +568,27 @@ function random(min, max) {
 
 //Wraps console.log for printing date in front
 function log(message) {
-    var dt = datetime.create();
-    var time = dt.format('m/d/y H:M:S');
+    var time = datetime.create().format('m-d-y H:M:S');
+    var today = datetime.create().format('m-d-y');
+    var file = "logs/" + today + ".txt";
     console.log('[' + time + '] ' + message);
+
+    fs.exists(file, function(exists) {
+        if (exists) {
+            fs.appendFile(file, '[' + time + '] ' + message + os.EOL, function (err) {
+                if(err){
+                    return console.log("FILE LOGGING FAILED AT " + time + "for MSG: " + message);
+                }
+            });
+        }else{
+            fs.writeFile(file, 'BEGIN TALON LOG FOR ' + today + os.EOL, function (err) {
+                if (err){
+                    return console.log("FILE CREATION FAILED AT " + time + "for FILE: " + file);
+                }
+                console.log('Created new log >> ' + file);
+            });
+        }
+    });
 }
 
 //Wrapper for indexOf
