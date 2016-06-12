@@ -4,6 +4,7 @@
 
 //TODO Roll over the Player class to the user factory
 
+//import libraries
 const redis = require("redis");
 const moment = require("moment");
 const Player = require('./modules/Player');
@@ -16,42 +17,61 @@ const datetime = require('node-datetime');
 const S = require('string');
 const fs = require('fs');
 
-var inm = redis.createClient(6379, "kiir.us");
-inm.auth("KIWICLIENTREDISPASSWORDTHATISWAYTOOLONGTOGUESSBUTSTILLFEASIBLETOGETBYDECRYPTINGOURCLIENTSOKUDOSTOYOUIFYOUDIDLOLJKPLEASETELLUSTHISISSCARY");
+//declare redis auth code
+const auth = "KIWICLIENTREDISPASSWORDTHATISWAYTOOLONGTOGUESSBUTSTILLFEASIBLETOGETBYDECRYPTINGOURCLIENTSOKUDOSTOYOUIFYOUDIDLOLJKPLEASETELLUSTHISISSCARY";
 
+//set up redis connection with backend redis message broker
+var inm = redis.createClient(6379, "kiir.us");
+//authenticate with redis
+inm.auth(auth);
+
+//Set up and pupolate server lists
 var servers = new ArrayList();
 var onlServers = new ArrayList();
 //servers.add("beak.tech");
 populateServers("conf/na-e.txt", servers);
 
+//Boolean to display all server IPs
+//every parseServer tick
 const displayServers = false;
 
+//Declare queue and server variables
 var currQ = 0;
 var currS = 0;
 var totS = servers.size();
 
+//Set the default queue size
 const qSize = 10;
 
+//Declare HashMaps for all users
+//and queued users
 var pList = new HashMap();
 var qList = new HashMap();
 
+//Declare HashMaps for active users and
+//HBC offending users
 var hbCheck = new HashMap();
 var hbChance = new HashMap();
 
+//Begin...
 log("~ TALON v0.6");
 
+//Subscribe local talon redis client to global message queue
 inm.on("subscribe", function(channel, count) {
     pList.set("talon", new Player("talon", "", "this"));
     log("~ Listening: " + channel + "\n");
 });
 
+//Run this event every time a message is received from a client
 inm.on("message", function(channel, message) {
+    //Split the message into parts
     var parts = message.split("￮");
     var chan = parts[0];
     var sid = parts[1];
     var from = parts[2];
     var command = parts[3];
 
+    //Send message to be parsed
     if (command !== '') {
         parse(chan, sid, from, command);
     } else {
@@ -59,6 +79,7 @@ inm.on("message", function(channel, message) {
     }
 });
 
+//Unused debug BS
 var showOnline = cron.job("*/15 * * * * *", function() {
     var i = 0;
     pList.forEach(function() {
@@ -70,11 +91,16 @@ var showOnline = cron.job("*/15 * * * * *", function() {
 //Checks player and server statuses every 10 seconds and
 //pops the queue if 10 players and >= 1 server is available.
 var parseQueue = cron.job("*/10 * * * * *", function() {
+    //Updates currS and currQ
     currS = onlServers.size();
     currQ = qList.count();
+    //If server are available
     if (onlServers.size() >= 1) {
+        //and people are queued
         if (qList.count() >= qSize) {
+            //Get all queued players and add to a JS array
             var players = qList.values();
+            //Declare an empty array for the 10 (x) selected players
             var selected = [];
             //Select 10 payers randomly. Store in selected[].
             for (var i = 0; i < qSize; i++) {
@@ -133,22 +159,31 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
             }
             call += "&numPl=" + (qSize / 2);
 
+            //Concatenate the built API call with the required properties to make the full call
             var apiCall = "https://kiir.us/api.php/?key=2F6E713BD4BA889A21166251DEDE9&cmd=q&rcon=q&ip=" + server + call;
+            //Log it...
             log("[Q]->> Built API call: " + apiCall);
 
+            //Send the API request
             requestify.get(apiCall).then(function(response) {
                 var pass = response.getBody();
+                //If the call succeeds
                 if (pass != "failed") {
+                    //Log everything
                     log('[Q]->> Server spawn COMPLETE >> ' + server + ' : ' + pass);
+                    //Pop the queue for all selected players
                     for (var k = 0; k < selected.length; k++) {
                         log('POP >>' + selected[k].channel);
                         reply(selected[k].channel, "p~" + server + "~" + pass);
                     }
+                //Else if the call fails
                 } else {
+                    //Call 911
                     log('[Q]->> Server spawn FAILED >> ' + server);
                 }
             });
 
+            //Update currQ to reflect queue pop
             currQ = qList.count();
         } else {
             log('[Q]{S: ' + currS + '/' + totS + '}(P: ' + currQ + '/' + qSize + ')->> Waiting for players');
@@ -163,16 +198,19 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
 var parseServers = cron.job("*/3 * * * * *", function() {
     for (var i = 0; i < totS; i++) {
         var ip = servers.get(i);
-        //Get hostname and ÷≥≥players
+        //Get hostname and players (ignore JSHint BS)
         requestify.get('https://kiir.us/api.php/?key=2F6E713BD4BA889A21166251DEDE9&ip=' + ip + '&cmd=both').then(response => parseServerAPIResponse(response));
     }
 });
 
 //Checks to see if a user has sent heartbeats in the past
 //30 seconds. If not, removes them from qList and hbCheck
+//
+//TODO comment this
 var parseHeartbeats = cron.job("*/30 * * * * *", function() {
     //log('[HBC] >> RUNNING...');
     var i = 0;
+    //Check EVERY user
     hbCheck.forEach(function(value, key) {
         //log('Checking ' + key + ' -> ' + value);
         if (value === false) {
@@ -203,10 +241,13 @@ var parseHeartbeats = cron.job("*/30 * * * * *", function() {
     log('[HBC] >> OFFENDERS: ' + i);
 });
 
+//Parse client commands
 function parse(channel, sid, from, input) {
 
+    //Instantiate command variable
     var command;
 
+    //Check if command has args
     if (input.indexOf('□') > -1) {
         var parts = input.split('□');
         command = parts[0];
@@ -215,9 +256,14 @@ function parse(channel, sid, from, input) {
         command = input;
     }
 
+    //Parse commands
     switch (command) {
+
+        //User logs in
         case "li":
+            //Create player object
             var p = new Player(from, sid, channel);
+            //log out all other instances of player
             if (pList.has(p.nm)) {
                 pList.remove(p.nm);
                 if (qList.has(p.nm)) {
@@ -225,12 +271,15 @@ function parse(channel, sid, from, input) {
                     currQ = qList.count();
                 }
             }
+            //Then set their playerID and add them to HBC
             pList.set(p.nm, p);
             hbCheck.set(p.nm, true);
             log("PLYR: --> " + p.nm + ":[" + p.channel + " - " + p.sid + "] created.");
             break;
 
+        //user logs out
         case "lo":
+            //Rape && pillage their user object
             if (pList.has(from)) {
                 pList.remove(from);
                 if (qList.has(from)) {
@@ -244,12 +293,15 @@ function parse(channel, sid, from, input) {
             }
             break;
 
+        //pong
         case "ping":
             log("RESP: pong");
             reply(channel, "pong");
             break;
 
+        //User heartbeat packet
         case "hb":
+            //Set their HBCheck to true for another 30 seconds
             if (pList.has(from)) {
                 hbCheck.set(from, true);
                 log("RESP: " + from + " > hb");
@@ -257,21 +309,23 @@ function parse(channel, sid, from, input) {
             }
             break;
 
-            //Return number of queued players
+        //Return number of queued players
         case "rq":
             log("RQ -> " + from);
             reply(channel, "q~" + currQ + "~" + currS);
             break;
 
-            //https://kiir.us/api.php/?cmd=b&key=2F6E713BD4BA889A21166251DEDE9&sid=(SID)
-        case "ban":
+        //UNIMPLEMENTED
+        //https://kiir.us/api.php/?cmd=b&key=2F6E713BD4BA889A21166251DEDE9&sid=(SID)
+        /*case "ban":
             requestify.get('https://kiir.us/api.php/?cmd=b&key=2F6E713BD4BA889A21166251DEDE9&sid=STEAM_0:1:32732494').then(function(response) {
                 var r = response.getBody();
                 log("WEB: :" + r.toString() + ":");
                 reply(channel, r.toString());
             });
-            break;
+            break;*/
 
+        //User joins / leaves the queue
         case "queue":
             if (procQueue(from, channel)) {
                 bcast("q~" + currQ + "~" + currS);
@@ -284,11 +338,14 @@ function parse(channel, sid, from, input) {
             }
             break;
 
+        //User requests theirs or another player's stats
         case "stats":
+            //Query stats API
             requestify.get('https://kiir.us/api.php/?cmd=stats&key=2F6E713BD4BA889A21166251DEDE9&name=' + from).then(function(response) {
                 var r = response.getBody();
                 //kr~xp~wins~losses
                 var stats = r.split('~');
+                //Cackyuhlate shite
                 var rank = function(xp) {
                     if (xp < 27) {
                         return "♟ Pawn";
@@ -343,18 +400,18 @@ function parse(channel, sid, from, input) {
                         return xp;
                     }
                 };
+                //Send info to client
                 reply(channel, "s~" + rank(stats[1]) + "~KR:  " + stats[0] + " (+- 0.1)~XP:  " + xptot(stats[1]) + "~" + stats[2] + "~" + stats[3]);
             });
-
             break;
 
-            //Test basic message replying
+        //Test basic message replying
         case "reply":
             reply(channel, "Talon is replying properly, " + from + " [" + channel + "]");
             log("RPLY: " + channel + " [" + from + "] -> " + "SENT");
             break;
 
-            //Return unknown command (In other words just echo back message)
+        //Return unknown command (In other words just echo back message)
         default:
             log("UNKN: --> " + from + " : " + input);
             reply(channel, "Unknown command '" + input + "'");
@@ -365,7 +422,7 @@ function parse(channel, sid, from, input) {
 //Send a single message to one user or channel
 function reply(to, msg) {
     var pub = redis.createClient(6379, "kiir.us");
-    pub.auth("KIWICLIENTREDISPASSWORDTHATISWAYTOOLONGTOGUESSBUTSTILLFEASIBLETOGETBYDECRYPTINGOURCLIENTSOKUDOSTOYOUIFYOUDIDLOLJKPLEASETELLUSTHISISSCARY");
+    pub.auth(auth);
     pub.publish(to, msg);
     pub.quit();
 }
@@ -373,7 +430,7 @@ function reply(to, msg) {
 //Broadcast to all users and channels
 function bcast(msg) {
     var pub = redis.createClient(6379, "kiir.us");
-    pub.auth("KIWICLIENTREDISPASSWORDTHATISWAYTOOLONGTOGUESSBUTSTILLFEASIBLETOGETBYDECRYPTINGOURCLIENTSOKUDOSTOYOUIFYOUDIDLOLJKPLEASETELLUSTHISISSCARY");
+    pub.auth(auth);
 
     var players = pList.values();
 
@@ -388,7 +445,7 @@ function bcast(msg) {
 //Broadcast excluding a single user or channel.
 function bcastex(msg, ex) {
     var pub = redis.createClient(6379, "kiir.us");
-    pub.auth("KIWICLIENTREDISPASSWORDTHATISWAYTOOLONGTOGUESSBUTSTILLFEASIBLETOGETBYDECRYPTINGOURCLIENTSOKUDOSTOYOUIFYOUDIDLOLJKPLEASETELLUSTHISISSCARY");
+    pub.auth(auth);
 
     var players = pList.values();
 
@@ -401,6 +458,7 @@ function bcastex(msg, ex) {
     pub.quit();
 }
 
+//Process the queue command
 function procQueue(user, channel) {
     //User leaves queue
     if (qList.has(user)) {
@@ -408,7 +466,7 @@ function procQueue(user, channel) {
         currQ = qList.count();
         log('QUEUE: >> ' + user + ' >> left');
         return false;
-        //User joins queue
+    //User joins queue
     } else {
         qList.set(user, pList.get(user));
         currQ = qList.count();
@@ -417,6 +475,9 @@ function procQueue(user, channel) {
     }
 }
 
+//Add / remove servers from the available servers
+//list based on their hostname, active players and
+//online status
 function parseServerAPIResponse(response) {
     var r, hostname, ip, players;
     if (contains(response.getBody(), "~")) {
@@ -459,6 +520,8 @@ function parseServerAPIResponse(response) {
     }
 }
 
+//Fill the servers[] array with lines from
+//a given text file
 function populateServers(file, list) {
     fs.exists(file, function(exists) {
         if (exists) {
@@ -476,6 +539,8 @@ function populateServers(file, list) {
     });
 }
 
+//Generate a random integer within
+//an interval inclusively
 function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -488,11 +553,13 @@ function log(message) {
 }
 
 //Wrapper for indexOf
+//Checks if a string A contains an
+//instance of string B
 function contains(a, b) {
     return S(a).contains(b);
 }
 
-//Starts listener
+//Starts message listener
 inm.subscribe("talon");
 
 //Starts tasks
@@ -500,3 +567,5 @@ inm.subscribe("talon");
 parseQueue.start();
 parseServers.start();
 parseHeartbeats.start();
+
+//Profit
