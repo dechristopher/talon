@@ -1,7 +1,7 @@
 exports.testUserFactory = function(test) {
     test.expect(9);
 
-    const user = require("./modules/user.js");
+    const user = require("../modules/user.js");
 
     //Set up a normally created user object
     const testuser = user('testuser', 'STEAM_0:0:TESTING', 'TESTCHANNEL');

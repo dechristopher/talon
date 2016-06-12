@@ -67,7 +67,7 @@ var showOnline = cron.job("*/15 * * * * *", function() {
     log('[P] (Q: ' + currQ + ' / O: ' + i + ')');
 });
 
-//Checks player and server statuses every 15 seconds and
+//Checks player and server statuses every 10 seconds and
 //pops the queue if 10 players and >= 1 server is available.
 var parseQueue = cron.job("*/10 * * * * *", function() {
     currS = onlServers.size();
@@ -347,12 +347,6 @@ function parse(channel, sid, from, input) {
             });
 
             break;
-
-            /*case "qwertyuiop":
-                console.log("! EXITING THREAD !");
-                inm.unsubscribe();
-                inm.quit();
-                break;*/
 
             //Test basic message replying
         case "reply":
