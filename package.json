@@ -1,10 +1,10 @@
 {
   "name": "talon",
-  "version": "1.0.0",
+  "version": "0.7.0",
   "description": "The Talon server for the Kiwi PUG system.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "./node_modules/jshint/bin/jshint server.js && nodeunit",
     "start": "node server.js"
   },
   "author": "dechristophera",
@@ -14,6 +14,7 @@
     "cron": "^1.1.0",
     "gulp-util": "^3.0.7",
     "hashmap": "^2.0.5",
+    "jshint": "^2.6.0",
     "moment": "^2.13.0",
     "node-datetime": "^1.0.0",
     "randomstring": "^1.1.4",
@@ -23,5 +24,8 @@
     "string": "^3.3.1",
     "stringpad": "^1.0.0",
     "sys": "0.0.1"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.2"
   }
 }
