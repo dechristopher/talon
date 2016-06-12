@@ -1,9 +1,14 @@
 /**
  * Created by Drew on 4/22/2016.
  */
-
+//
 //TODO Roll over the Player class to the user factory
-
+//
+// GOODLUCK
+//    ▲
+//   ▲ ▲
+// TRIFORCE
+//
 //import libraries
 const redis = require("redis");
 const moment = require("moment");
@@ -16,6 +21,9 @@ const cron = require('cron');
 const datetime = require('node-datetime');
 const S = require('string');
 const fs = require('fs');
+
+//TALON version
+var version = "0.7";
 
 //declare redis auth code
 const auth = "KIWICLIENTREDISPASSWORDTHATISWAYTOOLONGTOGUESSBUTSTILLFEASIBLETOGETBYDECRYPTINGOURCLIENTSOKUDOSTOYOUIFYOUDIDLOLJKPLEASETELLUSTHISISSCARY";
@@ -53,8 +61,18 @@ var qList = new HashMap();
 var hbCheck = new HashMap();
 var hbChance = new HashMap();
 
+
 //Begin...
-log("~ TALON v0.6");
+console.log(
+    " ████████╗ █████╗ ██╗      ██████╗ ███╗   ██╗\n" +
+    " ╚══██╔══╝██╔══██╗██║     ██╔═══██╗████╗  ██║\n" +
+    "    ██║   ███████║██║     ██║   ██║██╔██╗ ██║\n" +
+    "    ██║   ██╔══██║██║     ██║   ██║██║╚██╗██║\n" +
+    "    ██║   ██║  ██║███████╗╚██████╔╝██║ ╚████║\n" +
+    "    ╚═╝   ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═══╝\n" +
+    " Copyright 2016 Kiirus Technologies Inc."
+);
+log("~ TALON v" + version);
 
 //Subscribe local talon redis client to global message queue
 inm.on("subscribe", function(channel, count) {
