@@ -22,6 +22,7 @@ const requestify = require('requestify');
 const cron = require('cron');
 const datetime = require('node-datetime');
 const S = require('string');
+const lupus = require('lupus');
 const fs = require('fs');
 const os = require("os");
 
@@ -214,14 +215,22 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
     }
 });
 
-//Checks server status every 3 seconds for matches still
+//Checks server status every 5 seconds for matches still
 //going on and adds/removes them from onlServers[]
-var parseServers = cron.job("*/3 * * * * *", function() {
-    for (var i = 0; i < totS; i++) {
+var parseServers = cron.job("*/5 * * * * *", function() {
+    log("[S] Server Query...");
+    lupus(0, totS, function(n){
+        var ip = servers.get(n);
+        requestify.get('https://kiir.us/api.php/?key=2F6E713BD4BA889A21166251DEDE9&ip=' + ip + '&cmd=both').then(response => parseServerAPIResponse(response));
+    }, function(){
+        log("[S] Server Query: DONE");
+    });
+    //Old shit that jshint hated
+    /*for (var i = 0; i < totS; i++) {
         var ip = servers.get(i);
         //Get hostname and players (ignore JSHint BS)
         requestify.get('https://kiir.us/api.php/?key=2F6E713BD4BA889A21166251DEDE9&ip=' + ip + '&cmd=both').then(response => parseServerAPIResponse(response));
-    }
+    }*/
 });
 
 //Checks to see if a user has sent heartbeats in the past
