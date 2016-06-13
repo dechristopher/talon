@@ -1,4 +1,7 @@
 # talon
+
+[![Build Status](https://travis-ci.com/dechristopher/talon.svg?token=Y3xVpkK5ssNWUcAWrYpW&branch=master)](https://travis-ci.com/dechristopher/talon)
+
 The backend node microservices that make up the talon system for the KIWI PUG network.
 
 mon.js    - Monitors the messages per second sent into the backend with a cool bar graph.
