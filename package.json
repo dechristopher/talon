@@ -5,7 +5,7 @@
   "repository": "https://github.com/dechristopher/talon.git",
   "main": "server.js",
   "scripts": {
-    "test": "./node_modules/jshint/bin/jshint server.js && nodeunit",
+    "test": "./node_modules/jshint/bin/jshint server.js",
     "start": "node server.js"
   },
   "author": "dechristophera",
