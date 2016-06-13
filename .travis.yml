@@ -3,5 +3,5 @@ node_js:
  - "6.2.1"
 before_install:
  - "npm install nodeunit -g"
- before_script:
+before_script:
  - "nodeunit"
