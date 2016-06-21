@@ -26,7 +26,7 @@ const lupus = require('lupus');
 const fs = require('fs');
 const os = require("os");
 
-//TALON version
+//The TALON version
 var version = "0.7";
 
 //declare redis auth code
