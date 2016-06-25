@@ -1,5 +1,5 @@
 /**
- * Created by Drew on 4/22/2016.
+ * Created by Andrew DeChristopher <drew@kiir.us> on 4/22/2016.
  */
 //
 //TODO Roll over the Player class to the user factory
@@ -84,7 +84,7 @@ inm.on("subscribe", function(channel, count) {
     log("~ Listening: " + channel + os.EOL);
 });
 
-//Run this event every time a message is received from a client
+//Run this callback every time a message is received from a client
 inm.on("message", function(channel, message) {
     //Split the message into parts
     var parts = message.split("￮");
@@ -616,4 +616,4 @@ parseQueue.start();
 parseServers.start();
 parseHeartbeats.start();
 
-//Profit
+//Profit :>
