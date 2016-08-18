@@ -220,6 +220,7 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
 //going on and adds/removes them from onlServers[]
 var parseServers = cron.job("*/5 * * * * *", function() {
     log("[S] Server Query...");
+    console.log(onlServers);
     lupus(0, totS, function(n){
         var ip = servers.get(n);
         requestify.get('https://kiir.us/api.php/?key=2F6E713BD4BA889A21166251DEDE9&ip=' + ip + '&cmd=both').then(response => parseServerAPIResponse(response));
@@ -518,14 +519,17 @@ function parseServerAPIResponse(response) {
         hostname = r[1];
         players = r[2];
         //Offline or busy check
-        if ((players !== "1" || contains(hostname, "LIVE")) || contains(response.getBody(), "offline") && onlServers.contains(ip)) {
+        //
+        // 108.61.129.168:27015~KIWI::OFF~0
+        //
+        if (((players !== "1" || contains(hostname, "LIVE")) || contains(response.getBody(), "offline")) && onlServers.contains(ip)) {
             onlServers.remove(ip);
-            console.log('[S] > REMOVED: ' + ip);
+            console.log('[S] [-] > ' + ip);
         }
         //Online or freshly spawned check
         if (hostname === "KIWI::OFF" && players === "1" && !onlServers.contains(ip) && hostname !== "KIWI :: LIVE") {
             onlServers.add(ip);
-            console.log('[S] > ADDED: ' + ip);
+            console.log('[S] [+] > ' + ip);
         }
     } else {
         //console.log(response.getBody());
