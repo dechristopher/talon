@@ -220,7 +220,7 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
 //going on and adds/removes them from onlServers[]
 var parseServers = cron.job("*/5 * * * * *", function() {
     log("[S] Server Query...");
-    console.log(onlServers);
+    //console.log(onlServers);
     lupus(0, totS, function(n){
         var ip = servers.get(n);
         requestify.get('https://kiir.us/api.php/?key=2F6E713BD4BA889A21166251DEDE9&ip=' + ip + '&cmd=both').then(response => parseServerAPIResponse(response));
@@ -336,14 +336,14 @@ function parse(channel, sid, from, input) {
             //Set their HBCheck to true for another 30 seconds
             if (pList.has(from)) {
                 hbCheck.set(from, true);
-                log("RESP: " + from + " > hb");
+                log('[H] >> drop');
                 reply(channel + "-hb", "hb");
             }
             break;
 
         //Return number of queued players
         case "rq":
-            log("RQ -> " + from);
+            //log("RQ -> " + from);
             reply(channel, "q~" + currQ + "~" + currS);
             break;
 
@@ -357,16 +357,16 @@ function parse(channel, sid, from, input) {
             });
             break;*/
 
-        //User joins / leaves the queue
+        //User sends queue join/leave request
         case "queue":
             if (procQueue(from, channel)) {
                 bcast("q~" + currQ + "~" + currS);
                 bcast("j~" + currQ + "~" + from);
-                log("RESP: " + from + " > qj");
+                log('[Q] [+] ' + from);
             } else {
                 bcast("q~" + currQ + "~" + currS);
                 bcast("l~" + currQ + "~" + from);
-                log("RESP: " + from + " > ql");
+                log('[Q] [-] ' + from);
             }
             break;
 
@@ -496,13 +496,13 @@ function procQueue(user, channel) {
     if (qList.has(user)) {
         qList.remove(user);
         currQ = qList.count();
-        log('QUEUE: >> ' + user + ' >> left');
+        log('[Q] [?-] ' + user);
         return false;
     //User joins queue
     } else {
         qList.set(user, pList.get(user));
         currQ = qList.count();
-        log('QUEUE: >> ' + user + ' >> joined');
+        log('[Q] [?+] ' + user);
         return true;
     }
 }
