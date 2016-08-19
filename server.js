@@ -336,7 +336,7 @@ function parse(channel, sid, from, input) {
             //Set their HBCheck to true for another 30 seconds
             if (pList.has(from)) {
                 hbCheck.set(from, true);
-                log('[H] >> drop');
+                log('[H] >> ' + from);
                 reply(channel + "-hb", "hb");
             }
             break;
