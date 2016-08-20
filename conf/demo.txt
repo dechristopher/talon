@@ -1,2 +1,5 @@
-C:\KIWI\kq1
-C:\KIWI\kq2
+C:\KIWI\kq1\demos
+C:\KIWI\kq2\demos
+C:\KIWI\kq3\demos
+C:\KIWI\kq4\demos
+C:\KIWI\kq5\demos

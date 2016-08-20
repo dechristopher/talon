@@ -27,7 +27,7 @@ const fs = require('fs');
 const os = require("os");
 
 //The TALON version
-var version = "0.7";
+var version = "0.8";
 
 //declare redis auth code
 const auth = "KIWICLIENTREDISPASSWORDTHATISWAYTOOLONGTOGUESSBUTSTILLFEASIBLETOGETBYDECRYPTINGOURCLIENTSOKUDOSTOYOUIFYOUDIDLOLJKPLEASETELLUSTHISISSCARY";
