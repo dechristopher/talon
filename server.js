@@ -555,6 +555,16 @@ function parseServerAPIResponse(response) {
     }
 }
 
+//Sends out most recent announcement every 45 seconds
+var getAnnouncement = cron.job("*/45 * * * * *", function() {
+    requestify.get('http://kiir.us/api.php/?cmd=ann&key=2F6E713BD4BA889A21166251DEDE9').then(response => sendAnnouncement(response));
+});
+
+function sendAnnouncement(announcement){
+    bcast("a~" + announcement);
+
+}
+
 //Fill the servers[] array with lines from
 //a given text file
 function populateServers(file, list) {
@@ -620,5 +630,6 @@ inm.subscribe("talon");
 parseQueue.start();
 parseServers.start();
 parseHeartbeats.start();
+getAnnouncement.start();
 
 //Profit :>
