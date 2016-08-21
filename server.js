@@ -185,7 +185,7 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
             //Concatenate the built API call with the required properties to make the full call
             var apiCall = "https://kiir.us/api.php/?key=2F6E713BD4BA889A21166251DEDE9&cmd=q&rcon=q&ip=" + server + call;
             //Log it...
-            log("[Q]->> Built API call: " + apiCall);
+            log("[Q] [POP] Built API call: " + apiCall);
 
             //Send the API request
             requestify.get(apiCall).then(function(response) {
@@ -193,16 +193,16 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
                 //If the call succeeds
                 if (pass != "failed") {
                     //Log everything
-                    log('[Q]->> Server spawn COMPLETE >> ' + server + ' : ' + pass);
+                    log('[Q] [POP] Server spawn SUCCESS >> ' + server + ' : ' + pass);
                     //Pop the queue for all selected players
                     for (var k = 0; k < selected.length; k++) {
-                        log('POP >>' + selected[k].channel);
+                        log('[Q] [POP] >> ' + selected[k].channel + selected[k].nm);
                         reply(selected[k].channel, "p~" + server + "~" + pass);
                     }
                 //Else if the call fails
                 } else {
                     //Call 911
-                    log('[Q]->> Server spawn FAILED >> ' + server);
+                    log('[Q] [POP] Server spawn FAILED >> ' + server);
                 }
             });
 
@@ -306,7 +306,7 @@ function parse(channel, sid, from, input) {
             //Then set their playerID and add them to HBC
             pList.set(p.nm, p);
             hbCheck.set(p.nm, true);
-            log("PLYR: --> " + p.nm + ":[" + p.channel + " - " + p.sid + "] created.");
+            log("[LOGIN] " + p.nm + ":[" + p.channel + " - " + p.sid + "]");
             break;
 
         //user logs out
@@ -527,7 +527,7 @@ function parseServerAPIResponse(response) {
             console.log('[S] [-] > ' + ip);
         }
         //Online or freshly spawned check
-        if (hostname === "KIWI::OFF" && players === "1" && !onlServers.contains(ip) && hostname !== "KIWI :: LIVE") {
+        if (hostname === "KIWI::OFF" && players === "1" && !onlServers.contains(ip) && hostname !== "KIWI::LIVE") {
             onlServers.add(ip);
             console.log('[S] [+] > ' + ip);
         }
