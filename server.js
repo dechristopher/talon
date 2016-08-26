@@ -1,16 +1,16 @@
-/**
- * Created by Andrew DeChristopher <drew@kiir.us> on 4/22/2016.
- */
-//
-//TODO Roll over the Player class to the user factory
-//
-// GOODLUCK
-// TRIFORCE
-//    ▲
-//   ▲ ▲
-// PRAY FOR
-// NO CRASH
-//
+/*
+Created by Andrew DeChristopher <drew@kiir.us> on 4/22/2016.
+
+TODO Roll over the Player class to the user factory
+
+GOODLUCK
+TRIFORCE
+   ▲
+  ▲ ▲
+PRAY FOR
+NO CRASH
+*/
+
 //import libraries
 const redis = require("redis");
 const moment = require("moment");
@@ -309,7 +309,7 @@ function parse(channel, sid, from, input) {
             log("[LOGIN] " + p.nm + ":[" + p.channel + " - " + p.sid + "]");
             break;
 
-        //user logs out
+        //User logs out
         case "lo":
             //Rape && pillage their user object
             if (pList.has(from)) {
