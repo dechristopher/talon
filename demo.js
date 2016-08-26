@@ -94,7 +94,7 @@ function deleteDemo(code, filename) {
 }
 
 function sendFileToDemoCDN(filename) {
-    exec("sshpass -p \"@@DJDROPIRISH&!#@@KIIRUS&!#@@NIRVANA&!#@@\" rsync " + filename + " root@kiir.us:/var/www/cdn/demos/" + getDemoName(filename), puts);
+    exec("sshpass -p \"@@DJDROPIRISH&!#@@KIIRUS&!#@@\" rsync " + filename + " root@demo.kiir.us:/var/www/demo/" + getDemoName(filename), puts);
 }
 
 function demoExistsOnCDN (Url, callback, filename) {
