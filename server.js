@@ -590,7 +590,7 @@ function populateServers(file, list) {
             totS = servers.size();
             console.log('FILLED:', list);
         } else {
-            log('FILE:', file, 'DOES NOT EXIST! HALTING');
+            log('SERVERS FILE DOES NOT EXIST! HALTING');
             process.exit();
         }
     });
