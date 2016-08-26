@@ -29,14 +29,19 @@ const os = require("os");
 //The TALON version
 var version = "0.9.0";
 
+//development mode variable
+var dev = false;
+
+//redis server address
+var backend = "kiir.us";
+
 //Boolean to display all server IPs
 //every parseServer tick
 const displayServers = false;
 
-//Declare queue and server variables
+//Declare queue variables
 var currQ = 0;
 var currS = 0;
-var totS = servers.size();
 
 //Set the default queue size
 const qSize = 10;
