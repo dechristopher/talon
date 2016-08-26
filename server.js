@@ -60,37 +60,41 @@ var hbChance = new HashMap();
 var servers = new ArrayList();
 var onlServers = new ArrayList();
 
-//declare redis auth code
-const auth = "KIWICLIENTREDISPASSWORDTHATISWAYTOOLONGTOGUESSBUTSTILLFEASIBLETOGETBYDECRYPTINGOURCLIENTSOKUDOSTOYOUIFYOUDIDLOLJKPLEASETELLUSTHISISSCARY";
-
-//Placeholder variable for redis connection
-var inm;
+//Total number of servers
+totS = servers.size();
 
 //Populate server pool and connect to REDIS
-if (pprocess.argv.length > 2) {
-    if (process.argv[2] == "-dev") {
-        populateServers("conf/us-e-servers.txt", servers);
-        inm = redis.createClient(6379, "kiir.us");
+if (process.argv.length > 2) {
+    if (process.argv[2] == "dev") {
+        log("~D E V E L O P M E N T    M O D E ~");
+        populateServers("conf/dev-servers.txt", servers);
+        backend = "beak.tech";
+        dev = true;
     } else {
-        populateServers("conf/dev.txt", servers);
-        inm = redis.createClient(6379, "beak.tech");
+        populateServers("conf/us-e-servers.txt", servers);
     }
 } else {
     populateServers("conf/us-e-servers.txt", servers);
 }
 
-//authenticate with redis
-inm.auth(auth);
+//declare redis auth code
+const auth = "KIWICLIENTREDISPASSWORDTHATISWAYTOOLONGTOGUESSBUTSTILLFEASIBLETOGETBYDECRYPTINGOURCLIENTSOKUDOSTOYOUIFYOUDIDLOLJKPLEASETELLUSTHISISSCARY";
+
+//Placeholder variable for redis connection
+var inm = redis.createClient(6379, backend);
+
+//Auth with redis
+if (dev == false) { inm.auth(auth); }
 
 //Begin...
-log("\n" +
-    "   ___       ___       ___       ___       ___   \n" +
-    "  /\  \     /\  \     /\__\     /\  \     /\__\  \n" +
-    "  \:\  \   /::\  \   /:/  /    /::\  \   /:| _|_ \n" +
-    "  /::\__\ /::\:\__\ /:/__/    /:/\:\__\ /::|/\__\\n" +
-    " /:/\/__/ \/\::/  / \:\  \    \:\/:/  / \/|::/  /\n" +
-    " \/__/      /:/  /   \:\__\    \::/  /    |:/  / \n" +
-    "            \/__/     \/__/     \/__/     \/__/  \n" +
+console.log("\n" +
+    "   ___       ___       ___       ___       ___    \n" +
+    "  /\  \     /\  \     /\__\     /\  \     /\__\   \n" +
+    "  \:\  \   /::\  \   /:/  /    /::\  \   /:| _|_  \n" +
+    "  /::\__\ /::\:\__\ /:/__/    /:/\:\__\ /::|/\__\ \n" +
+    " /:/\/__/ \/\::/  / \:\  \    \:\/:/  / \/|::/  / \n" +
+    " \/__/      /:/  /   \:\__\    \::/  /    |:/  /  \n" +
+    "            \/__/     \/__/     \/__/     \/__/   \n" +
     " Copyright 2016 Kiirus Technologies Inc."
 );
 log("~ TALON v" + version);
@@ -470,16 +474,16 @@ function parse(channel, sid, from, input) {
 
 //Send a single message to one user or channel
 function reply(to, msg) {
-    var pub = redis.createClient(6379, "kiir.us");
-    pub.auth(auth);
+    var pub = redis.createClient(6379, backend);
+    if(!dev) { pub.auth(auth); }
     pub.publish(to, msg);
     pub.quit();
 }
 
 //Broadcast to all users and channels
 function bcast(msg) {
-    var pub = redis.createClient(6379, "kiir.us");
-    pub.auth(auth);
+    var pub = redis.createClient(6379, backend);
+    if(!dev) { pub.auth(auth); }
 
     var players = pList.values();
 
@@ -493,8 +497,8 @@ function bcast(msg) {
 
 //Broadcast excluding a single user or channel.
 function bcastex(msg, ex) {
-    var pub = redis.createClient(6379, "kiir.us");
-    pub.auth(auth);
+    var pub = redis.createClient(6379, backend);
+    if(!dev) { pub.auth(auth); }
 
     var players = pList.values();
 
