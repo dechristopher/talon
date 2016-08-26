@@ -27,21 +27,7 @@ const fs = require('fs');
 const os = require("os");
 
 //The TALON version
-var version = "0.8";
-
-//declare redis auth code
-const auth = "KIWICLIENTREDISPASSWORDTHATISWAYTOOLONGTOGUESSBUTSTILLFEASIBLETOGETBYDECRYPTINGOURCLIENTSOKUDOSTOYOUIFYOUDIDLOLJKPLEASETELLUSTHISISSCARY";
-
-//set up redis connection with backend redis message broker
-var inm = redis.createClient(6379, "kiir.us");
-//authenticate with redis
-inm.auth(auth);
-
-//Set up and pupolate server lists
-var servers = new ArrayList();
-var onlServers = new ArrayList();
-//servers.add("beak.tech");
-populateServers("conf/na-e.txt", servers);
+var version = "0.9.0";
 
 //Boolean to display all server IPs
 //every parseServer tick
@@ -65,15 +51,41 @@ var qList = new HashMap();
 var hbCheck = new HashMap();
 var hbChance = new HashMap();
 
+//Set up the server lists
+var servers = new ArrayList();
+var onlServers = new ArrayList();
+
+//declare redis auth code
+const auth = "KIWICLIENTREDISPASSWORDTHATISWAYTOOLONGTOGUESSBUTSTILLFEASIBLETOGETBYDECRYPTINGOURCLIENTSOKUDOSTOYOUIFYOUDIDLOLJKPLEASETELLUSTHISISSCARY";
+
+//Placeholder variable for redis connection
+var inm;
+
+//Populate server pool and connect to REDIS
+if (pprocess.argv.length > 2) {
+    if (process.argv[2] == "-dev") {
+        populateServers("conf/us-e-servers.txt", servers);
+        inm = redis.createClient(6379, "kiir.us");
+    } else {
+        populateServers("conf/dev.txt", servers);
+        inm = redis.createClient(6379, "beak.tech");
+    }
+} else {
+    populateServers("conf/us-e-servers.txt", servers);
+}
+
+//authenticate with redis
+inm.auth(auth);
 
 //Begin...
 log("\n" +
-    " ████████╗ █████╗ ██╗      ██████╗ ███╗   ██╗\n" +
-    " ╚══██╔══╝██╔══██╗██║     ██╔═══██╗████╗  ██║\n" +
-    "    ██║   ███████║██║     ██║   ██║██╔██╗ ██║\n" +
-    "    ██║   ██╔══██║██║     ██║   ██║██║╚██╗██║\n" +
-    "    ██║   ██║  ██║███████╗╚██████╔╝██║ ╚████║\n" +
-    "    ╚═╝   ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═══╝\n" +
+    "   ___       ___       ___       ___       ___   \n" +
+    "  /\  \     /\  \     /\__\     /\  \     /\__\  \n" +
+    "  \:\  \   /::\  \   /:/  /    /::\  \   /:| _|_ \n" +
+    "  /::\__\ /::\:\__\ /:/__/    /:/\:\__\ /::|/\__\\n" +
+    " /:/\/__/ \/\::/  / \:\  \    \:\/:/  / \/|::/  /\n" +
+    " \/__/      /:/  /   \:\__\    \::/  /    |:/  / \n" +
+    "            \/__/     \/__/     \/__/     \/__/  \n" +
     " Copyright 2016 Kiirus Technologies Inc."
 );
 log("~ TALON v" + version);
