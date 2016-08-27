@@ -84,7 +84,7 @@ const auth = "KIWICLIENTREDISPASSWORDTHATISWAYTOOLONGTOGUESSBUTSTILLFEASIBLETOGE
 var inm = redis.createClient(6379, backend);
 
 //Auth with redis
-if (dev == false) {
+if (dev === false) {
     inm.auth(auth);
 }
 
