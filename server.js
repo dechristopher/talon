@@ -14,7 +14,7 @@ NO CRASH
 //import libraries
 const redis = require("redis");
 const moment = require("moment");
-const Player = require('./modules/Player');
+const player = require('./modules/player');
 const user = require('./modules/user');
 const ArrayList = require("arraylist");
 const HashMap = require("hashmap");
@@ -112,7 +112,7 @@ log("~ TALON v" + version);
 
 //Subscribe local talon redis client to global message queue
 inm.on("subscribe", function(channel, count) {
-    pList.set("talon", new Player("talon", "", "this"));
+    pList.set("talon", new player("talon", "", "this"));
     log("~ Listening: " + channel + os.EOL);
 });
 
@@ -327,7 +327,7 @@ function parse(channel, sid, from, input) {
         //User logs in
         case "li":
             //Create player object
-            var p = new Player(from, sid, channel);
+            var p = new player(from, sid, channel);
             //log out all other instances of player
             if (pList.has(p.nm)) {
                 pList.remove(p.nm);
