@@ -681,15 +681,15 @@ var port = 3000;
     console.log('[ERR] Redis: ' + err);
 });*/
 
-server.listen(port, function () {
+server.listen(port, function() {
     console.log('[TP] talonPanel μSrvc started.');
-	console.log('[TP] Express server started.');
+    console.log('[TP] Express server started.');
     /*db.select(1, function () {
         console.log('[SYS] Connected to database');
     });*/
 });
 
-app.get('/', function (req, res, next) {
+app.get('/', function(req, res, next) {
     try {
         res.send("IT WORKS!");
         console.log('[TP] GET /');
