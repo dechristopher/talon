@@ -94,7 +94,7 @@ function deleteDemo(code, filename) {
 }
 
 function sendFileToDemoCDN(filename) {
-    exec("sshpass -p \"@@DJDROPIRISH&!#@@KIIRUS&!#@@\" rsync " + filename + " root@demo.kiir.us:/var/www/demo/" + getDemoName(filename), puts);
+    //exec("sshpass -p \"@@DJDROPIRISH&!#@@KIIRUS&!#@@\" rsync " + filename + " root@demo.kiir.us:/var/www/demo/" + getDemoName(filename), puts);
 }
 
 function demoExistsOnCDN (Url, callback, filename) {
@@ -160,8 +160,8 @@ var checkToDelete = cron.job("*/5 * * * * *", function(){
     if(delList.count() > 0){
         log('Checking for uploaded demos.');
         delList.forEach(function(value, key){
-            log('CHECKING FOR: https://cdn.kiir.us/demos/' + getDemoName(key));
-            demoExistsOnCDN('https://cdn.kiir.us/demos/' + getDemoName(key), deleteDemo, key);
+            log('CHECKING FOR: http://demo.kiir.us/demos/' + getDemoName(key));
+            demoExistsOnCDN('http://demo.kiir.us/demos/' + getDemoName(key), deleteDemo, key);
         });
     }
 });

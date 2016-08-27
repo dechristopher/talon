@@ -7,7 +7,9 @@
   "scripts": {
     "test": "./node_modules/jshint/bin/jshint server.js",
     "start": "node server.js",
-    "dev": "node server.js dev"
+    "dev": "node server.js dev",
+    "demo-client": "node modules/demo-client.js",
+    "demo-server": "node modules/demo-server.js"
   },
   "author": "dechristophera",
   "license": "ISC",
