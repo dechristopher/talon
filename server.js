@@ -207,8 +207,8 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
 
             //Concatenate the built API call with the required properties to make the full call
             var apiCall = "https://kiir.us/api.php/?key=2F6E713BD4BA889A21166251DEDE9&cmd=q&rcon=q&ip=" + server + call;
-            //Log it...
-            log("[Q] [POP] Built API call: " + apiCall);
+            //Log it ... or not
+            //log("[Q] [POP] Built API call: " + apiCall);
 
             //Send the API request
             requestify.get(apiCall).then(function(response) {
@@ -216,16 +216,18 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
                 //If the call succeeds
                 if (pass != "failed") {
                     //Log everything
-                    log('[Q] [POP] Server spawn SUCCESS >> ' + server + ' : ' + pass);
+                    var now = datetime.create().format('m-d-y H:M:S');
+                    log('[Q] [POP] Match created @ ' + now);
+                    log('[Q] [POP] [S] >> ' + server + ' : ' + pass);
                     //Pop the queue for all selected players
                     for (var k = 0; k < selected.length; k++) {
-                        log('[Q] [POP] >> ' + selected[k].channel + selected[k].nm);
+                        log('[Q] [POP] [P] >> ' + selected[k].channel + ' - ' + selected[k].steamid + ' - ' + selected[k].nm);
                         reply(selected[k].channel, "p~" + server + "~" + pass);
                     }
                     //Else if the call fails
                 } else {
                     //Call 911
-                    log('[Q] [POP] Server spawn FAILED >> ' + server);
+                    log('[Q] [POP] [S] FAILED >> ' + server);
                 }
             });
 
