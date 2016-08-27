@@ -27,7 +27,7 @@ const fs = require('fs');
 const os = require("os");
 
 //talonPanel libraries
-const express = require('express')
+const express = require('express');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
