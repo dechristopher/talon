@@ -4,16 +4,16 @@
 This repository contains the talon backend (server.js) and a few supporting services (modules/ & demo/) outlined below to facilitate the smooth operation of the KIWI PUG Platform. Unit testing coming soon to a theater near you!
 
 ####Production####
-Run `git clone (thisrepo) talon && cd talon && npm install && npm start`
+Run: `git clone (thisrepo) talon && cd talon && npm install && npm start`
 
 ####Development####
-Run `git clone (thisrepo) talon && cd talon && npm install && npm run dev`
+Run: `git clone (thisrepo) talon && cd talon && npm install && npm run dev`
 
 ####Demo CDN manager (server)####
-Run `git clone (thisrepo) talon && cd talon && npm install && npm run demo-server`
+Run: `git clone (thisrepo) talon && cd talon && npm install && npm run demo-server`
 
 ####Demo Client (client)####
-Run `git clone (thisrepo) talon && cd talon && npm install && npm run demo-client`
+Run: `git clone (thisrepo) talon && cd talon && npm install && npm run demo-client`
 
 ---
 
