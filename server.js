@@ -671,4 +671,31 @@ parseServers.start();
 parseHeartbeats.start();
 getAnnouncement.start();
 
+
+//BEGIN talonPanel shite
+var port = 3000;
+
+//app.use(express.static('px'));
+
+/*db.on("error", function (err) {
+    console.log('[ERR] Redis: ' + err);
+});*/
+
+server.listen(port, function () {
+    console.log('[TP] talonPanel μSrvc started.');
+	console.log('[TP] Express server started.');
+    /*db.select(1, function () {
+        console.log('[SYS] Connected to database');
+    });*/
+});
+
+app.get('/', function (req, res, next) {
+    try {
+        res.send("IT WORKS!");
+        console.log('[TP] GET /');
+    } catch (e) {
+        next(e);
+    }
+});
+
 //Profit :>
