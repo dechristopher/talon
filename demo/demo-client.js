@@ -30,7 +30,7 @@ function log(message) {
 }
 
 //Check if string contains another
-function contains (a, b) {
+function contains(a, b) {
     return S(a).contains(b);
 }
 
@@ -57,13 +57,13 @@ function getDemoName(filename) {
 
 //Echos some bs on rsync
 function puts(error, stdout, stderr) {
-    if(stdout !== null) {
+    if (stdout !== null) {
         log(gutil.colors.green(stdout));
     }
-    if(stderr !== null) {
+    if (stderr !== null) {
         log(gutil.colors.red(stderr));
     }
-    if(error !== null) {
+    if (error !== null) {
         log(gutil.colors.red(error));
     }
 }
@@ -71,8 +71,8 @@ function puts(error, stdout, stderr) {
 //Deletes the demo from the local drive
 function deleteDemo(code, filename) {
     log('DELETE?: ' + code + " - " + filename);
-    if(code === true){
-        fs.exists(filename, function (exists) {
+    if (code === true) {
+        fs.exists(filename, function(exists) {
             if (exists) {
                 //Show in green
                 log(gutil.colors.green('DELETING LOCAL DEMO: ' + filename));
@@ -88,7 +88,7 @@ function deleteDemo(code, filename) {
                 dList.remove(filename);
             }
         });
-    }else{
+    } else {
         log(gutil.colors.red('Demo not found on server: 404'));
     }
 }
@@ -97,7 +97,7 @@ function sendFileToDemoCDN(filename) {
     //exec("sshpass -p \"@@DJDROPIRISH&!#@@KIIRUS&!#@@\" rsync " + filename + " root@demo.kiir.us:/var/www/demo/" + getDemoName(filename), puts);
 }
 
-function demoExistsOnCDN (Url, callback, filename) {
+function demoExistsOnCDN(Url, callback, filename) {
     var http = require('http'),
         url = require('url');
     var options = {
@@ -106,9 +106,9 @@ function demoExistsOnCDN (Url, callback, filename) {
         port: 80,
         path: url.parse(Url).pathname
     };
-    var req = http.request(options, function (r) {
+    var req = http.request(options, function(r) {
         log("GOT: " + r.statusCode);
-        callback( r.statusCode==200, filename );
+        callback(r.statusCode == 200, filename);
     });
     req.end();
 }
@@ -118,13 +118,13 @@ function demoExistsOnCDN (Url, callback, filename) {
 var checkForDemos = cron.job("*/20 * * * * *", function() {
     log(gutil.colors.green('Checking for demos...'));
     //Find new demo files
-    recursive("C:\\KIWI", /*[ignoreFunc],*/ function (err, files) {
-        if(err !== null) {
+    recursive("C:\\KIWI", /*[ignoreFunc],*/ function(err, files) {
+        if (err !== null) {
             log(gutil.colors.red('Errors: ' + err));
         }
         // Files is an array of filenames
-        for(var i = 0; i < files.length; i++){
-            if(!dList.has(files[i]) && contains(files[i], ".dem")){
+        for (var i = 0; i < files.length; i++) {
+            if (!dList.has(files[i]) && contains(files[i], ".dem")) {
                 log(gutil.colors.blue('ADDED: ' + files[i]));
                 dList.set(files[i], getFilesizeInBytes(files[i]));
                 checkdList.set(files[i], 0);
@@ -133,20 +133,20 @@ var checkForDemos = cron.job("*/20 * * * * *", function() {
     });
 });
 
-var checkDemoGrowth = cron.job("*/20 * * * * *", function(){
-    dList.forEach(function(value, key){
+var checkDemoGrowth = cron.job("*/20 * * * * *", function() {
+    dList.forEach(function(value, key) {
         //Check for demo file growth
         var currSize = getFilesizeInBytes(key);
-        if(currSize > value){
+        if (currSize > value) {
             log("STILL RECORDING: " + getDemoName(key));
             dList.set(key, currSize);
             checkdList.set(key, 0);
-        }else{
+        } else {
             //Add 1 to value of 20 second intervals file size has been the same
             log("UNCHANGED: " + getDemoName(key));
             checkdList.set(key, checkdList.get(key) + 1);
             //If a minute has passed with no growth
-            if(checkdList.get(key) == 3){
+            if (checkdList.get(key) == 3) {
                 log("UPLOADING: " + getDemoName(key));
                 //Upload demo to CDN, check for success, and delete demo from local server
                 delList.set(key, 0);
@@ -156,10 +156,10 @@ var checkDemoGrowth = cron.job("*/20 * * * * *", function(){
     });
 });
 
-var checkToDelete = cron.job("*/5 * * * * *", function(){
-    if(delList.count() > 0){
+var checkToDelete = cron.job("*/5 * * * * *", function() {
+    if (delList.count() > 0) {
         log('Checking for uploaded demos.');
-        delList.forEach(function(value, key){
+        delList.forEach(function(value, key) {
             log('CHECKING FOR: http://demo.kiir.us/demos/' + getDemoName(key));
             demoExistsOnCDN('http://demo.kiir.us/demos/' + getDemoName(key), deleteDemo, key);
         });
