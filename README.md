@@ -2,15 +2,15 @@
 
 [![Build Status](https://travis-ci.com/dechristopher/talon.svg?token=Y3xVpkK5ssNWUcAWrYpW&branch=master)](https://travis-ci.com/dechristopher/talon)
 
-Talon consists of the backend node microservices that make up the talon system for the KIWI PUG network.
+This repository contains the talon backend
 
-server.js - The RPC communication app that talks to the clients, processes heartbeats, manages the queues, and
-facilitates messaging and friends. 
+server.js - TALON, the backend of the KIWI PUG Platform, manages client-server communication, processes heartbeats, manages the queues, and
+facilitates messaging, friends, and lobbies.
 
-mon.js    - A lightweight node app that can be used from anywhere to monitor basic backend throughput in messages per second and minute.
+demo/demo-client.js - Checks the CS:GO game server directories for demo files and uploads them to the demo CDN if they stop growing in file size.
+demo/demo-server.js - Runs on the demo CDN and accepts all file transfers from the demo-client.js instances on the game servers.
 
-demo.js   - Checks the CS:GO server directories for demo files and uploads them to the CDN if they stop growing in file size.
+modules/mon.js - A lightweight node app that can be used from anywhere to monitor basic backend throughput in messages per second and minute.
+modules/user.js - A generator function to create user objects and such.
 
-user.js   - A generator function to create user objects.
-
-test.js   - Unit tests for various things that need unit tests.
+test/test.js - Unit tests for various things that need unit tests.
