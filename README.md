@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.com/dechristopher/talon.svg?token=Y3xVpkK5ssNWUcAWrYpW&branch=master)](https://travis-ci.com/dechristopher/talon)
 
 # talon
-This repository contains the talon backend
+This repository contains the talon backend (server.js) and a few supporting services (modules/ & demo/) outlined below to facilitate the smooth operation of the KIWI PUG Platform. Unit testing coming soon to a theater near you!
 
 ---
 
