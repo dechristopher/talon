@@ -135,11 +135,7 @@ inm.on("message", function(channel, message) {
 
 //Unused debug BS
 var showOnline = cron.job("*/15 * * * * *", function() {
-    var i = 0;
-    pList.forEach(function() {
-        i++;
-    });
-    log('[P] (Q: ' + currQ + ' / O: ' + i + ')');
+    log('[P] (Q: ' + currQ + ' / O: ' + pList.count() + ')');
 });
 
 //Checks player and server statuses every 10 seconds and
