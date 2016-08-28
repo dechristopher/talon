@@ -657,6 +657,27 @@ function contains(a, b) {
     return S(a).contains(b);
 }
 
+function isPlayerInQueue(name){
+    return qList.has(name);
+}
+
+function webPrintStar(bool){
+    if(bool){
+        return '*';
+    }else{
+        return '';
+    }
+}
+
+function webPlayerList(){
+    var list = "";
+    pList.forEach(function(value, key){
+        var queued = isPlayerInQueue(key);
+        list = list + "<br />- " + key + webPrintStar(queued) + "<br />";
+    });
+    return list;
+}
+
 //Starts message listener
 inm.subscribe("talon");
 
