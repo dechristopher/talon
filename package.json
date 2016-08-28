@@ -1,6 +1,6 @@
 {
   "name": "talon",
-  "version": "0.9.0",
+  "version": "1.0.8",
   "description": "The server backend for the KIWI PUG system.",
   "repository": "https://github.com/dechristopher/talon.git",
   "main": "server.js",
@@ -8,8 +8,9 @@
     "test": "./node_modules/jshint/bin/jshint server.js",
     "start": "node server.js",
     "dev": "node server.js dev",
-    "demo-client": "node modules/demo-client.js",
-    "demo-server": "node modules/demo-server.js"
+    "demo-client": "node demo/demo-client.js",
+    "demo-server": "node demo/demo-server.js",
+    "mon": "node modules/mon.js"
   },
   "author": "dechristophera",
   "license": "ISC",
