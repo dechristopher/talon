@@ -707,8 +707,13 @@ server.listen(port, function() {
 
 app.get('/', function(req, res, next) {
     try {
-        res.send("Total servers: " + totS.toString());
-        console.log('[TP] GET /');
+        res.send( "<h2>TALONpanel</h2>" + "<hr><br />"
+            + "Total servers: " + totS.toString() + " - [" + servers.toString() + "]" + "<br />"
+            + "Total players: " + pList.count() + "<br />"
+            + "Players =>" + webPlayerList().toString() + "<br />"
+            + "<hr>" + "TALON v" + version
+        );
+        log('[TP] [' + req.ip + '] GET /');
     } catch (e) {
         next(e);
     }
