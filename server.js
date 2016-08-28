@@ -33,7 +33,7 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
 //The TALON version
-var version = "0.9.0";
+var version = "1.0.8";
 
 //development mode variable
 var dev = false;
@@ -691,7 +691,7 @@ server.listen(port, function() {
 
 app.get('/', function(req, res, next) {
     try {
-        res.send("IT WORKS!");
+        res.send("Total servers: " + totS.toString());
         console.log('[TP] GET /');
     } catch (e) {
         next(e);
