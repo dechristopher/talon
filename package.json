@@ -1,7 +1,7 @@
 {
   "name": "talon",
   "version": "1.0.8",
-  "description": "The server backend for the KIWI PUG system.",
+  "description": "The server backend and supporting services for the KIWI PUG system.",
   "repository": "https://github.com/dechristopher/talon.git",
   "main": "server.js",
   "scripts": {
