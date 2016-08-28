@@ -707,11 +707,38 @@ server.listen(port, function() {
 
 app.get('/', function(req, res, next) {
     try {
-        res.send( "<h2>TALONpanel</h2>" + "<hr><br />"
+        res.send(
+            "<!DOCTYPE html><html><head>"
+            + "<title>TalonPanel :: Dashboard</title>"
+            + "</head><body>"
+            + "<h2>TALONpanel</h2>" + "<hr><br />"
             + "Total servers: " + totS.toString() + " - [" + servers.toString() + "]" + "<br />"
             + "Total players: " + pList.count() + "<br />"
             + "Players =>" + webPlayerList().toString() + "<br />"
             + "<hr>" + "TALON v" + version
+            + " (<a href='http:\/\/" + backend + ":" + port + "/refresh'>Auto refresh</a>)"
+            + "</body></html>"
+        );
+        log('[TP] [' + req.ip + '] GET /');
+    } catch (e) {
+        next(e);
+    }
+});
+
+app.get('/refresh', function(req, res, next) {
+    try {
+        res.send(
+            "<!DOCTYPE html><html><head>"
+            + "<title>TalonPanel :: Dashboard</title>"
+            + "<meta http-equiv='Refresh' content='5'>"
+            + "</head><body>"
+            + "<h2>TALONpanel</h2>" + "<hr><br />"
+            + "Total servers: " + totS.toString() + " - [" + servers.toString() + "]" + "<br />"
+            + "Total players: " + pList.count() + "<br />"
+            + "Players =>" + webPlayerList().toString() + "<br />"
+            + "<hr>" + "TALON v" + version
+            + " (<a href='http:\/\/" + backend + ":" + port + "'>No refresh</a>)"
+            + "</body></html>"
         );
         log('[TP] [' + req.ip + '] GET /');
     } catch (e) {
