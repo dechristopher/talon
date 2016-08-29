@@ -718,7 +718,7 @@ app.get('/', function(req, res, next) {
             + "Total players: " + pList.count() + "<br />"
             + "Players =>" + webPlayerList().toString() + "<br />"
             + "<hr>" + "TALON v" + version
-            + " (<a href='http:\/\/" + backend + ":" + port + "/refresh'>Auto refresh</a>)"
+            + " (<a href='http:\/\/panel." + backend + ":" + port + "/refresh'>Auto refresh</a>)"
             + "</body></html>"
         );
         log('[TP] [' + req.ip + '] GET /');
