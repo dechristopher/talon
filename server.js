@@ -67,7 +67,7 @@ var servers = new ArrayList();
 var onlServers = new ArrayList();
 
 //Total number of servers
-totS = servers.size();
+var totS = servers.size();
 
 //Populate server pool and connect to REDIS
 if (process.argv.length > 2) {
