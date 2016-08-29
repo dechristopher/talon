@@ -25,10 +25,10 @@ const requestify = require('requestify');
 const S = require('string');
 
 //talonPanel libraries
-const app = express();
 const express = require('express');
-const io = require('socket.io')(server);
+const app = express();
 const server = require('http').Server(app);
+const io = require('socket.io')(server);
 
 //custom libraries
 const player = require('./modules/player');
