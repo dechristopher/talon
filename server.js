@@ -12,25 +12,27 @@ NO CRASH
 */
 
 //core libraries
-const redis = require("redis");
-const moment = require("moment");
-const player = require('./modules/player');
-const user = require('./modules/user');
 const ArrayList = require("arraylist");
-const HashMap = require("hashmap");
-const requestify = require('requestify');
 const cron = require('cron');
 const datetime = require('node-datetime');
-const S = require('string');
-const lupus = require('lupus');
 const fs = require('fs');
+const HashMap = require("hashmap");
+const lupus = require('lupus');
+const moment = require("moment");
 const os = require("os");
+const redis = require("redis");
+const requestify = require('requestify');
+const S = require('string');
 
 //talonPanel libraries
-const express = require('express');
 const app = express();
-const server = require('http').Server(app);
+const express = require('express');
 const io = require('socket.io')(server);
+const server = require('http').Server(app);
+
+//custom libraries
+const player = require('./modules/player');
+const user = require('./modules/user');
 
 //The TALON version
 const version = "1.0.8";
