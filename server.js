@@ -11,7 +11,7 @@ PRAY FOR
 NO CRASH
 */
 
-//import libraries
+//core libraries
 const redis = require("redis");
 const moment = require("moment");
 const player = require('./modules/player');
@@ -33,17 +33,17 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
 //The TALON version
-var version = "1.0.8";
+const version = "1.0.8";
+
+//Boolean to display all server IPs
+//every parseServer tick
+const displayServers = false;
 
 //development mode variable
 var dev = false;
 
 //redis server address
 var backend = "kiir.us";
-
-//Boolean to display all server IPs
-//every parseServer tick
-const displayServers = false;
 
 //Declare queue variables
 var currQ = 0;
