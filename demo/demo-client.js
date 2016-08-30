@@ -1,3 +1,6 @@
+/*
+Created by Andrew DeChristopher <drew@kiir.us> on 8/30/2016.
+ */
 const io = require('socket.io-client');
 const socket = io.connect('http://localhost:8080', {reconnect: true});
 const fs = require('fs');
