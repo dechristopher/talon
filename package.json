@@ -17,6 +17,7 @@
   "dependencies": {
     "arraylist": "^0.1.0",
     "cron": "^1.1.0",
+    "delivery": "0.0.4",
     "express": "^4.14.0",
     "gulp-util": "^3.0.7",
     "hashmap": "^2.0.5",
