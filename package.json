@@ -17,7 +17,6 @@
   "dependencies": {
     "arraylist": "^0.1.0",
     "cron": "^1.1.0",
-    "delivery": "0.0.4",
     "express": "^4.14.0",
     "gulp-util": "^3.0.7",
     "hashmap": "^2.0.5",
@@ -30,6 +29,7 @@
     "requestify": "^0.1.17",
     "socket.io": "^1.4.8",
     "socket.io-client": "^1.4.8",
+    "socket.io-stream": "^0.9.0",
     "string": "^3.3.1",
     "stringpad": "^1.0.0",
     "sys": "0.0.1"
