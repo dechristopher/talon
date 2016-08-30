@@ -1,4 +1,4 @@
-const user = (u, s, c) => {
+const user = (u, s, c, h) => {
     var username = Object.undefined;
     if (u !== "") {
         username = u;
@@ -11,6 +11,10 @@ const user = (u, s, c) => {
     if (c !== "") {
         channel = c;
     }
+    var hwid = Object.undefined;
+    if (c !== "") {
+        hwid = h;
+    }
     return {
         getUsername: () => {
             return username;
@@ -20,6 +24,9 @@ const user = (u, s, c) => {
         },
         getChannel: () => {
             return channel;
+        },
+        getHWID: () => {
+            return hwid;
         }
     };
 };
