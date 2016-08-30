@@ -1,12 +1,13 @@
-var io = require('socket.io');
-var dl = require('delivery');
+const io = require('socket.io').listen(8080);
+const dl = require('delivery');
+const fs = require('fs');
 
 io.sockets.on('connection', function(socket){
-
+  console.log('client connected');
   var delivery = dl.listen(socket);
-  delivery.on('receive.success',function(file){
 
-    fs.writeFile(file.name, file.buffer, function(err){
+  delivery.on('receive.success',function(file){
+    fs.writeFile("test/" + file.name, file.buffer, function(err){
       if(err){
         console.log('File could not be saved: ' + err);
       }else{
@@ -14,4 +15,5 @@ io.sockets.on('connection', function(socket){
       };
     });
   });
+
 });
