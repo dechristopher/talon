@@ -716,7 +716,7 @@ app.get('/', function(req, res, next) {
             + "<h2>TALONpanel</h2>" + "<hr><br />"
             + "Total servers: " + totS.toString() + " - [" + servers.toString() + "]" + "<br />"
             + "Total players: " + pList.count() + "<br />"
-            + "Players =>" + webPlayerList().toString() + "<br />"
+            + "Players:<br />" + webPlayerList().toString() + "<br />"
             + "<hr>" + "TALON v" + version
             + " (<a href='http:\/\/panel." + backend + ":" + port + "/refresh'>Auto refresh</a>)"
             + "</body></html>"
@@ -737,7 +737,7 @@ app.get('/refresh', function(req, res, next) {
             "<h2>TALONpanel</h2>" + "<hr><br />" +
             "Total servers: " + totS.toString() + " - [" + servers.toString() + "]" + "<br />" +
             "Total players: " + pList.count() + "<br />" +
-            "Players =>" + webPlayerList().toString() + "<br />" +
+            "Players:<br />" + webPlayerList().toString() + "<br />" +
             "<hr>" + "TALON v" + version +
             " (<a href='http:\/\/panel." + backend + ":" + port + "'>No refresh</a>)" +
             "</body></html>"
