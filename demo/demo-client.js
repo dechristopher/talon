@@ -1,23 +1,14 @@
 const io = require('socket.io-client');
 const socket = io.connect('http://localhost:8080', {reconnect: true});
-const dl = require('delivery');
+const fs = require('fs');
+const ss = require('socket.io-stream');
 
 socket.on( 'connect', function() {
   console.log( "Sockets connected" );
 
-  delivery = dl.listen( socket );
-  delivery.connect();
+  var stream = ss.createStream();
+  var filename = 'kiwi-25.dem';
 
-  delivery.on('delivery.connect',function(delivery){
-    console.log('connected to server..')
-    delivery.send({
-      name: 'README.md',
-      path : '../README.md'
-    });
-
-    delivery.on('send.success',function(file){
-      console.log('File sent successfully!');
-    });
-  });
-
+  ss(socket).emit('foo', stream, {name: filename});
+  fs.createReadStream(filename).pipe(stream);
 });
