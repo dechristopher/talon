@@ -35,7 +35,7 @@ const player = require('./modules/player');
 const user = require('./modules/user');
 
 //The TALON version
-const version = "1.0.8";
+const version = "1.1.2";
 
 //Boolean to display all server IPs
 //every parseServer tick
