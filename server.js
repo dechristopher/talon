@@ -631,7 +631,7 @@ function random(min, max) {
 function log(message) {
     var time = datetime.create().format('m-d-y H:M:S');
     var today = datetime.create().format('m-d-y');
-    var file = "logs/" + today + ".txt";
+    var file = "logs/" + today + ".log";
     console.log('[' + time + '] ' + message);
 
     fs.exists(file, function(exists) {
