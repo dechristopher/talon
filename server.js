@@ -711,9 +711,9 @@ app.get('/', function(req, res, next) {
     try {
         res.send(
             "<!DOCTYPE html><html><head>"
-            + "<title>TalonPanel :: Dashboard</title>"
+            + "<title>talonPanel :: Dash</title>"
             + "</head><body>"
-            + "<h2>TALONpanel</h2>" + "<hr><br />"
+            + "<h2>talonPanel</h2>" + "<hr><br />"
             + "Total servers: " + totS.toString() + " - [" + servers.toString() + "]" + "<br />"
             + "Total players: " + pList.count() + "<br />"
             + "Players:<br />" + webPlayerList().toString() + "<br />"
@@ -731,10 +731,10 @@ app.get('/refresh', function(req, res, next) {
     try {
         res.send(
             "<!DOCTYPE html><html><head>" +
-            "<title>TalonPanel :: Dashboard</title>" +
+            "<title>talonPanel :: Dash</title>" +
             "<meta http-equiv='Refresh' content='5'>" +
             "</head><body>" +
-            "<h2>TALONpanel</h2>" + "<hr><br />" +
+            "<h2>talonPanel</h2>" + "<hr><br />" +
             "Total servers: " + totS.toString() + " - [" + servers.toString() + "]" + "<br />" +
             "Total players: " + pList.count() + "<br />" +
             "Players:<br />" + webPlayerList().toString() + "<br />" +
