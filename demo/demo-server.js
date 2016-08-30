@@ -11,22 +11,4 @@ io.sockets.on('connection', function(socket){
     var filename = path.basename(data.name);
     stream.pipe(fs.createWriteStream('test/' + filename));
   });
-
-  /*var delivery = dl.listen(socket);
-
-  delivery.on('receive.success',function(file){
-    fs.writeFile("test/" + file.name, file.buffer, function(err){
-      if(err){
-        console.log('File could not be saved: ' + err);
-      }else{
-        console.log('File ' + file.name + " saved");
-      };
-    });
-  });*/
-
 });
-
-/*process.on('uncaughtException', function (err) {
-  console.log('Oh shit recover somehow');
-});
-*/
