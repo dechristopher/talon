@@ -20,7 +20,6 @@
     "express": "^4.14.0",
     "gulp-util": "^3.0.7",
     "hashmap": "^2.0.5",
-    "jshint": "^2.9.2",
     "lupus": "0.0.1",
     "moment": "^2.13.0",
     "node-datetime": "^1.0.0",
