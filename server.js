@@ -792,6 +792,7 @@ app.get('/kick/:username/refresh', function(req, res, next) {
         var username = req.params.username;
         pList.remove(username);
         res.redirect('http://' + req.hostname + ':' + port + '/refresh');
+        log('[TP] [' + req.ip + '] GET /kick/' + username);
         log('[TP] [KICK] ' + username);
     } catch (e) {
         next(e);
