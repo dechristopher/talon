@@ -769,7 +769,7 @@ app.get('/refresh', function(req, res, next) {
             " (<a href='http:\/\/" + req.hostname + ":" + port + "'>No refresh</a>)" +
             "</body></html>"
         );
-        log('[TP] [' + req.ip + '] GET /');
+        log('[TP] [' + req.ip + '] GET /refresh');
     } catch (e) {
         next(e);
     }
