@@ -12,6 +12,6 @@ io.sockets.on('connection', function(socket) {
     ss(socket).on('foo', function(stream, data) {
         var filename = path.basename(data.name).split('\\');
         var filename = filename[filename.length - 1];
-        stream.pipe(fs.createWriteStream('www/demo/' + filename));
+        stream.pipe(fs.createWriteStream('/var/www/demo/' + filename));
     });
 });
