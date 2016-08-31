@@ -762,11 +762,11 @@ app.get('/refresh', function(req, res, next) {
             "<meta http-equiv='Refresh' content='5'>" +
             "</head><body>" +
             "<h2>talonPanel</h2>" + "<hr><br />" +
-            "Total servers: " + totS.toString() + " - [" + servers.toString() + "]" + "<br />" +
+            "Total servers: " + totS.toString() + "<br />" + webServerList().toString() + "<br />" +
             "Total players: " + pList.count() + "<br />" +
-            "Players:<br />" + webPlayerList().toString() + "<br />" +
+            "<h3>Players:</h3>" + webPlayerList(true).toString() + "<br />" +
             "<hr>" + "TALON v" + version +
-            " (<a href='http:\/\/panel." + backend + ":" + port + "'>No refresh</a>)" +
+            " (<a href='http:\/\/" + req.hostname + ":" + port + "'>No refresh</a>)" +
             "</body></html>"
         );
         log('[TP] [' + req.ip + '] GET /');
