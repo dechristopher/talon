@@ -21,7 +21,7 @@ socket.on('connect', function() {
     console.log("Sockets connected");
 
     var stream = ss.createStream();
-    var filename = 'C:\\KIWI\\kp1\\demos\\kiwi-3.dem';
+    var filename = 'C:\\KIWI\\kp1\\csgo\\demos\\kiwi-3.dem';
 
     ss(socket).emit('foo', stream, {
         name: filename
