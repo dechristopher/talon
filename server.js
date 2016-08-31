@@ -680,9 +680,9 @@ function webPlayerList(refresh) {
     pList.forEach(function(value, key) {
         var queued = isPlayerInQueue(key);
         if (refresh) {
-            list = list + "<b>-</b> " + key + webPrintStar(queued) + " ( " + value.sid + " || " + value.channel + " ) [<a href='/kick/" + key + "/refresh'>KICK</a>]<br />";
+            list = list + "<b>-</b> " + webPrintStar(queued) + key + " ( " + value.sid + " || " + value.channel + " ) [<a href='/kick/" + key + "/refresh'>KICK</a>]<br />";
         } else {
-            list = list + "<b>-</b> " + key + webPrintStar(queued) + " ( " + value.sid + " || " + value.channel + " ) [<a href='/kick/" + key + "'>KICK</a>]<br />";
+            list = list + "<b>-</b> " + webPrintStar(queued) + key + " ( " + value.sid + " || " + value.channel + " ) [<a href='/kick/" + key + "'>KICK</a>]<br />";
         }
     });
     return list;
