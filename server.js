@@ -737,16 +737,16 @@ server.listen(port, function() {
 app.get('/', function(req, res, next) {
     try {
         res.send(
-            "<!DOCTYPE html><html><head>"
-            + "<title>talonPanel :: Dash</title>"
-            + "</head><body>"
-            + "<h2>talonPanel</h2>" + "<hr><br />"
-            + "Total servers: " + totS.toString() + " - [" + servers.toString() + "]" + "<br />"
-            + "Total players: " + pList.count() + "<br />"
-            + "Players:<br />" + webPlayerList().toString() + "<br />"
-            + "<hr>" + "TALON v" + version
-            + " (<a href='http:\/\/panel." + backend + ":" + port + "/refresh'>Auto refresh</a>)"
-            + "</body></html>"
+            "<!DOCTYPE html><html><head>" +
+            "<title>talonPanel :: Dash</title>" +
+            "</head><body>" +
+            "<h2>talonPanel</h2>" + "<hr><br />" +
+            "Total servers: " + totS.toString() + "<br />" + webServerList().toString() + "<br />" +
+            "Total players: " + pList.count() + "<br />" +
+            "<h3>Players:</h3>" + webPlayerList(false).toString() + "<br />" +
+            "<hr>" + "TALON v" + version +
+            " (<a href='http:\/\/" + req.hostname + ":" + port + "/refresh'>Auto refresh</a>)" +
+            "</body></html>"
         );
         log('[TP] [' + req.ip + '] GET /');
     } catch (e) {
