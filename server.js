@@ -114,7 +114,7 @@ log("~ TALON v" + version);
 
 //Subscribe local talon redis client to global message queue
 inm.on("subscribe", function(channel, count) {
-    //pList.set("talon", new player("talon", "", "this"));
+    pList.set("talon", new player("talon", "STEAM_0:0:1", "thisisachannelid"));
     log("~ Listening: " + channel + os.EOL);
 });
 
