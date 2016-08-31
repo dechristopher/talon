@@ -6,11 +6,11 @@ const ss = require('socket.io-stream');
 const fs = require('fs');
 var path = require('path');
 
-io.sockets.on('connection', function(socket){
-  console.log('client connected');
+io.sockets.on('connection', function(socket) {
+    console.log('client connected');
 
-  ss(socket).on('foo', function(stream, data) {
-    var filename = path.basename(data.name);
-    stream.pipe(fs.createWriteStream('test/' + filename));
-  });
+    ss(socket).on('foo', function(stream, data) {
+        var filename = path.basename(data.name);
+        stream.pipe(fs.createWriteStream('test/' + filename));
+    });
 });
