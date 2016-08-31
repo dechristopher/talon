@@ -775,4 +775,26 @@ app.get('/refresh', function(req, res, next) {
     }
 });
 
+app.get('/kick/:username', function(req, res, next) {
+    try {
+        var username = req.params.username;
+        pList.remove(username);
+        res.redirect('http://' + req.hostname + ':' + port);
+        log('[TP] [KICK] ' + username);
+    } catch (e) {
+        next(e);
+    }
+});
+
+app.get('/kick/:username/refresh', function(req, res, next) {
+    try {
+        var username = req.params.username;
+        pList.remove(username);
+        res.redirect('http://' + req.hostname + ':' + port + '/refresh');
+        log('[TP] [KICK] ' + username);
+    } catch (e) {
+        next(e);
+    }
+});
+
 //Profit :>
