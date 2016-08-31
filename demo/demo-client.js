@@ -2,7 +2,7 @@
 Created by Andrew DeChristopher <drew@kiir.us> on 8/30/2016.
  */
 const io = require('socket.io-client');
-const socket = io.connect('http://localhost:27000', {
+const socket = io.connect('http://demo.kiir.us:27000', {
     reconnect: true
 });
 const ss = require('socket.io-stream');
