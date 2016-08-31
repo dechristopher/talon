@@ -659,10 +659,12 @@ function contains(a, b) {
     return S(a).contains(b);
 }
 
+//Bool if player is currently in queue
 function isPlayerInQueue(name){
     return qList.has(name);
 }
 
+//Prints an asterisk if bool
 function webPrintStar(bool){
     if(bool){
         return '*';
