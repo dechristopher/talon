@@ -1,5 +1,5 @@
-C:\KIWI\kq1\demos
-C:\KIWI\kq2\demos
-C:\KIWI\kq3\demos
-C:\KIWI\kq4\demos
-C:\KIWI\kq5\demos
+C:\KIWI\kp1\demos
+C:\KIWI\kp2\demos
+C:\KIWI\kp3\demos
+C:\KIWI\kp4\demos
+C:\KIWI\kp5\demos
