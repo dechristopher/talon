@@ -15,7 +15,7 @@ const requestify = require('requestify');
 
 var demoFolders = new ArrayList();
 
-populateServers("conf/demo.txt", demoFolders);
+populateDemoFolders("conf/demo.txt", demoFolders);
 
 socket.on('connect', function() {
     console.log("Sockets connected");
