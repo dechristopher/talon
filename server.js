@@ -660,25 +660,50 @@ function contains(a, b) {
 }
 
 //Bool if player is currently in queue
-function isPlayerInQueue(name){
+function isPlayerInQueue(name) {
     return qList.has(name);
 }
 
 //Prints an asterisk if bool
-function webPrintStar(bool){
-    if(bool){
+function webPrintStar(bool) {
+    if (bool) {
         return '*';
-    }else{
+    } else {
         return '';
     }
 }
 
-function webPlayerList(){
+//returns a formatted list of '-username [steamid] = [channel] = [hwid]'
+//bool refresh to add /refresh in the end of the kick URL
+function webPlayerList(refresh) {
     var list = "";
-    pList.forEach(function(value, key){
+    pList.forEach(function(value, key) {
         var queued = isPlayerInQueue(key);
-        list = list + "- " + key + webPrintStar(queued) + "<br />";
+        if (refresh) {
+            list = list + "<b>-</b> " + key + webPrintStar(queued) + " ( " + value.sid + " || " + value.channel + " ) [<a href='/kick/" + key + "/refresh'>KICK</a>]<br />";
+        } else {
+            list = list + "<b>-</b> " + key + webPrintStar(queued) + " ( " + value.sid + " || " + value.channel + " ) [<a href='/kick/" + key + "'>KICK</a>]<br />";
+        }
     });
+    return list;
+}
+
+function webServerList() {
+    var list = '[ ';
+    var br = 0;
+    for (var i = 0; i < servers.size(); i++) {
+        list += servers.get(i);
+        if (i != (servers.size() - 1)) {
+            list += ', ';
+        } else {
+            list += ' ]<br />';
+        }
+        br++;
+        if (br == 3) {
+            list += '<br />';
+            br = 0;
+        }
+    }
     return list;
 }
 
