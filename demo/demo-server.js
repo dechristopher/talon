@@ -8,8 +8,14 @@ var path = require('path');
 
 io.sockets.on('connection', function(socket) {
     console.log('client connected');
-
-    ss(socket).on('foo', function(stream, data) {
+    //For uploads from US-NJ1
+    ss(socket).on('us-nj1', function(stream, data) {
+        var filename = path.basename(data.name).split('\\');
+        var filename = filename[filename.length - 1];
+        stream.pipe(fs.createWriteStream('/var/www/demo/' + filename));
+    });
+    //For uploads from US-NJ2
+    ss(socket).on('us-nj2', function(stream, data) {
         var filename = path.basename(data.name).split('\\');
         var filename = filename[filename.length - 1];
         stream.pipe(fs.createWriteStream('/var/www/demo/' + filename));
