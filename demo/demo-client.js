@@ -23,7 +23,7 @@ socket.on('connect', function() {
     var stream = ss.createStream();
     var filename = 'C:\\KIWI\\kp1\\csgo\\demos\\kiwi-43.dem';
 
-    ss(socket).emit('foo', stream, {
+    ss(socket).emit('us-nj1', stream, {
         name: filename
     });
     fs.createReadStream(filename).pipe(stream);
