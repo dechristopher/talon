@@ -34,15 +34,17 @@ socket.on('connect', function() {
 function populateDemoFolders(file, list) {
     fs.exists(file, function(exists) {
         if (exists) {
-            fs.readFileSync(file).toString().split('\n').forEach(function(line) {
+            //fs.readFileSync(file).toString().split('\n').forEach(function(line) {
+            fs.readFileSync(file).toString().split(os.EOL).forEach(function(line) {
                 if (line !== '') {
                     list.add(line);
                 }
             });
-            console.log('FILLED:', list);
+            console.log(DEMO + 'FILLED:', list);
         } else {
-            log('DEMO LOCATION FILE DOES NOT EXIST! HALTING');
-            process.exit();
+            throw new Error(ERROR_NO_FOLDER + file);
+            //log('DEMO LOCATION FILE DOES NOT EXIST! HALTING');
+            //process.exit();
         }
     });
 }
