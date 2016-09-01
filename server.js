@@ -81,6 +81,8 @@ var hbChance = new HashMap();
 var servers = new ArrayList();
 var onlServers = new ArrayList();
 
+var firewallIPs = new ArrayList();
+
 //Total number of servers
 var totS = servers.size();
 
