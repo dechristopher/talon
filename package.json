@@ -24,6 +24,7 @@
     "lupus": "0.0.1",
     "moment": "^2.13.0",
     "node-datetime": "^1.0.0",
+    "queue": "^4.0.0",
     "recursive-readdir": "^2.0.0",
     "redis": "^2.6.0-1",
     "requestify": "^0.1.17",
