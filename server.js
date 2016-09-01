@@ -299,7 +299,7 @@ var parseHeartbeats = cron.job("*/30 * * * * *", function() {
                     hbCheck.remove(key);
                     hbChance.remove(key);
                     pList.remove(key);
-                    log('[HBC] REM >> ' + key);
+                    log(HBC + 'REM >> ' + key);
                 } else {
                     hbChance.set(key, chance - 1);
                     i++;
@@ -316,7 +316,7 @@ var parseHeartbeats = cron.job("*/30 * * * * *", function() {
             hbCheck.set(key, false);
         }
     });
-    log('[HBC] >> OFFENDERS: ' + i);
+    log(HBC + '>> OFFENDERS: ' + i);
 });
 
 //Parse client commands
