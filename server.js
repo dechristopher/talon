@@ -669,6 +669,11 @@ function contains(a, b) {
     return S(a).contains(b);
 }
 
+//return steamid64 representation of normal steamid
+function sidTo64(steamid){
+    return sidconvert.convertTo64(steamid);
+}
+
 //Bool if player is currently in queue
 function isPlayerInQueue(name) {
     return qList.has(name);
