@@ -89,3 +89,19 @@ function populateDemoFolders(file, list) {
         }
     });
 }
+
+function upload(filename){
+    if(go){
+        var stream = ss.createStream();
+        var filename = 'C:\\KIWI\\kp1\\csgo\\demos\\kiwi-43.dem';
+
+        ss(socket).emit(sock, stream, {
+            name: filename
+        });
+
+        fs.createReadStream(filename).pipe(stream, finished(filename));
+
+    }else{
+
+    }
+}
