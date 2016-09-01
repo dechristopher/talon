@@ -628,31 +628,6 @@ function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-//Wraps console.log for printing date in front
-function log(message) {
-    var time = datetime.create().format('m-d-y H:M:S');
-    var today = datetime.create().format('m-d-y');
-    var file = "logs/" + today + ".log";
-    console.log('[' + time + '] ' + message);
-
-    fs.exists(file, function(exists) {
-        if (exists) {
-            fs.appendFile(file, '[' + time + '] ' + message + os.EOL, function(err) {
-                if (err) {
-                    return console.log("FILE LOGGING FAILED AT " + time + "for MSG: " + message);
-                }
-            });
-        } else {
-            fs.writeFile(file, 'BEGIN TALON LOG FOR ' + today + os.EOL, function(err) {
-                if (err) {
-                    return console.log("FILE CREATION FAILED AT " + time + "for FILE: " + file);
-                }
-                console.log('Created new log >> ' + file);
-            });
-        }
-    });
-}
-
 //Wrapper for indexOf
 //Checks if a string A contains an
 //instance of string B
