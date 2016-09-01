@@ -13,7 +13,7 @@ Run: `git clone (thisrepo) talon && cd talon && npm install && npm run dev`
 Run: `git clone (thisrepo) talon && cd talon && npm install && npm run demo-server`
 
 ####Demo Client (client)####
-Run: `git clone (thisrepo) talon && cd talon && npm install && npm run demo-client`
+Run: `git clone (thisrepo) talon && cd talon && npm install && npm run demo-client-(region)`
 
 ---
 
