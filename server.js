@@ -751,7 +751,7 @@ server.listen(port, function() {
 //Checks if request IP is allowed to access talonPanel before
 //continuing to render talonPanel.
 app.use(function (req, res, next) {
-    var ip = req.connection.remoteAddress.toString().substring(7, req.connection.remoteAddress.toString().length);;
+    var ip = req.connection.remoteAddress.toString().substring(7, req.connection.remoteAddress.toString().length);
     if(firewall(ip)){
         next();
     }else{
