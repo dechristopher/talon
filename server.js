@@ -595,7 +595,7 @@ function parseServerAPIResponse(response) {
 
         if (onlServers.contains(ip)) {
             onlServers.remove(ip);
-            console.log(SRV + '[-] > ' + ip);z
+            console.log(SRV + '[-] > ' + ip);
         }
     }
 
