@@ -407,11 +407,11 @@ function parse(channel, sid, from, input) {
             if (procQueue(from, channel)) {
                 bcast("q~" + currQ + "~" + currS);
                 bcast("j~" + currQ + "~" + from);
-                log('[Q] [+] ' + from);
+                log(Q + '[+] ' + from);
             } else {
                 bcast("q~" + currQ + "~" + currS);
                 bcast("l~" + currQ + "~" + from);
-                log('[Q] [-] ' + from);
+                log(Q + '[-] ' + from);
             }
             break;
 
@@ -547,13 +547,13 @@ function procQueue(user, channel) {
     if (qList.has(user)) {
         qList.remove(user);
         currQ = qList.count();
-        log('[Q] [?-] ' + user);
+        log(Q + '[?-] ' + user);
         return false;
         //User joins queue
     } else {
         qList.set(user, pList.get(user));
         currQ = qList.count();
-        log('[Q] [?+] ' + user);
+        log(Q + '[?+] ' + user);
         return true;
     }
 }
