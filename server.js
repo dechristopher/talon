@@ -716,6 +716,8 @@ app.get('/', function(req, res, next) {
         res.send(
             "<!DOCTYPE html><html><head>" +
             "<title>talonPanel :: Dash</title>" +
+            "<link href='https://fonts.googleapis.com/css?family=Exo+2' rel='stylesheet'>" +
+            "<style>body{ -webkit-font-smoothing: antialiased; font-family: 'Exo 2', sans-serif;}</style>" +
             "</head><body>" +
             "<h2>talonPanel</h2>" + "<hr><br />" +
             "Total servers: " + totS.toString() + "<br />" + webServerList().toString() + "<br />" +
