@@ -7,7 +7,7 @@ function log(message, logname) {
     var time = datetime.create().format('m-d-y H:M:S');
     var today = datetime.create().format('m-d-y');
     var file = "";
-    if(logname === null){
+    if(logname === undefined){
         file = "logs/" + today + ".log";
     }else{
         file = "logs/" + today + logname + ".log";
