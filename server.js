@@ -33,6 +33,7 @@ const io = require('socket.io')(server);
 //custom libraries
 const player = require('./modules/player');
 const user = require('./modules/user');
+const log = require('./modules/log');
 
 //The TALON version
 const version = "1.1.2";
