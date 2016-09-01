@@ -286,6 +286,7 @@ var parseHeartbeats = cron.job("*/30 * * * * *", function() {
                 if (chance === 0) {
                     hbCheck.remove(key);
                     hbChance.remove(key);
+                    pList.remove(key);
                     log('[HBC] REM >> ' + key);
                 } else {
                     hbChance.set(key, chance - 1);
