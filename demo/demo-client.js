@@ -1,12 +1,17 @@
 /*
 Created by Andrew DeChristopher <drew@kiir.us> on 8/30/2016.
  */
+
+//socket libraries
 const io = require('socket.io-client');
+const ss = require('socket.io-stream');
 const socket = io.connect('http://demo.kiir.us:27000', {
     reconnect: true
 });
-const ss = require('socket.io-stream');
+
+//core libraries
 const cron = require('cron');
+const datetime = require('node-datetime');
 const fs = require('fs');
 const ArrayList = require("arraylist");
 const lupus = require('lupus');
