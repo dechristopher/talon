@@ -351,7 +351,7 @@ function parse(channel, sid, from, input) {
             //Then set their playerID and add them to HBC
             pList.set(p.nm, p);
             hbCheck.set(p.nm, true);
-            log("[LOGIN] " + p.nm + ":[" + p.channel + " - " + p.sid + "]");
+            log(LOGIN + p.nm + ":[" + p.channel + " - " + p.sid + "]");
             break;
 
             //User logs out
