@@ -739,7 +739,7 @@ app.get('/', function(req, res, next) {
             " (<a href='http:\/\/" + req.hostname + ":" + port + "/refresh'>Auto refresh</a>)" +
             "</body></html>"
         );
-        log('[TP] [' + req.ip + '] GET /');
+        log(TP + '[' + req.ip + '] GET /');
     } catch (e) {
         next(e);
     }
@@ -762,7 +762,7 @@ app.get('/refresh', function(req, res, next) {
             " (<a href='http:\/\/" + req.hostname + ":" + port + "'>No refresh</a>)" +
             "</body></html>"
         );
-        log('[TP] [' + req.ip + '] GET /refresh');
+        log(TP + '[' + req.ip + '] GET /refresh');
     } catch (e) {
         next(e);
     }
@@ -773,8 +773,8 @@ app.get('/kick/:username', function(req, res, next) {
         var username = req.params.username;
         pList.remove(username);
         res.redirect('http://' + req.hostname + ':' + port);
-        log('[TP] [' + req.ip + '] GET /kick/' + username);
-        log('[TP] [KICK] ' + username);
+        log(TP + '[' + req.ip + '] GET /kick/' + username);
+        log(TP + '[KICK] ' + username);
     } catch (e) {
         next(e);
     }
@@ -785,8 +785,8 @@ app.get('/kick/:username/refresh', function(req, res, next) {
         var username = req.params.username;
         pList.remove(username);
         res.redirect('http://' + req.hostname + ':' + port + '/refresh');
-        log('[TP] [' + req.ip + '] GET /kick/' + username);
-        log('[TP] [KICK] ' + username);
+        log(TP + '[' + req.ip + '] GET /kick/' + username);
+        log(TP + '[KICK] ' + username);
     } catch (e) {
         next(e);
     }
