@@ -237,27 +237,27 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
                 if (pass != "failed") {
                     //Log everything
                     var now = datetime.create().format('m-d-y H:M:S');
-                    log('[Q] [POP] Match created @ ' + now);
-                    log('[Q] [POP] [S] >> ' + server + ' : ' + pass);
+                    log(Q + '[POP] Match created @ ' + now);
+                    log(Q + '[POP] [S] >> ' + server + ' : ' + pass);
                     //Pop the queue for all selected players
                     for (var k = 0; k < selected.length; k++) {
-                        log('[Q] [POP] [P] >> ' + selected[k].channel + ' - ' + selected[k].steamid + ' - ' + selected[k].nm);
+                        log(Q + '[POP] [P] >> ' + selected[k].channel + ' - ' + selected[k].steamid + ' - ' + selected[k].nm);
                         reply(selected[k].channel, "p~" + server + "~" + pass);
                     }
                     //Else if the call fails
                 } else {
                     //Call 911
-                    log('[Q] [POP] [S] FAILED >> ' + server);
+                    log(Q + '[POP] [S] FAILED >> ' + server);
                 }
             });
 
             //Update currQ to reflect queue pop
             currQ = qList.count();
         } else {
-            log('[Q]{S: ' + currS + '/' + totS + '}(P: ' + currQ + '/' + qSize + ')->> Waiting for players');
+            log(Q + '{S: ' + currS + '/' + totS + '}(P: ' + currQ + '/' + qSize + ')->> Waiting for players');
         }
     } else {
-        log('[Q]{S: ' + currS + '/' + totS + '}(P: ' + currQ + '/' + qSize + ')->> No servers');
+        log(Q + '{S: ' + currS + '/' + totS + '}(P: ' + currQ + '/' + qSize + ')->> No servers');
     }
 });
 
