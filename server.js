@@ -735,12 +735,29 @@ var port = 3000;
     log('[ERR] Redis: ' + err);
 });*/
 
+//Checks if given IP is in allowed talonPanel IPs.
+function firewall(ip){
+    return firewallIPs.contains(ip);
+}
+
 server.listen(port, function() {
-    log('[TP] talonPanel μSrvc started.');
-    log('[TP] Express server started.');
+    log(TP + 'talonPanel μSrvc started.');
+    log(TP + 'Express server started.');
     /*db.select(1, function () {
         console.log('[SYS] Connected to database');
     });*/
+});
+
+//Checks if request IP is allowed to access talonPanel before
+//continuing to render talonPanel.
+app.use(function (req, res, next) {
+    var ip = req.connection.remoteAddress.toString().substring(7, req.connection.remoteAddress.toString().length);;
+    if(firewall(ip)){
+        next();
+    }else{
+        log(TP + 'DISALLOWED: ' + ip);
+        res.end();
+    }
 });
 
 app.get('/', function(req, res, next) {
