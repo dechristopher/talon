@@ -23,6 +23,7 @@ const os = require("os");
 const redis = require("redis");
 const requestify = require('requestify');
 const S = require('string');
+const gutil = require('gulp-util');
 
 //talonPanel libraries
 const express = require('express');
