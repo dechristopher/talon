@@ -631,8 +631,24 @@ function populateServers(file, list) {
             totS = servers.size();
             console.log('FILLED:', list);
         } else {
-            log('SERVERS FILE DOES NOT EXIST! HALTING');
-            process.exit();
+            throw new Error(ERROR_NO_SERV_FILE + file);
+        }
+    });
+}
+
+//Fill the firewallIPs[] array with lines from
+//a given text file
+function populateFirewallIPs(file) {
+    fs.exists(file, function(exists) {
+        if (exists) {
+            fs.readFileSync(file).toString().split('\n').forEach(function(line) {
+                if (line !== '') {
+                    firewallIPs.add(line);
+                }
+            });
+            console.log('FIREWALL IPs:', firewallIPs);
+        } else {
+            throw new Error(ERROR_NO_FWIP_FILE + file);
         }
     });
 }
