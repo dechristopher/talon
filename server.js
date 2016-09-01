@@ -613,7 +613,7 @@ var getAnnouncement = cron.job("*/45 * * * * *", function() {
 
 function sendAnnouncement(announcement) {
     bcast("a~" + announcement);
-    log('[A] [SENT] ' + announcement);
+    log(ANNO + '[SENT] ' + announcement);
 }
 
 //Fill the servers[] array with lines from
