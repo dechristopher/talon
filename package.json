@@ -8,7 +8,8 @@
     "test": "./node_modules/jshint/bin/jshint server.js",
     "start": "node server.js",
     "dev": "node server.js dev",
-    "demo-client": "node demo/demo-client.js",
+    "demo-client-us-nj1": "node demo/demo-client.js us-nj1",
+    "demo-client-us-nj2": "node demo/demo-client.js us-nj2",
     "demo-server": "node demo/demo-server.js",
     "mon": "node modules/mon.js"
   },
