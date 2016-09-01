@@ -100,6 +100,8 @@ if (process.argv.length > 2) {
     populateServers("conf/us-e-servers.txt", servers);
 }
 
+populateFirewallIPs('conf/ips.txt');
+
 //declare redis auth code
 const auth = "KIWICLIENTREDISPASSWORDTHATISWAYTOOLONGTOGUESSBUTSTILLFEASIBLETOGETBYDECRYPTINGOURCLIENTSOKUDOSTOYOUIFYOUDIDLOLJKPLEASETELLUSTHISISSCARY";
 
