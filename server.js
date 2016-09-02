@@ -776,6 +776,7 @@ function firewall(ip){
     return firewallIPs.contains(ip);
 }
 
+//Log express server start
 server.listen(port, function() {
     log(TP + 'talonPanel μSrvc started.');
     log(TP + 'Express server started.');
