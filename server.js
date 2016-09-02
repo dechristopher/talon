@@ -796,20 +796,7 @@ app.use(function (req, res, next) {
 
 app.get('/', function(req, res, next) {
     try {
-        res.send(
-            "<!DOCTYPE html><html><head>" +
-            "<title>talonPanel :: Dash</title>" +
-            "<link href='https://fonts.googleapis.com/css?family=Exo+2' rel='stylesheet'>" +
-            "<style>body{ -webkit-font-smoothing: antialiased; font-family: 'Exo 2', sans-serif;}</style>" +
-            "</head><body>" +
-            "<h2>talonPanel</h2>" + "<hr><br />" +
-            "Total servers: " + totS.toString() + "<br />" + webServerList().toString() + "<br />" +
-            "Total players: " + pList.count() + "<br />" +
-            "<h3>Players:</h3>" + webPlayerList(false).toString() + "<br />" +
-            "<hr>" + "TALON v" + version +
-            " (<a href='http:\/\/" + req.hostname + ":" + port + "/refresh'>Auto refresh</a>)" +
-            "</body></html>"
-        );
+        res.send(renderPanel(false, req));
         log(TP + '[' + req.ip + '] GET /');
     } catch (e) {
         next(e);
@@ -818,21 +805,7 @@ app.get('/', function(req, res, next) {
 
 app.get('/refresh', function(req, res, next) {
     try {
-        res.send(
-            "<!DOCTYPE html><html><head>" +
-            "<title>talonPanel :: Dash</title>" +
-            "<meta http-equiv='Refresh' content='5'>" +
-            "<link href='https://fonts.googleapis.com/css?family=Exo+2' rel='stylesheet'>" +
-            "<style>body{ -webkit-font-smoothing: antialiased; font-family: 'Exo 2', sans-serif;}</style>" +
-            "</head><body>" +
-            "<h2>talonPanel</h2>" + "<hr><br />" +
-            "Total servers: " + totS.toString() + "<br />" + webServerList().toString() + "<br />" +
-            "Total players: " + pList.count() + "<br />" +
-            "<h3>Players:</h3>" + webPlayerList(true).toString() + "<br />" +
-            "<hr>" + "TALON v" + version +
-            " (<a href='http:\/\/" + req.hostname + ":" + port + "'>No refresh</a>)" +
-            "</body></html>"
-        );
+        res.send(renderPanel(true, req));
         log(TP + '[' + req.ip + '] GET /refresh');
     } catch (e) {
         next(e);
