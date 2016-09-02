@@ -726,6 +726,30 @@ function webServerList() {
     return list;
 }
 
+function renderPanel(refresh, req){
+    var panel = "<!DOCTYPE html><html><head>" +
+                "<title>talonPanel :: Dash</title>";
+                if(refresh){
+                    panel += "<meta http-equiv='Refresh' content='5'>";
+                }
+        panel +="<link href='https://fonts.googleapis.com/css?family=Exo+2' rel='stylesheet'>" +
+                "<style>body{ -webkit-font-smoothing: antialiased; font-family: 'Exo 2', sans-serif;}</style>" +
+                "</head><body>" +
+                "<h2>talonPanel</h2>" + "<hr><br />" +
+                "Total servers: " + totS.toString() + "<br />" + webServerList().toString() + "<br /><hr>" +
+                "Online players: " + pList.count() + "<br />" +
+                "Queued players: " + qList.count() + "<br /><hr>" +
+                "<h3>Players:</h3>" + webPlayerList(refresh).toString() + "<br />" +
+                "<hr>" + "TALON v" + version;
+                if(refresh){
+                    panel +=" (<a href='http:\/\/" + req.hostname + ":" + port + "'>No refresh</a>)";
+                }else{
+                    panel +=" (<a href='http:\/\/" + req.hostname + ":" + port + "/refresh'>Auto refresh</a>)";
+                }
+        panel +="</body></html>";
+    return panel;
+}
+
 //Starts message listener
 inm.subscribe("talon");
 
