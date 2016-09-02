@@ -752,6 +752,16 @@ function renderPanel(refresh, req){
     return panel;
 }
 
+//Disconnect player from backend and
+//remove from queue if necessary
+function webKickPlayer(username){
+    pList.remove(username);
+    if(isPlayerInQueue(username)){
+        qList.remove(username);
+    }
+    log(TP + '[KICK] ' + username);
+}
+
 //Starts message listener
 inm.subscribe("talon");
 
