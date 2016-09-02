@@ -707,6 +707,7 @@ function webPlayerList(refresh) {
     return list;
 }
 
+//Returns formatted list of servers
 function webServerList() {
     var list = '[ ';
     var br = 0;
