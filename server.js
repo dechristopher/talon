@@ -727,6 +727,7 @@ function webServerList() {
     return list;
 }
 
+//Put together panel pages based on requested type
 function renderPanel(refresh, req){
     var panel = "<!DOCTYPE html><html><head>" +
                 "<title>talonPanel :: Dash</title>";
