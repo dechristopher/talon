@@ -59,7 +59,7 @@ if (process.argv.length > 2) {
 socket.on('connect', function() {
     console.log(DEMO + "Connected to demo CDN.");
     go = true;
-    uppload();
+    upload();
 });
 
 socket.on('disconnect', function() {
