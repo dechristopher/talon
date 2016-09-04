@@ -93,7 +93,7 @@ function populateDemoFolders(file, list) {
 function upload(filename){
     if(go){
         var stream = ss.createStream();
-        var filename = 'C:\\KIWI\\kp1\\csgo\\demos\\kiwi-43.dem';
+        var filename = 'C:\\KIWI\\kp3\\csgo\\demos\\kiwi-26.dem';
 
         ss(socket).emit(sock, stream, {
             name: filename
