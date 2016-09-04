@@ -40,13 +40,13 @@ const log = require('./modules/log');
 //Define ERORS and other constants
 const ERROR_NO_FWIP_FILE = '[' + gutil.colors.red('ERROR') + '] Given ip file does not exist: ';
 const ERROR_NO_SERV_FILE = '[' + gutil.colors.red('ERROR') + '] Given servers file does not exist: ';
+const SRV = '[' + gutil.colors.cyan('S') + '] ';
 const TP = '[' + gutil.colors.blue('TP') + '] ';
 const Q = '[' + gutil.colors.green('Q') + '] ';
 const HB = '[' + gutil.colors.yellow('HB') + '] ';
 const HBC = '[' + gutil.colors.yellow('HBC') + '] ';
 const ANNO = '[' + gutil.colors.magenta('A') + '] ';
 const LOGIN = '[' + gutil.colors.green('LOGIN') + '] ';
-const SRV = '[' + gutil.colors.cyan('S') + '] ';
 
 //The TALON version
 const version = "1.1.2";
