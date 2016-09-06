@@ -1,11 +1,15 @@
 /*
 Created by Andrew DeChristopher <drew@kiir.us> on 8/30/2016.
  */
+
+
+//core libraries
 const io = require('socket.io').listen(27000);
 const ss = require('socket.io-stream');
 const fs = require('fs');
 const path = require('path');
 
+//custom libraries
 const log = require('../modules/log');
 
 log('[KIWI] Demo CDN Server', '-demo-server');
