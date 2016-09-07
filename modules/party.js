@@ -162,4 +162,7 @@ var testuser = user('testuser', 'STEAM_0:0:TESTING', 'TESTCHANNEL', 'OFI)*#BO*QB
 
 console.log(testuser.getUsername() + ' - ' + testuser.getSteamID() + ' - ' + testuser.getChannel() + ' - ' + testuser.getHWID());
 
-var party = createParty(testuser.getUsername());
+createParty(testuser.getUsername(), function(id){
+	console.log(SUCCESS + 'Created party: ' + id);
+	process.exit();
+});
