@@ -149,7 +149,7 @@ function partyExists(party){
 				return false;
 			}
 		}else{
-			throw new Error(ERROR_FAILED_EXISTS + party);
+			throw new Error(ERROR_FAILED_EXISTS + party + os.EOL + err);
 		}
 	});
 }
