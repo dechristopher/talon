@@ -31,17 +31,18 @@ const parties3 = 'parties:3';
 const parties4 = 'parties:4';
 const parties5 = 'parties:5';
 
-//Add test usernames in a set called testparty
-/*rcon.sadd(['testparty', 'drop', 'sparks', 'rogean',], function(err, reply){
-	console.log(reply);
-});*/
-
+/*
+	Generates unique party, adds user to it, and adds it to global and single member party sets.
+	RET: generated party ID "party:[7-digit alphanumeric id]"
+ */
 function createParty(username){
-	var id = 'party:' + rstr.generate(6);
+	var id = 'party:' + rstr.generate(7);
 	//Check if party with generated ID already exists
 	rcon.exists(id, function(err, reply){
 		if(err == undefined){
 			if(reply == 1){
+				//Somehow generated existing perty id, so recursively retry until success.
+				console.log('RETRYING');
 				return createParty(username);
 			}else{
 				//Add user to new party set
