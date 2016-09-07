@@ -42,7 +42,7 @@ const parties5 = 'parties:5';
 	'username' - string
 	RET: generated party ID "party:[7-digit alphanumeric id]"
  */
-function createParty(username){
+function createParty(username, callback){
 	var id = 'party:' + rstr.generate(7);
 	//Check if party with generated ID already exists
 	if(partyExists(id)){
@@ -66,33 +66,32 @@ function createParty(username){
 										if(reply == 1){
 											console.log(PARTY + id + ' added to parties:1.');
 											//Final checks to ensure user in party
-											if(isMemberOfParty(id, username)){
-												return id;
-											}else{
-												throw new Error(ERROR_FAILED_CREATE + username);
-											}
+											isMemberOfParty(id, username, function(tf){
+												if(tf){
+													callback(id);
+												}else{
+													throw new Error(ERROR_FAILED_CREATE + username + os.EOL + member);
+												}
+											});
 										}else{
 											throw new Erorr('Party already exists!? [2]');
 										}
 									}else{
-										console.log(err);
-										throw new Error(ERROR_FAILED_SADD + parties1);
+										throw new Error(ERROR_FAILED_SADD + parties1 + os.EOL + err);
 									}
 								});
 							}else{
 								throw new Erorr('Party already exists!? [1]');
 							}
 						}else{
-							console.log(err);
-							throw new Error(ERROR_FAILED_SADD + partiesG);
+							throw new Error(ERROR_FAILED_SADD + partiesG + os.EOL + err);
 						}
 					});
 				}else{
 					throw new Error('User already part of party!? [0]');
 				}
 			}else{
-				console.log(err);
-				throw new Error(ERROR_FAILED_SADD + id);
+				throw new Error(ERROR_FAILED_SADD + id + os.EOL + err);
 			}
 		});
 	}
