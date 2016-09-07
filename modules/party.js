@@ -7,6 +7,7 @@ const redis = require('redis');
 const HashMap = require("hashmap");
 const rstr = require('randomstring');
 const gutil = require('gulp-util');
+const os = require('os');
 
 //custom libraries
 const user = require('./user');
