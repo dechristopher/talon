@@ -104,16 +104,45 @@ function leaveParty(username){
 
 }
 
-function isMemberOfParty(username, party){
-	//rcon.smember
+/*
+	Checks whether or not a user exists in a given party
+	'party' - string (party:XXXXXXX)
+	'username' - string
+	RET: bool - is user in party
+ */
+function isMemberOfParty(party, username){
+	rcon.sismember([party, username], function(err, reply){
+		if(err == undefined){
+			if(reply == 1){
+				console.log(ISMEMBER + party + ' >> true');
+				return true;
+			}else{
+				console.log(ISMEMBER + party + ' >> false');
+				return false;
+			}
+		}else{
+			throw new Error(ERROR_FAILED_SISMEMBER + party);
+		}
+	});
 }
 
+/*
+	Checks whether or not a party already exists in the datastore
+	'party' - string (party:XXXXXXX)
+	RET: bool - party exists
+ */
 function partyExists(party){
 	rcon.exists(party, function(err, reply){
-		if(reply == 1){
-
+		if(err == undefined){
+			if(reply == 1){
+				console.log(EXISTS + party + ' >> true');
+				return true;
+			}else{
+				console.log(EXISTS + party + ' >> false');
+				return false;
+			}
 		}else{
-
+			throw new Error(ERROR_FAILED_EXISTS + party);
 		}
 	});
 }
