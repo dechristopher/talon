@@ -22,6 +22,7 @@ const ERROR_FAILED_EXISTS = '[' + gutil.colors.red('ERROR') + '] Failed to check
 const EXISTS = '[' + gutil.colors.cyan('EXISTS') + '] ';
 const ISMEMBER = '[' + gutil.colors.cyan('ISMEMBER') + '] ';
 const PARTY = '[' + gutil.colors.green('PARTY') + '] ';
+const SUCCESS = '[' + gutil.colors.green('SUCCESS') + '] ';
 
 //connect to redis
 var rcon = redis.createClient(6379, 'localhost');
