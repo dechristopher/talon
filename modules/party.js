@@ -37,63 +37,63 @@ const parties5 = 'parties:5';
 
 /*
 	Generates unique party, adds user to it, and adds it to global and single member party sets.
+	'username' - string
 	RET: generated party ID "party:[7-digit alphanumeric id]"
  */
 function createParty(username){
 	var id = 'party:' + rstr.generate(7);
 	//Check if party with generated ID already exists
-	rcon.exists(id, function(err, reply){
-		if(err == undefined){
-			if(reply == 1){
-				//Somehow generated existing perty id, so recursively retry until success.
-				console.log('RETRYING');
-				return createParty(username);
-			}else{
-				//Add user to new party set
-				rcon.sadd([id, username], function(err, reply){
-					if(err == undefined){
-						if(reply == 1){
-							console.log(PARTY + id + ' created. Added: ' + username + '. Adding to party sets.')
-							//Add new party to global parties set
-							rcon.sadd([partiesG, id], function(err, reply){
-								if(err == undefined){
-									if(reply == 1){
-										console.log(PARTY + id + ' added to global parties set.');
-										//Add new party to parties:1 set
-										rcon.sadd([parties1, id], function(err, reply){
-											if(err == undefined){
-												if(reply == 1){
-													console.log(PARTY + id + ' added to parties:1.');
-													return id;
-												}else{
-													throw new Erorr('Party already exists!? [2]');
-												}
+	if(partyExists(id)){
+		//Somehow generated existing party id, so recursively retry until success.
+		console.log('RETRYING');
+		return createParty(username);
+	}else{
+		//Add user to new party set
+		rcon.sadd([id, username], function(err, reply){
+			if(err == undefined){
+				if(reply == 1){
+					console.log(PARTY + id + ' created. Added: ' + username + '. Adding to party sets.')
+					//Add new party to global parties set
+					rcon.sadd([partiesG, id], function(err, reply){
+						if(err == undefined){
+							if(reply == 1){
+								console.log(PARTY + id + ' added to global parties set.');
+								//Add new party to parties:1 set
+								rcon.sadd([parties1, id], function(err, reply){
+									if(err == undefined){
+										if(reply == 1){
+											console.log(PARTY + id + ' added to parties:1.');
+											//Final checks to ensure user in party
+											if(isMemberOfParty(id, username)){
+												return id;
 											}else{
-												console.log(err);
-												throw new Error(ERROR_FAILED_SADD + parties1);
+												throw new Error(ERROR_FAILED_CREATE + username);
 											}
-										});
+										}else{
+											throw new Erorr('Party already exists!? [2]');
+										}
 									}else{
-										throw new Erorr('Party already exists!? [1]');
+										console.log(err);
+										throw new Error(ERROR_FAILED_SADD + parties1);
 									}
-								}else{
-									console.log(err);
-									throw new Error(ERROR_FAILED_SADD + partiesG);
-								}
-							});
+								});
+							}else{
+								throw new Erorr('Party already exists!? [1]');
+							}
 						}else{
-							throw new Error('User already part of party!');
+							console.log(err);
+							throw new Error(ERROR_FAILED_SADD + partiesG);
 						}
-					}else{
-						console.log(err);
-						throw new Error(ERROR_FAILED_SADD + id);
-					}
-				});
+					});
+				}else{
+					throw new Error('User already part of party!? [0]');
+				}
+			}else{
+				console.log(err);
+				throw new Error(ERROR_FAILED_SADD + id);
 			}
-		}else{
-			throw new Erorr(ERROR_FAILED_EXISTS + id)
-		}
-	});
+		});
+	}
 }
 
 function joinParty(username, party){
