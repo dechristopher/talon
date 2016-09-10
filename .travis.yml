@@ -4,4 +4,4 @@ node_js:
 before_install:
  - "npm install nodeunit -g"
 before_script:
- - "nodeunit"
+ - "./node_modules/jshint/bin/jshint server.js"
