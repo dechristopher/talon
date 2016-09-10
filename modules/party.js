@@ -42,59 +42,61 @@ const parties5 = 'parties:5';
 	'username' - string
 	RET: generated party ID "party:[7-digit alphanumeric id]"
  */
-function createParty(username, callback) {
+exports.createParty = function(username, rcon, callback) {
     var id = 'party:' + rstr.generate(7);
     //Check if party with generated ID already exists
-    if (partyExists(id)) {
-        //Somehow generated existing party id, so recursively retry until success.
-        console.log('RETRYING');
-        return createParty(username);
-    } else {
-        //Add user to new party set
-        rcon.sadd([id, username], function(err, reply) {
-            if (err == undefined) {
-                if (reply == 1) {
-                    console.log(PARTY + id + ' created. Added: ' + username + '. Adding to party sets.')
-                        //Add new party to global parties set
-                    rcon.sadd([partiesG, id], function(err, reply) {
-                        if (err == undefined) {
-                            if (reply == 1) {
-                                console.log(PARTY + id + ' added to global parties set.');
-                                //Add new party to parties:1 set
-                                rcon.sadd([parties1, id], function(err, reply) {
-                                    if (err == undefined) {
-                                        if (reply == 1) {
-                                            console.log(PARTY + id + ' added to parties:1.');
-                                            //Final checks to ensure user in party
-                                            isMemberOfParty(id, username, function(tf) {
-                                                if (tf) {
-                                                    callback(id);
-                                                } else {
-                                                    throw new Error(ERROR_FAILED_CREATE + username + os.EOL + member);
-                                                }
-                                            });
+    partyExists(id, rcon, function(tf){
+        if(tf){
+            //Somehow generated existing party id, so recursively retry until success.
+            console.log('RETRYING');
+            return createParty(username, callback);
+        }else{
+            //Add user to new party set
+            rcon.sadd([id, username], function(err, reply) {
+                if (err == undefined) {
+                    if (reply == 1) {
+                        console.log(PARTY + id + ' created. Added: ' + username + '. Adding to party sets.')
+                            //Add new party to global parties set
+                        rcon.sadd([partiesG, id], function(err, reply) {
+                            if (err == undefined) {
+                                if (reply == 1) {
+                                    console.log(PARTY + id + ' added to global parties set.');
+                                    //Add new party to parties:1 set
+                                    rcon.sadd([parties1, id], function(err, reply) {
+                                        if (err == undefined) {
+                                            if (reply == 1) {
+                                                console.log(PARTY + id + ' added to parties:1.');
+                                                //Final checks to ensure user in party
+                                                isMemberOfParty(id, username, rcon, function(tf) {
+                                                    if (tf) {
+                                                        callback(id);
+                                                    } else {
+                                                        throw new Error(ERROR_FAILED_CREATE + username + os.EOL + member);
+                                                    }
+                                                });
+                                            } else {
+                                                throw new Erorr('Party already exists!? [2]');
+                                            }
                                         } else {
-                                            throw new Erorr('Party already exists!? [2]');
+                                            throw new Error(ERROR_FAILED_SADD + parties1 + os.EOL + err);
                                         }
-                                    } else {
-                                        throw new Error(ERROR_FAILED_SADD + parties1 + os.EOL + err);
-                                    }
-                                });
+                                    });
+                                } else {
+                                    throw new Erorr('Party already exists!? [1]');
+                                }
                             } else {
-                                throw new Erorr('Party already exists!? [1]');
+                                throw new Error(ERROR_FAILED_SADD + partiesG + os.EOL + err);
                             }
-                        } else {
-                            throw new Error(ERROR_FAILED_SADD + partiesG + os.EOL + err);
-                        }
-                    });
+                        });
+                    } else {
+                        throw new Error('User already part of party!? [0]');
+                    }
                 } else {
-                    throw new Error('User already part of party!? [0]');
+                    throw new Error(ERROR_FAILED_SADD + id + os.EOL + err);
                 }
-            } else {
-                throw new Error(ERROR_FAILED_SADD + id + os.EOL + err);
-            }
-        });
-    }
+            });
+        }
+    });
 }
 
 function joinParty(username, party) {
