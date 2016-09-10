@@ -47,12 +47,12 @@ const parties5 = 'parties:5';
 exports.createParty = function(username, rcon, callback) {
     var id = 'party:' + rstr.generate(7);
     //Check if party with generated ID already exists
-    partyExists(id, rcon, function(tf){
-        if(tf){
+    partyExists(id, rcon, function(tf) {
+        if (tf) {
             //Somehow generated existing party id, so recursively retry until success.
             console.log('RETRYING');
             return createParty(username, callback);
-        }else{
+        } else {
             //Add user to new party set
             rcon.sadd([id, username], function(err, reply) {
                 if (err == undefined) {
@@ -196,23 +196,23 @@ function partyExists(party, rcon, callback) {
     });
 }
 
-function getNumPlayersInParty(party, rcon, callback){
-    partyExists(party, rcon, function(tf){
-        if(tf){
-            rcon.scard(party, function(err, reply){
-                if(err == undefined){
+function getNumPlayersInParty(party, rcon, callback) {
+    partyExists(party, rcon, function(tf) {
+        if (tf) {
+            rcon.scard(party, function(err, reply) {
+                if (err == undefined) {
                     callback(reply);
-                }else{
+                } else {
                     throw new Error(ERORR_FAILED_SCARD);
                 }
             });
-        }else{
+        } else {
             console.log('Party DNE')
         }
     });
 }
 
-function getPlayersInParty(party, rcon, callback){
+function getPlayersInParty(party, rcon, callback) {
 
 }
 
