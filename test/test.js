@@ -34,28 +34,28 @@ exports['Test user generator factory'] = function(test) {
 };
 
 exports.parties = testCase({
-    setUp: function (callback) {
+    setUp: function(callback) {
         const auth = "KIWICLIENTREDISPASSWORDTHATISWAYTOOLONGTOGUESSBUTSTILLFEASIBLETOGETBYDECRYPTINGOURCLIENTSOKUDOSTOYOUIFYOUDIDLOLJKPLEASETELLUSTHISISSCARY";
         rcon.auth(auth);
         callback();
     },
-    tearDown: function (callback) {
+    tearDown: function(callback) {
         rcon.quit(callback);
     },
-    testPartyCreation: function (test) {
+    testPartyCreation: function(test) {
         const partymember = user('partymember', 'STEAM_0:0:PARTY', 'PARTYCHANNEL');
 
-        rcon.select(2, function(err,res){
-            if(err == undefined){
+        rcon.select(2, function(err, res) {
+            if (err == undefined) {
                 console.log('Selected DB2');
-                party.createParty(partymember.getUsername(), rcon, function(id){
-                    party.partyExists(id, rcon, function(tf){
+                party.createParty(partymember.getUsername(), rcon, function(id) {
+                    party.partyExists(id, rcon, function(tf) {
                         test.expect(1);
                         test.strictEqual(tf, true, "Tests that party successfully created.");
                         test.done();
                     });
                 });
-            }else{
+            } else {
                 throw new Error(err);
             }
         });
