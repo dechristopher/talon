@@ -15,7 +15,9 @@ const user = require('./user');
 //ERORS
 const ERROR_FAILED_CREATE = '[' + gutil.colors.red('ERROR') + '] Party created but didn\'t add user: ';
 const ERROR_FAILED_SADD = '[' + gutil.colors.red('ERROR') + '] Failed to add value to set: ';
+const ERROR_FAILED_SCARD = '[' + gutil.colors.red('ERROR') + '] Failed to get number of members of: ';
 const ERROR_FAILED_SISMEMBER = '[' + gutil.colors.red('ERROR') + '] Failed to check if value member of: ';
+const ERROR_FAILED_SMEMBERS = '[' + gutil.colors.red('ERROR') + '] Failed getting members of: ';
 const ERROR_FAILED_EXISTS = '[' + gutil.colors.red('ERROR') + '] Failed to check existence of key: ';
 
 //PREFIXES
