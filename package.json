@@ -24,6 +24,7 @@
     "lupus": "0.0.1",
     "moment": "^2.13.0",
     "node-datetime": "^1.0.0",
+    "nodeunit": "^0.10.2",
     "randomstring": "^1.1.5",
     "recursive-readdir": "^2.0.0",
     "redis": "^2.6.0-1",
