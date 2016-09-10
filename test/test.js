@@ -1,7 +1,14 @@
+const user = require("../modules/user.js");
+const party = require('../modules/party.js');
+const redis = require('redis');
+
+var rcon = redis.createClient(6379, 'kiir.us');
+const auth = "KIWICLIENTREDISPASSWORDTHATISWAYTOOLONGTOGUESSBUTSTILLFEASIBLETOGETBYDECRYPTINGOURCLIENTSOKUDOSTOYOUIFYOUDIDLOLJKPLEASETELLUSTHISISSCARY";
+
+rcon.auth(auth);
+
 exports.testUserFactory = function(test) {
     test.expect(9);
-
-    const user = require("../modules/user.js");
 
     //Set up a normally created user object
     const testuser = user('testuser', 'STEAM_0:0:TESTING', 'TESTCHANNEL');
