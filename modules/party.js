@@ -117,7 +117,25 @@ function leaveParty(username) {
 	'username' - string
 	RET: bool - is user in party
  */
-function isMemberOfParty(party, username, callback) {
+exports.isMemberOfParty = function(party, username, rcon, callback) {
+    rcon.sismember([party, username], function(err, reply) {
+        if (err == undefined) {
+            var tf = false;
+            if (reply == 1) {
+                console.log(ISMEMBER + username + ' -> ' + party + ' >> true');
+                tf = true;
+            } else {
+                console.log(ISMEMBER + username + ' -> ' + party + ' >> false');
+                tf = false;
+            }
+            callback(tf);
+        } else {
+            throw new Error(ERROR_FAILED_SISMEMBER + party + os.EOL + err);
+        }
+    });
+}
+
+function isMemberOfParty(party, username, rcon, callback) {
     rcon.sismember([party, username], function(err, reply) {
         if (err == undefined) {
             var tf = false;
