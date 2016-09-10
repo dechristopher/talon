@@ -25,7 +25,7 @@ const PARTY = '[' + gutil.colors.green('PARTY') + '] ';
 const SUCCESS = '[' + gutil.colors.green('SUCCESS') + '] ';
 
 //connect to redis
-var rcon = redis.createClient(6379, 'localhost');
+//var rcon = redis.createClient(6379, 'localhost');
 
 //var userToPartyMap = new HashMap();
 
