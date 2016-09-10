@@ -196,7 +196,27 @@ function partyExists(party, rcon, callback) {
     });
 }
 
-function deleteParty() {
+function getNumPlayersInParty(party, rcon, callback){
+    partyExists(party, rcon, function(tf){
+        if(tf){
+            rcon.scard(party, function(err, reply){
+                if(err == undefined){
+                    callback(reply);
+                }else{
+                    throw new Error(ERORR_FAILED_SCARD);
+                }
+            });
+        }else{
+            console.log('Party DNE')
+        }
+    });
+}
+
+function getPlayersInParty(party, rcon, callback){
+
+}
+
+function deleteParty(party, rcon, callback) {
 
 }
 
