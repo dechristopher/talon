@@ -158,16 +158,36 @@ function isMemberOfParty(party, username, rcon, callback) {
 	'party' - string (party:XXXXXXX)
 	RET: bool - party exists
  */
-function partyExists(party) {
+exports.partyExists = function(party, rcon, callback) {
     rcon.exists(party, function(err, reply) {
         if (err == undefined) {
+            var tf = false;
             if (reply == 1) {
                 console.log(EXISTS + party + ' >> true');
-                return true;
+                tf = true;
             } else {
                 console.log(EXISTS + party + ' >> false');
-                return false;
+                tf = false;
             }
+            callback(tf);
+        } else {
+            throw new Error(ERROR_FAILED_EXISTS + party + os.EOL + err);
+        }
+    });
+}
+
+function partyExists(party, rcon, callback) {
+    rcon.exists(party, function(err, reply) {
+        if (err == undefined) {
+            var tf = false;
+            if (reply == 1) {
+                console.log(EXISTS + party + ' >> true');
+                tf = true;
+            } else {
+                console.log(EXISTS + party + ' >> false');
+                tf = false;
+            }
+            callback(tf);
         } else {
             throw new Error(ERROR_FAILED_EXISTS + party + os.EOL + err);
         }
