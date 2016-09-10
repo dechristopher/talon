@@ -670,7 +670,7 @@ function contains(a, b) {
 }
 
 //return steamid64 representation of normal steamid
-function sidTo64(steamid){
+function sidTo64(steamid) {
     return sidconvert.convertTo64(steamid);
 }
 
@@ -692,7 +692,7 @@ function webPrintStar(bool) {
 //bool refresh to add /refresh in the end of the kick URL
 function webPlayerList(refresh) {
     var list = "";
-    if(pList.count() > 0){
+    if (pList.count() > 0) {
         pList.forEach(function(value, key) {
             var queued = isPlayerInQueue(key);
             if (refresh) {
@@ -701,7 +701,7 @@ function webPlayerList(refresh) {
                 list = list + "<b>-</b> " + webPrintStar(queued) + key + " ( " + value.sid + " || " + value.channel + " ) ( <a href='http://steamcommunity.com/profiles/" + sidTo64(value.sid) + "'>Steam Profile</a> ) [ <a href='/kick/" + key + "'>KICK</a> ]<br />";
             }
         });
-    }else{
+    } else {
         list += "<b>-</b> None online...<br />";
     }
     return list;
@@ -728,35 +728,35 @@ function webServerList() {
 }
 
 //Put together panel pages based on requested type
-function renderPanel(refresh, req){
+function renderPanel(refresh, req) {
     var panel = "<!DOCTYPE html><html><head>" +
-                "<title>talonPanel :: Dash</title>";
-                if(refresh){
-                    panel += "<meta http-equiv='Refresh' content='5'>";
-                }
-        panel +="<link href='https://fonts.googleapis.com/css?family=Exo+2' rel='stylesheet'>" +
-                "<style>body{ -webkit-font-smoothing: antialiased; font-family: 'Exo 2', sans-serif;}</style>" +
-                "</head><body>" +
-                "<h2>talonPanel</h2>" + "<hr><br />" +
-                "Total servers: " + totS.toString() + "<br />" + webServerList().toString() + "<br /><hr>" +
-                "Online players: " + pList.count() + "<br />" +
-                "Queued players: " + qList.count() + "<br /><hr>" +
-                "<h3>Players:</h3>" + webPlayerList(refresh).toString() + "<br />" +
-                "<hr>" + "TALON v" + version;
-                if(refresh){
-                    panel +=" (<a href='http:\/\/" + req.hostname + ":" + port + "'>No refresh</a>)";
-                }else{
-                    panel +=" (<a href='http:\/\/" + req.hostname + ":" + port + "/refresh'>Auto refresh</a>)";
-                }
-        panel +="</body></html>";
+        "<title>talonPanel :: Dash</title>";
+    if (refresh) {
+        panel += "<meta http-equiv='Refresh' content='5'>";
+    }
+    panel += "<link href='https://fonts.googleapis.com/css?family=Exo+2' rel='stylesheet'>" +
+        "<style>body{ -webkit-font-smoothing: antialiased; font-family: 'Exo 2', sans-serif;}</style>" +
+        "</head><body>" +
+        "<h2>talonPanel</h2>" + "<hr><br />" +
+        "Total servers: " + totS.toString() + "<br />" + webServerList().toString() + "<br /><hr>" +
+        "Online players: " + pList.count() + "<br />" +
+        "Queued players: " + qList.count() + "<br /><hr>" +
+        "<h3>Players:</h3>" + webPlayerList(refresh).toString() + "<br />" +
+        "<hr>" + "TALON v" + version;
+    if (refresh) {
+        panel += " (<a href='http:\/\/" + req.hostname + ":" + port + "'>No refresh</a>)";
+    } else {
+        panel += " (<a href='http:\/\/" + req.hostname + ":" + port + "/refresh'>Auto refresh</a>)";
+    }
+    panel += "</body></html>";
     return panel;
 }
 
 //Disconnect player from backend and
 //remove from queue if necessary
-function webKickPlayer(username){
+function webKickPlayer(username) {
     pList.remove(username);
-    if(isPlayerInQueue(username)){
+    if (isPlayerInQueue(username)) {
         qList.remove(username);
     }
     log(TP + '[KICK] ' + username);
@@ -782,7 +782,7 @@ var port = 3000;
 });*/
 
 //Checks if given IP is in allowed talonPanel IPs.
-function firewall(ip){
+function firewall(ip) {
     return firewallIPs.contains(ip);
 }
 
@@ -797,11 +797,11 @@ server.listen(port, function() {
 
 //Checks if request IP is allowed to access talonPanel before
 //continuing to render talonPanel.
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
     var ip = req.connection.remoteAddress.toString().substring(7, req.connection.remoteAddress.toString().length);
-    if(firewall(ip)){
+    if (firewall(ip)) {
         next();
-    }else{
+    } else {
         log(TP + 'DISALLOWED: ' + ip);
         res.end();
     }
