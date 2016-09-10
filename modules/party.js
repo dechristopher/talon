@@ -198,11 +198,11 @@ function deleteParty() {
 
 }
 
-var testuser = user('testuser', 'STEAM_0:0:TESTING', 'TESTCHANNEL', 'OFI)*#BO*QBO@CLIb');
+/*var testuser = user('testuser', 'STEAM_0:0:TESTING', 'TESTCHANNEL', 'OFI)*#BO*QBO@CLIb');
 
 console.log(testuser.getUsername() + ' - ' + testuser.getSteamID() + ' - ' + testuser.getChannel() + ' - ' + testuser.getHWID());
 
-createParty(testuser.getUsername(), function(id) {
+createParty(testuser.getUsername(), rcon, function(id) {
     console.log(SUCCESS + 'Created party: ' + id);
     process.exit();
-});
+});*/
