@@ -22,6 +22,7 @@ const ERROR_FAILED_EXISTS = '[' + gutil.colors.red('ERROR') + '] Failed to check
 //PREFIXES
 const EXISTS = '[' + gutil.colors.cyan('EXISTS') + '] ';
 const ISMEMBER = '[' + gutil.colors.cyan('ISMEMBER') + '] ';
+const MEMBERS = '[' + gutil.colors.cyan('MEMBERS') + '] ';
 const PARTY = '[' + gutil.colors.green('PARTY') + '] ';
 const SUCCESS = '[' + gutil.colors.green('SUCCESS') + '] ';
 
