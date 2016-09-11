@@ -196,7 +196,7 @@ function partyExists(party, rcon, callback) {
 	'party' - string (party:XXXXXXX)
 	RET: int - num in party
  */
-exports.getNumPlayersInParty = function(party, rcon, callback) {
+exports.getNumPartyMembers = function(party, rcon, callback) {
     partyExists(party, rcon, function(tf) {
         if (tf) {
             rcon.scard(party, function(err, reply) {
@@ -213,7 +213,7 @@ exports.getNumPlayersInParty = function(party, rcon, callback) {
     });
 }
 
-function getNumPlayersInParty(party, rcon, callback) {
+function getNumPartyMembers(party, rcon, callback) {
     partyExists(party, rcon, function(tf) {
         if (tf) {
             rcon.scard(party, function(err, reply) {
@@ -235,7 +235,7 @@ function getNumPlayersInParty(party, rcon, callback) {
 	'party' - string (party:XXXXXXX)
 	RET: array - all player usernames
  */
- exports.getPlayersInParty = function(party, rcon, callback) {
+ exports.getPartyMembers = function(party, rcon, callback) {
      partyExists(party, rcon, function(tf) {
          if (tf) {
              rcon.smembers(party, function(err, reply) {
@@ -252,7 +252,7 @@ function getNumPlayersInParty(party, rcon, callback) {
      });
  }
 
-function getPlayersInParty(party, rcon, callback) {
+function getPartyMembers(party, rcon, callback) {
     partyExists(party, rcon, function(tf) {
         if (tf) {
             rcon.smembers(party, function(err, reply) {
