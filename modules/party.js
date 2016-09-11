@@ -4,7 +4,6 @@ Created by Andrew DeChristopher <drew@kiir.us> on 9/7/2016
 
 //core libraries
 const redis = require('redis');
-const HashMap = require("hashmap");
 const rstr = require('randomstring');
 const gutil = require('gulp-util');
 const os = require('os');
@@ -28,9 +27,6 @@ const SUCCESS = '[' + gutil.colors.green('SUCCESS') + '] ';
 
 //connect to redis
 //var rcon = redis.createClient(6379, 'localhost');
-
-//var userToPartyMap = new HashMap();
-
 //Redis sets of parties
 const partiesG = 'parties';
 const parties1 = 'parties:1';
