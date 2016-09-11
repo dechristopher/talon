@@ -63,6 +63,11 @@ exports.parties = testCase({
         });
     },
 
+    testGetPartyMembers: function(test) {
+        party.getPartyMembers('party:KTSotnN', rcon, function(reply) {
+            test.expect(1);
+            test.strictEqual(reply.length, 4, "Tests that all party members returned in array properly");
+            test.done();
         });
     }
 });
