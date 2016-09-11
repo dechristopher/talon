@@ -3,7 +3,7 @@ const party = require('../modules/party.js');
 const redis = require('redis');
 var testCase = require('nodeunit').testCase;
 
-var rcon = redis.createClient(6379, 'kiir.us');
+var rcon;
 
 exports['Test user generator factory'] = function(test) {
     test.expect(9);
