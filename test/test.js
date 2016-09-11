@@ -54,20 +54,15 @@ exports.parties = testCase({
 
     testPartyCreation: function(test) {
         const partymember = user('partymember', 'STEAM_0:0:PARTY', 'PARTYCHANNEL');
+        party.createParty(partymember.getUsername(), rcon, function(id) {
+            party.partyExists(id, rcon, function(tf) {
+                test.expect(1);
+                test.strictEqual(tf, true, "Tests that party successfully created.");
+                test.done();
+            });
+        });
+    },
 
-        rcon.select(2, function(err, res) {
-            if (err == undefined) {
-                console.log('Selected DB2');
-                party.createParty(partymember.getUsername(), rcon, function(id) {
-                    party.partyExists(id, rcon, function(tf) {
-                        test.expect(1);
-                        test.strictEqual(tf, true, "Tests that party successfully created.");
-                        test.done();
-                    });
-                });
-            } else {
-                throw new Error(err);
-            }
         });
     }
 });
