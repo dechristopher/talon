@@ -269,6 +269,11 @@ function getPlayersInParty(party, rcon, callback) {
     });
 }
 
+/*
+	Deletes a party from redis if no members
+	'party' - string (party:XXXXXXX)
+	RET: bool - deleted or not
+ */
 function deleteParty(party, rcon, callback) {
 
 }
