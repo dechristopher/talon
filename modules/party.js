@@ -25,8 +25,6 @@ const ISMEMBER = '[' + gutil.colors.cyan('ISMEMBER') + '] ';
 const PARTY = '[' + gutil.colors.green('PARTY') + '] ';
 const SUCCESS = '[' + gutil.colors.green('SUCCESS') + '] ';
 
-//connect to redis
-//var rcon = redis.createClient(6379, 'localhost');
 //Redis sets of parties
 const partiesG = 'parties';
 const parties1 = 'parties:1';
