@@ -191,18 +191,41 @@ function partyExists(party, rcon, callback) {
     });
 }
 
-function getNumPlayersInParty(party, rcon, callback) {
+/*
+	Gets the number of players in a given party
+	'party' - string (party:XXXXXXX)
+	RET: int - num in party
+ */
+exports.getNumPlayersInParty = function(party, rcon, callback) {
     partyExists(party, rcon, function(tf) {
         if (tf) {
             rcon.scard(party, function(err, reply) {
                 if (err == undefined) {
+                    console.log(MEMBERS + reply);
                     callback(reply);
                 } else {
                     throw new Error(ERORR_FAILED_SCARD);
                 }
             });
         } else {
-            console.log('Party DNE')
+            console.log('Party DNE');
+        }
+    });
+}
+
+function getNumPlayersInParty(party, rcon, callback) {
+    partyExists(party, rcon, function(tf) {
+        if (tf) {
+            rcon.scard(party, function(err, reply) {
+                if (err == undefined) {
+                    console.log(MEMBERS + reply);
+                    callback(reply);
+                } else {
+                    throw new Error(ERORR_FAILED_SCARD);
+                }
+            });
+        } else {
+            console.log('Party DNE');
         }
     });
 }
