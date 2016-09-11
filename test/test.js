@@ -35,13 +35,23 @@ exports['Test user generator factory'] = function(test) {
 
 exports.parties = testCase({
     setUp: function(callback) {
+        rcon = redis.createClient(6379, 'kiir.us');
         const auth = "KIWICLIENTREDISPASSWORDTHATISWAYTOOLONGTOGUESSBUTSTILLFEASIBLETOGETBYDECRYPTINGOURCLIENTSOKUDOSTOYOUIFYOUDIDLOLJKPLEASETELLUSTHISISSCARY";
         rcon.auth(auth);
+        rcon.select(2, function(err, res) {
+            if (err == undefined) {
+                callback();
+            } else {
+                throw new Error(err);
+            }
+        });
+    },
+
+    tearDown: function(callback) {
+        rcon.quit();
         callback();
     },
-    tearDown: function(callback) {
-        rcon.quit(callback);
-    },
+
     testPartyCreation: function(test) {
         const partymember = user('partymember', 'STEAM_0:0:PARTY', 'PARTYCHANNEL');
 
