@@ -97,15 +97,15 @@ exports.createParty = function(username, rcon, callback) {
     });
 }
 
-function joinParty(username, party) {
+function joinParty(username, party, rcon, callback) {
 
 }
 
-function changeParties(username, party) {
+function changeParties(username, party, destparty, rcon, callback) {
 
 }
 
-function leaveParty(username) {
+function leaveParty(username, party, rcon, callback) {
 
 }
 
