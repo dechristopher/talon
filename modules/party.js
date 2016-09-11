@@ -230,8 +230,43 @@ function getNumPlayersInParty(party, rcon, callback) {
     });
 }
 
-function getPlayersInParty(party, rcon, callback) {
+/*
+	Gets all player usernames in a party
+	'party' - string (party:XXXXXXX)
+	RET: array - all player usernames
+ */
+ exports.getPlayersInParty = function(party, rcon, callback) {
+     partyExists(party, rcon, function(tf) {
+         if (tf) {
+             rcon.smembers(party, function(err, reply) {
+                 if (err == undefined) {
+                     console.log(MEMBERS + reply.length);
+                     callback(reply);
+                 } else {
+                     throw new Error(ERORR_FAILED_SMEMBERS);
+                 }
+             });
+         } else {
+             console.log('Party DNE');
+         }
+     });
+ }
 
+function getPlayersInParty(party, rcon, callback) {
+    partyExists(party, rcon, function(tf) {
+        if (tf) {
+            rcon.smembers(party, function(err, reply) {
+                if (err == undefined) {
+                    console.log(MEMBERS + reply.length);
+                    callback(reply);
+                } else {
+                    throw new Error(ERORR_FAILED_SMEMBERS);
+                }
+            });
+        } else {
+            console.log('Party DNE');
+        }
+    });
 }
 
 function deleteParty(party, rcon, callback) {
