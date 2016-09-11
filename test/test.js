@@ -1,5 +1,5 @@
 /*
-Created by Andrew DeChristopher <drew@kiir.us> on 6/1/2016
+Created by Andrew DeChristopher <drew@kiir.us> on 6/1/2016.
  */
 const user = require("../modules/user.js");
 const party = require('../modules/party.js');

@@ -1,5 +1,5 @@
 /*
-Created by Andrew DeChristopher <drew@kiir.us> on 9/7/2016
+Created by Andrew DeChristopher <drew@kiir.us> on 9/7/2016.
  */
 
 //core libraries
