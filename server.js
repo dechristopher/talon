@@ -100,6 +100,9 @@ if (process.argv.length > 2) {
     } else {
         populateServers("conf/us-e-servers.txt", servers);
     }
+    if(process.argv[2] == "nofw"){
+        firewallEnabled = false;
+    }
 } else {
     populateServers("conf/us-e-servers.txt", servers);
 }
