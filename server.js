@@ -58,6 +58,9 @@ const displayServers = false;
 //development mode variable
 var dev = false;
 
+//enable firewall
+var firewallEnabled = true;
+
 //redis server address
 var backend = "kiir.us";
 
