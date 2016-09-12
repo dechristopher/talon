@@ -789,7 +789,11 @@ var port = 3000;
 
 //Checks if given IP is in allowed talonPanel IPs.
 function firewall(ip) {
-    return firewallIPs.contains(ip);
+    if(firewallEnabled){
+        return firewallIPs.contains(ip);
+    }else{
+        return true;
+    }
 }
 
 //Log express server start
