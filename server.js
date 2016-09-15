@@ -169,6 +169,12 @@ inm.on("message", function(channel, message) {
     }
 });
 
+//Reports relevant app metrics to datadog
+var reportMetrics = cron.job("*/5 * * * * *", function() {
+    var memUsage = process.memoryUsage();
+    metrics.gauge('memory.rss', memUsage.rss);
+});
+
 //Unused debug BS
 var showOnline = cron.job("*/15 * * * * *", function() {
     log('[P] (Q: ' + currQ + ' / O: ' + pList.count() + ')');
