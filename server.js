@@ -793,6 +793,7 @@ parseQueue.start();
 parseServers.start();
 parseHeartbeats.start();
 getAnnouncement.start();
+reportMetrics.start();
 
 //BEGIN talonPanel shite
 var port = 3000;
