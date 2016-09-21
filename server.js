@@ -61,6 +61,8 @@ const LOGIN = '[' + gutil.colors.green('LOGIN') + '] ';
 //The TALON version
 const version = "1.2.2";
 
+process.title = 'talon-v' + version;
+
 //Boolean to display all server IPs
 //every parseServer tick
 const displayServers = false;
