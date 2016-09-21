@@ -174,7 +174,9 @@ inm.on("message", function(channel, message) {
 //Reports relevant app metrics to datadog
 var reportMetrics = cron.job("*/5 * * * * *", function() {
     var memUsage = process.memoryUsage();
-    metrics.gauge('memory.rss', memUsage.rss);
+    var cpuUsage = process.cpuUsage();
+    metrics.gauge('sys.memory', memUsage.rss);
+    //metrics.gauge('sys.cpu', cpuUsage.user);
 });
 
 //Unused debug BS
@@ -841,7 +843,7 @@ app.get('/', function(req, res, next) {
     try {
         res.send(renderPanel(false, req));
         log(TP + '[' + req.ip + '] GET /');
-        metrics.increment('talon.panel.view.norefresh');
+        metrics.increment('panel.view.norefresh');
     } catch (e) {
         next(e);
     }
@@ -851,7 +853,7 @@ app.get('/refresh', function(req, res, next) {
     try {
         res.send(renderPanel(true, req));
         log(TP + '[' + req.ip + '] GET /refresh');
-        metrics.increment('talon.panel.view.refresh');
+        metrics.increment('panel.view.refresh');
     } catch (e) {
         next(e);
     }
