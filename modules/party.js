@@ -105,7 +105,9 @@ function joinParty(username, party, rcon, callback) {
 	Swaps user from one party to another
     and deletes old party if last member
     before leaving
+    'username' - string
 	'party' - string (party:XXXXXXX)
+    'destparty' - string (party:XXXXXXX)
 	RET: bool - deleted or not
  */
 function changeParties(username, party, destparty, rcon, callback) {
@@ -114,6 +116,7 @@ function changeParties(username, party, destparty, rcon, callback) {
 
 /*
 	Leave party and create new one
+    'username' - string
 	'party' - string (party:XXXXXXX)
 	RET: bool - left or not
  */
