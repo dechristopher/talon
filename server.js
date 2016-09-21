@@ -840,7 +840,7 @@ app.get('/', function(req, res, next) {
     try {
         res.send(renderPanel(false, req));
         log(TP + '[' + req.ip + '] GET /');
-        //metrics.gauge('panel.view.norefresh', 1);
+        norefreshV++;
     } catch (e) {
         next(e);
     }
@@ -850,7 +850,7 @@ app.get('/refresh', function(req, res, next) {
     try {
         res.send(renderPanel(true, req));
         log(TP + '[' + req.ip + '] GET /refresh');
-        //metrics.gauge('panel.view.refresh', 1);
+        refreshV++;
     } catch (e) {
         next(e);
     }
