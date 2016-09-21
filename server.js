@@ -175,6 +175,10 @@ inm.on("message", function(channel, message) {
 var reportMetrics = cron.job("*/5 * * * * *", function() {
     var memUsage = process.memoryUsage();
     metrics.gauge('memory.rss', memUsage.rss);
+    metrics.gauge('talon.panel.view.norefresh', norevreshV);
+    metrics.gauge('talon.panel.view.refresh', refreshV);
+    norefreshV = 0;
+    refreshV = 0;
 });
 
 //Unused debug BS
