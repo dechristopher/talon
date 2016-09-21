@@ -59,7 +59,7 @@ const ANNO = '[' + gutil.colors.magenta('A') + '] ';
 const LOGIN = '[' + gutil.colors.green('LOGIN') + '] ';
 
 //The TALON version
-const version = "1.1.2";
+const version = "1.2.2";
 
 //Boolean to display all server IPs
 //every parseServer tick
