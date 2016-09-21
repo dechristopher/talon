@@ -29,6 +29,8 @@ const sidconvert = require('steamidconvert')();
 //datadog api
 const metrics = require('datadog-metrics');
 metrics.init({ host: 'talon', prefix: 'talon.' });
+var norefreshV = 0;
+var refreshV = 0;
 /*var options = {
  api_key: "983d600012039fbbde12c74b8383e7ff",
  app_key: "dece31077596cafe58d8bdf30c8262dc8ed7527d",
