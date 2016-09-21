@@ -96,15 +96,37 @@ exports.createParty = function(username, rcon, callback) {
     });
 }
 
+//not sure if this should just implement changeParties or not...
 function joinParty(username, party, rcon, callback) {
 
 }
 
+/*
+	Swaps user from one party to another
+    and deletes old party if last member
+    before leaving
+	'party' - string (party:XXXXXXX)
+	RET: bool - deleted or not
+ */
 function changeParties(username, party, destparty, rcon, callback) {
 
 }
 
+/*
+	Leave party and create new one
+	'party' - string (party:XXXXXXX)
+	RET: bool - left or not
+ */
 function leaveParty(username, party, rcon, callback) {
+
+}
+
+/*
+	Deletes a party from redis if no members
+	'party' - string (party:XXXXXXX)
+	RET: bool - deleted or not
+ */
+function deleteParty(party, rcon, callback) {
 
 }
 
@@ -267,15 +289,6 @@ function getPartyMembers(party, rcon, callback) {
             console.log('Party DNE');
         }
     });
-}
-
-/*
-	Deletes a party from redis if no members
-	'party' - string (party:XXXXXXX)
-	RET: bool - deleted or not
- */
-function deleteParty(party, rcon, callback) {
-
 }
 
 /*
