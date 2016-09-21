@@ -385,6 +385,7 @@ function parse(channel, sid, from, input) {
             pList.set(p.nm, p);
             hbCheck.set(p.nm, true);
             log(LOGIN + p.nm + ":[" + p.channel + " - " + p.sid + "]");
+            metrics.increment('talon.user.login');
             break;
 
             //User logs out
