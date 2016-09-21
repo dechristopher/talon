@@ -29,8 +29,6 @@ const sidconvert = require('steamidconvert')();
 //datadog api
 const metrics = require('datadog-metrics');
 metrics.init({ host: 'talon', prefix: 'talon.' });
-var norefreshV = 0;
-var refreshV = 0;
 /*var options = {
  api_key: "983d600012039fbbde12c74b8383e7ff",
  app_key: "dece31077596cafe58d8bdf30c8262dc8ed7527d",
@@ -175,10 +173,6 @@ inm.on("message", function(channel, message) {
 var reportMetrics = cron.job("*/5 * * * * *", function() {
     var memUsage = process.memoryUsage();
     metrics.gauge('memory.rss', memUsage.rss);
-    metrics.gauge('talon.panel.view.norefresh', norevreshV);
-    metrics.gauge('talon.panel.view.refresh', refreshV);
-    norefreshV = 0;
-    refreshV = 0;
 });
 
 //Unused debug BS
@@ -845,7 +839,7 @@ app.get('/', function(req, res, next) {
     try {
         res.send(renderPanel(false, req));
         log(TP + '[' + req.ip + '] GET /');
-        norefreshV++;
+        metrics.increment('talon.panel.view.norefresh');
     } catch (e) {
         next(e);
     }
@@ -855,7 +849,7 @@ app.get('/refresh', function(req, res, next) {
     try {
         res.send(renderPanel(true, req));
         log(TP + '[' + req.ip + '] GET /refresh');
-        refreshV++;
+        metrics.increment('talon.panel.view.refresh');
     } catch (e) {
         next(e);
     }
