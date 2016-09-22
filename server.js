@@ -179,7 +179,7 @@ var reportMetrics = cron.job("*/5 * * * * *", function() {
     //metrics.gauge('sys.cpu', cpuUsage.user);
     metrics.gauge('players.online', pList.count());
     metrics.gauge('players.queued', qList.count());
-    metrics.gauge('servers.count', servers.size());
+    metrics.gauge('servers.count', onlServers.size());
 });
 
 //Unused debug BS
