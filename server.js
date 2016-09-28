@@ -726,9 +726,9 @@ function webPlayerList(refresh) {
         pList.forEach(function(value, key) {
             var queued = isPlayerInQueue(key);
             if (refresh) {
-                list = list + "<b>-</b> " + webPrintStar(queued) + key + " ( " + value.sid + " || " + value.channel + " ) ( <a href='http://steamcommunity.com/profiles/" + sidTo64(value.sid) + "'>Steam Profile</a> ) [ <a href='/kick/" + key + "/refresh'>KICK</a> ]<br />";
+                list += "<b>-</b> " + webPrintStar(queued) + key + " ( " + value.sid + " || " + value.channel + " ) ( <a href='http://steamcommunity.com/profiles/" + sidTo64(value.sid) + "'>Steam Profile</a> ) [ <a href='/kick/" + key + "/refresh'>KICK</a> ]<br />";
             } else {
-                list = list + "<b>-</b> " + webPrintStar(queued) + key + " ( " + value.sid + " || " + value.channel + " ) ( <a href='http://steamcommunity.com/profiles/" + sidTo64(value.sid) + "'>Steam Profile</a> ) [ <a href='/kick/" + key + "'>KICK</a> ]<br />";
+                list += "<b>-</b> " + webPrintStar(queued) + key + " ( " + value.sid + " || " + value.channel + " ) ( <a href='http://steamcommunity.com/profiles/" + sidTo64(value.sid) + "'>Steam Profile</a> ) [ <a href='/kick/" + key + "'>KICK</a> ]<br />";
             }
         });
     } else {
