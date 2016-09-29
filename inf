@@ -1,0 +1,9 @@
+KIWI Architecture
+
+					------------ Service Discovery ------------
+					|					|					  |
+CLIENT -------- feapp (talon) ----------|------------ REST API Instances --------- MySQL DB Cluster
+					|					|
+    				-------------- REDIS Cluster
+					|					|
+					------------- Parties Service
