@@ -18,7 +18,7 @@ WORKDIR /usr/src/app
 RUN curl -sL https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh -o install_nvm.sh
 RUN chmod +x install_nvm.sh
 RUN ./install_nvm.sh
-RUN source ~/.profile
+# RUN source ~/.profile
 RUN nvm install 6.0.0
 RUN nvm use 6.0.0
 
