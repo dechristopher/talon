@@ -17,6 +17,11 @@ RUN chmod +x nodesource_setup.sh
 RUN ./nodesource_setup.sh
 RUN apt-get install -y nodejs
 
+# Set DataDog API key
+COPY ./dd-env.sh /usr/src/app
+RUN chmod +x dd-env.sh
+RUN ./dd-env.sh
+
 # Install app dependencies
 COPY package.json /usr/src/app/
 RUN npm install
@@ -27,10 +32,6 @@ COPY ./demo /usr/src/app
 COPY ./modules /usr/src/app
 COPY ./logs /usr/src/app
 COPY ./conf /usr/src/app
-COPY ./dd-env.sh /usr/src/app
-
-# Export DATADOG API key
-RUN ./dd-env.sh
 
 EXPOSE 3000
 CMD [ "npm", "start" ]
