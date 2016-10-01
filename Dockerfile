@@ -1,4 +1,4 @@
-FROM ubuntu:16.10
+FROM ubuntu:14.04.5
 
 # Run updates
 RUN apt-get update
@@ -7,20 +7,15 @@ RUN apt-get -y upgrade
 # Install curl
 RUN apt-get install -y curl
 
-# Install build-essentialls and libssl-dev
-RUN apt-get install -y build-essential libssl-dev
-
 # Create app directory
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-# Download nvm script and install Node
-RUN curl -sL https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh -o install_nvm.sh
-RUN chmod +x install_nvm.sh
-RUN ./install_nvm.sh
-# RUN source ~/.profile
-RUN nvm install 6.0.0
-RUN nvm use 6.0.0
+# Download nodesource install script and install Node
+RUN curl -sL https://deb.nodesource.com/setup_6.x -o nodesource_setup.sh
+RUN chmod +x nodesource_setup.sh
+RUN ./nodesource_setup.sh
+RUN apt-get install -y nodejs
 
 # Install app dependencies
 COPY package.json /usr/src/app/
