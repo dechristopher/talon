@@ -27,6 +27,7 @@ COPY ./demo /usr/src/app
 COPY ./modules /usr/src/app
 COPY ./logs /usr/src/app
 COPY ./conf /usr/src/app
+COPY ./dd-env.sh /usr/src/app
 
 # Export DATADOG API key
 RUN ./dd-env.sh
