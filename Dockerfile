@@ -1,4 +1,11 @@
-FROM node:argon
+FROM ubuntu:16.10
+
+RUN apt-get update
+RUN apt-get upgrade
+
+RUN curl -sL https://deb.nodesource.com/setup_6.x -o nodesource_setup.sh
+RUN bash nodesource_setup.sh
+RUN apt-get install -y nodejs
 
 # Create app directory
 RUN mkdir -p /usr/src/app
