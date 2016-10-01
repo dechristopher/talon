@@ -7,14 +7,15 @@ RUN apt-get -y upgrade
 # Install curl
 RUN apt-get install -y curl
 
-# Download nodesource install script and install Node
-RUN curl -sL https://deb.nodesource.com/setup_6.x -o nodesource_setup.sh
-RUN bash nodesource_setup.sh
-RUN apt-get install -y nodejs
-
 # Create app directory
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
+
+# Download nodesource install script and install Node
+RUN curl -sL https://deb.nodesource.com/setup_6.x -o nodesource_setup.sh
+RUN chmod +x nodesource_setup.sh
+RUN ./nodesource_setup.sh
+RUN apt-get install -y nodejs
 
 # Install app dependencies
 COPY package.json /usr/src/app/
