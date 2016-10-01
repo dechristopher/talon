@@ -29,7 +29,7 @@ COPY ./logs /usr/src/app
 COPY ./conf /usr/src/app
 
 # Export DATADOG API key
-RUN export DATADOG_API_KEY=983d600012039fbbde12c74b8383e7ff
+RUN ./dd-env.sh
 
 EXPOSE 3000
 CMD [ "npm", "start" ]
