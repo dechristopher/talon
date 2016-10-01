@@ -8,7 +8,7 @@ RUN apt-get -y upgrade
 RUN apt-get install -y curl
 
 # Install build-essentialls and libssl-dev
-RUN apt-get install build-essential libssl-dev
+RUN apt-get install -y build-essential libssl-dev
 
 # Create app directory
 RUN mkdir -p /usr/src/app
