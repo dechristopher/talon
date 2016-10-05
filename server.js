@@ -56,9 +56,6 @@ const HBC = '[' + gutil.colors.yellow('HBC') + '] ';
 const ANNO = '[' + gutil.colors.magenta('A') + '] ';
 const LOGIN = '[' + gutil.colors.green('LOGIN') + '] ';
 
-//The TALON version
-const version = "1.2.2";
-
 process.title = 'talon-v' + version;
 
 //Boolean to display all server IPs
@@ -131,6 +128,8 @@ if (dev === false) {
 }
 
 //Begin...
+process.title = 'talon-v' + cfg.version;
+
 console.log("\n" +
     " ▄▄▄█████▓ ▄▄▄       ██▓     ▒█████   ███▄    █ \n" +
     " ▓  ██▒ ▓▒▒████▄    ▓██▒    ▒██▒  ██▒ ██ ▀█   █ \n" +
@@ -144,7 +143,7 @@ console.log("\n" +
     " Copyright 2016 Kiirus Technologies Inc."
 );
 
-log("~ TALON v" + version);
+log("~ TALON v" + cfg.version);
 
 //Subscribe local talon redis client to global message queue
 inm.on("subscribe", function(channel, count) {
