@@ -56,9 +56,6 @@ const HBC = '[' + gutil.colors.yellow('HBC') + '] ';
 const ANNO = '[' + gutil.colors.magenta('A') + '] ';
 const LOGIN = '[' + gutil.colors.green('LOGIN') + '] ';
 
-//development mode variable
-var dev = false;
-
 //enable firewall
 var firewallEnabled = true;
 
@@ -94,10 +91,10 @@ var totS = servers.size();
 //Populate server pool and connect to REDIS
 if (process.argv.length > 2) {
     if (process.argv[2] == "dev") {
-        log("~D E V E L O P M E N T    M O D E ~");
         populateServers("conf/dev-servers.txt", servers);
         backend = "beak.tech";
-        dev = true;
+        log("~ D E V E L O P M E N T    M O D E ~");
+        cfg.dev = true;
     } else {
         populateServers("conf/us-e-servers.txt", servers);
     }
@@ -117,8 +114,8 @@ const auth = "KIWICLIENTREDISPASSWORDTHATISWAYTOOLONGTOGUESSBUTSTILLFEASIBLETOGE
 var inm = redis.createClient(6379, backend);
 
 //Auth with redis
-if (dev === false) {
     inm.auth(auth);
+if (cfg.dev === false) {
 }
 
 //Begin...
@@ -525,8 +522,8 @@ function parse(channel, sid, from, input) {
 //Send a single message to one user or channel
 function reply(to, msg) {
     var pub = redis.createClient(6379, backend);
-    if (!dev) {
         pub.auth(auth);
+    if (!cfg.dev) {
     }
     pub.publish(to, msg);
     pub.quit();
@@ -535,8 +532,8 @@ function reply(to, msg) {
 //Broadcast to all users and channels
 function bcast(msg) {
     var pub = redis.createClient(6379, backend);
-    if (!dev) {
         pub.auth(auth);
+    if (!cfg.dev) {
     }
 
     var players = pList.values();
@@ -552,8 +549,8 @@ function bcast(msg) {
 //Broadcast excluding a single user or channel.
 function bcastex(msg, ex) {
     var pub = redis.createClient(6379, backend);
-    if (!dev) {
         pub.auth(auth);
+    if (!cfg.dev) {
     }
 
     var players = pList.values();
