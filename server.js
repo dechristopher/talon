@@ -588,12 +588,12 @@ function parseServerAPIResponse(response) {
         //
         if (((players !== "1" || contains(hostname, "LIVE")) || contains(response.getBody(), "offline")) && onlServers.contains(ip)) {
             onlServers.remove(ip);
-            console.log(SRV + '[-] > ' + ip);
+            log(SRV + '[-] > ' + ip);
         }
         //Online or freshly spawned check
         if (hostname === "KIWI::OFF" && players === "1" && !onlServers.contains(ip) && hostname !== "KIWI::LIVE") {
             onlServers.add(ip);
-            console.log(SRV + '[+] > ' + ip);
+            log(SRV + '[+] > ' + ip);
         }
     } else {
         //console.log(response.getBody());
@@ -604,7 +604,7 @@ function parseServerAPIResponse(response) {
 
         if (onlServers.contains(ip)) {
             onlServers.remove(ip);
-            console.log(SRV + '[-] > ' + ip);
+            log(SRV + '[-] > ' + ip);
         }
     }
 
