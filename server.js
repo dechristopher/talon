@@ -56,8 +56,6 @@ const HBC = '[' + gutil.colors.yellow('HBC') + '] ';
 const ANNO = '[' + gutil.colors.magenta('A') + '] ';
 const LOGIN = '[' + gutil.colors.green('LOGIN') + '] ';
 
-process.title = 'talon-v' + version;
-
 //Boolean to display all server IPs
 //every parseServer tick
 const displayServers = false;
