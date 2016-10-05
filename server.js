@@ -40,6 +40,7 @@ metrics.init({ host: 'talon', prefix: 'talon.' });
 const player = require('./modules/player');
 const user = require('./modules/user');
 const log = require('./modules/log');
+const sms = require('./modules/sms');
 
 //Define ERORS and other constants
 const ERROR_NO_FWIP_FILE = '[' + gutil.colors.red('ERROR') + '] Given ip file does not exist: ';
