@@ -26,21 +26,15 @@ const S = require('string');
 const gutil = require('gulp-util');
 const sidconvert = require('steamidconvert')();
 
-//datadog api
-const metrics = require('datadog-metrics');
-metrics.init({ host: 'talon', prefix: 'talon.' });
-/*var options = {
- api_key: "983d600012039fbbde12c74b8383e7ff",
- app_key: "dece31077596cafe58d8bdf30c8262dc8ed7527d",
-};*/
-//metrics.gauge('panel.view.refresh', 1);
-
-
 //talonPanel libraries
 const express = require('express');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
+
+//datadog api
+const metrics = require('datadog-metrics');
+metrics.init({ host: 'talon', prefix: 'talon.' });
 
 //custom libraries
 const player = require('./modules/player');
