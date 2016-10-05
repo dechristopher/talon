@@ -37,7 +37,10 @@ const cfg = require('./modules/cfg');
 
 //datadog api
 const metrics = require('datadog-metrics');
-metrics.init({ host: 'talon', prefix: 'talon.' });
+metrics.init({
+    host: 'talon',
+    prefix: 'talon.'
+});
 
 //custom libraries
 const player = require('./modules/player');
@@ -93,7 +96,7 @@ if (process.argv.length > 2) {
     } else {
         populateServers(cfg.servers[cfg.region], servers);
     }
-    if(process.argv[2] == "nofw"){
+    if (process.argv[2] == "nofw") {
         cfg.firewallEnabled = false;
     }
 } else {
@@ -795,9 +798,9 @@ var port = 3000;
 
 //Checks if given IP is in allowed talonPanel IPs.
 function firewall(ip) {
-    if(cfg.firewallEnabled){
+    if (cfg.firewallEnabled) {
         return firewallIPs.contains(ip);
-    }else{
+    } else {
         return true;
     }
 }
