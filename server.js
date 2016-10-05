@@ -56,9 +56,6 @@ const HBC = '[' + gutil.colors.yellow('HBC') + '] ';
 const ANNO = '[' + gutil.colors.magenta('A') + '] ';
 const LOGIN = '[' + gutil.colors.green('LOGIN') + '] ';
 
-//enable firewall
-var firewallEnabled = true;
-
 //redis server address
 var backend = "kiir.us";
 
@@ -99,12 +96,13 @@ if (process.argv.length > 2) {
         populateServers("conf/us-e-servers.txt", servers);
     }
     if(process.argv[2] == "nofw"){
-        firewallEnabled = false;
+        cfg.firewallEnabled = false;
     }
 } else {
     populateServers("conf/us-e-servers.txt", servers);
 }
 
+//Populate allowed panel IPs from list
 populateFirewallIPs('conf/ips.txt');
 
 //declare redis auth code
@@ -802,7 +800,7 @@ var port = 3000;
 
 //Checks if given IP is in allowed talonPanel IPs.
 function firewall(ip) {
-    if(firewallEnabled){
+    if(cfg.firewallEnabled){
         return firewallIPs.contains(ip);
     }else{
         return true;
