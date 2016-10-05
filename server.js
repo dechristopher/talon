@@ -99,15 +99,12 @@ if (process.argv.length > 2) {
 //Populate allowed panel IPs from list
 populateFirewallIPs('conf/ips.txt');
 
-//declare redis auth code
-const auth = "KIWICLIENTREDISPASSWORDTHATISWAYTOOLONGTOGUESSBUTSTILLFEASIBLETOGETBYDECRYPTINGOURCLIENTSOKUDOSTOYOUIFYOUDIDLOLJKPLEASETELLUSTHISISSCARY";
-
 //Placeholder variable for redis connection
 var inm = redis.createClient(6379, cfg.backend);
 
 //Auth with redis
-    inm.auth(auth);
 if (cfg.dev === false) {
+    inm.auth(cfg.auth);
 }
 
 //Begin...
@@ -513,9 +510,9 @@ function parse(channel, sid, from, input) {
 
 //Send a single message to one user or channel
 function reply(to, msg) {
-        pub.auth(auth);
     var pub = redis.createClient(6379, cfg.backend);
     if (!cfg.dev) {
+        pub.auth(cfg.auth);
     }
     pub.publish(to, msg);
     pub.quit();
@@ -523,9 +520,9 @@ function reply(to, msg) {
 
 //Broadcast to all users and channels
 function bcast(msg) {
-        pub.auth(auth);
     var pub = redis.createClient(6379, cfg.backend);
     if (!cfg.dev) {
+        pub.auth(cfg.auth);
     }
 
     var players = pList.values();
@@ -540,9 +537,9 @@ function bcast(msg) {
 
 //Broadcast excluding a single user or channel.
 function bcastex(msg, ex) {
-        pub.auth(auth);
     var pub = redis.createClient(6379, cfg.backend);
     if (!cfg.dev) {
+        pub.auth(cfg.auth);
     }
 
     var players = pList.values();
