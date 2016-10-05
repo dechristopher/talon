@@ -657,7 +657,7 @@ function populateFirewallIPs(file) {
                     firewallIPs.add(line);
                 }
             });
-            console.log('FIREWALL IPs:', firewallIPs);
+            log('FIREWALL IPs: [ ' + firewallIPs + ' ]');
         } else {
             throw new Error(ERROR_NO_FWIP_FILE + file);
         }
