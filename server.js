@@ -196,7 +196,7 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
             onlServers.remove(server);
 
             //Build API call
-            //https://kiir.us/api.php/?key=2F6E713BD4BA889A21166251DEDE9&cmd=q&rcon=q&ip={SERVER}
+            //https://kiir.us/api.php/?key=<apikey>&cmd=q&rcon=q&ip={SERVER}
             //&p1=ABC&p2=ABC&p3=ABC&p4=ABC&p5=ABC&p6=ABC&p7=ABC&p8=ABC&p9=ABC&p10=ABC&t1n=team_drop&t2n=team_sparks&numPl=5
             var call = "";
             if (cfg.qSize == 10) {
@@ -409,7 +409,7 @@ function parse(channel, sid, from, input) {
             break;
 
             //UNIMPLEMENTED
-            //https://kiir.us/api.php/?cmd=b&key=2F6E713BD4BA889A21166251DEDE9&sid=(SID)
+            //https://kiir.us/api.php/?cmd=b&key=<apikey>&sid=(SID)
             /*case "ban":
                 requestify.get('https://kiir.us/api.php/?cmd=b&key=2F6E713BD4BA889A21166251DEDE9&sid=STEAM_0:1:32732494').then(function(response) {
                     var r = response.getBody();
