@@ -640,7 +640,7 @@ function populateServers(file, list) {
                 }
             });
             totS = servers.size();
-            console.log('FILLED:', list);
+            log('FILLED: [ ' + list + ' ]');
         } else {
             throw new Error(ERROR_NO_SERV_FILE + file);
         }
