@@ -39,3 +39,6 @@ jspm_packages
 
 # CS:GO Test Demos
 *.dem
+
+# Environment variable file .env
+.env
