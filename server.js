@@ -56,10 +56,6 @@ const HBC = '[' + gutil.colors.yellow('HBC') + '] ';
 const ANNO = '[' + gutil.colors.magenta('A') + '] ';
 const LOGIN = '[' + gutil.colors.green('LOGIN') + '] ';
 
-//Boolean to display all server IPs
-//every parseServer tick
-const displayServers = false;
-
 //development mode variable
 var dev = false;
 
@@ -631,7 +627,7 @@ function parseServerAPIResponse(response) {
     currS = onlServers.size();
     bcast("q~" + currQ + "~" + currS);
 
-    if (displayServers) {
+    if (cfg.displayServers) {
         log('[S] >> AVAILABLE: ' + onlServers.length);
     }
 }
