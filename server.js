@@ -60,9 +60,6 @@ const LOGIN = '[' + gutil.colors.green('LOGIN') + '] ';
 var currQ = 0;
 var currS = 0;
 
-//Set the default queue size
-const qSize = 10;
-
 //Declare HashMaps for all users
 //and queued users
 var pList = new HashMap();
@@ -179,13 +176,13 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
     //If server are available
     if (onlServers.size() >= 1) {
         //and people are queued
-        if (qList.count() >= qSize) {
+        if (qList.count() >= cfg.qSize) {
             //Get all queued players and add to a JS array
             var players = qList.values();
             //Declare an empty array for the 10 (x) selected players
             var selected = [];
             //Select 10 payers randomly. Store in selected[].
-            for (var i = 0; i < qSize; i++) {
+            for (var i = 0; i < cfg.qSize; i++) {
                 selected[i] = players[random(0, players.length - 1)];
                 var tp = qList.search(selected[i]);
                 qList.remove(tp);
@@ -201,13 +198,13 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
             //https://kiir.us/api.php/?key=2F6E713BD4BA889A21166251DEDE9&cmd=q&rcon=q&ip={SERVER}
             //&p1=ABC&p2=ABC&p3=ABC&p4=ABC&p5=ABC&p6=ABC&p7=ABC&p8=ABC&p9=ABC&p10=ABC&t1n=team_drop&t2n=team_sparks&numPl=5
             var call = "";
-            if (qSize == 10) {
-                for (var j = 1; j <= qSize; j++) {
+            if (cfg.qSize == 10) {
+                for (var j = 1; j <= cfg.qSize; j++) {
                     call += "&p" + j + "=" + selected[j - 1].sid;
                 }
                 call += "&t1n=team_" + selected[0].nm;
                 call += "&t2n=team_" + selected[5].nm;
-            } else if (qSize == 8) {
+            } else if (cfg.qSize == 8) {
                 call += "&p1=" + selected[0].sid;
                 call += "&p2=" + selected[1].sid;
                 call += "&p3=" + selected[2].sid;
@@ -218,7 +215,7 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
                 call += "&p9=" + selected[7].sid;
                 call += "&t1n=team_" + selected[0].nm;
                 call += "&t2n=team_" + selected[4].nm;
-            } else if (qSize == 6) {
+            } else if (cfg.qSize == 6) {
                 call += "&p1=" + selected[0].sid;
                 call += "&p2=" + selected[1].sid;
                 call += "&p3=" + selected[2].sid;
@@ -227,20 +224,20 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
                 call += "&p8=" + selected[5].sid;
                 call += "&t1n=team_" + selected[0].nm;
                 call += "&t2n=team_" + selected[3].nm;
-            } else if (qSize == 4) {
+            } else if (cfg.qSize == 4) {
                 call += "&p1=" + selected[0].sid;
                 call += "&p2=" + selected[1].sid;
                 call += "&p6=" + selected[2].sid;
                 call += "&p7=" + selected[3].sid;
                 call += "&t1n=team_" + selected[0].nm;
                 call += "&t2n=team_" + selected[2].nm;
-            } else if (qSize == 2) {
+            } else if (cfg.qSize == 2) {
                 call += "&p1=" + selected[0].sid;
                 call += "&p6=" + selected[1].sid;
                 call += "&t1n=team_" + selected[0].nm;
                 call += "&t2n=team_" + selected[1].nm;
             }
-            call += "&numPl=" + (qSize / 2);
+            call += "&numPl=" + (cfg.qSize / 2);
 
             //Concatenate the built API call with the required properties to make the full call
             var apiCall = "https://kiir.us/api.php/?key=2F6E713BD4BA889A21166251DEDE9&cmd=q&rcon=q&ip=" + server + call;
@@ -271,10 +268,10 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
             //Update currQ to reflect queue pop
             currQ = qList.count();
         } else {
-            log(Q + '{S: ' + currS + '/' + totS + '}(P: ' + currQ + '/' + qSize + ')->> Waiting for players');
+            log(Q + '{S: ' + currS + '/' + totS + '}(P: ' + currQ + '/' + cfg.qSize + ')->> Waiting for players');
         }
     } else {
-        log(Q + '{S: ' + currS + '/' + totS + '}(P: ' + currQ + '/' + qSize + ')->> No servers');
+        log(Q + '{S: ' + currS + '/' + totS + '}(P: ' + currQ + '/' + cfg.qSize + ')->> No servers');
     }
 });
 
