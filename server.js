@@ -241,7 +241,7 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
             call += "&numPl=" + (cfg.qSize / 2);
 
             //Concatenate the built API call with the required properties to make the full call
-            var apiCall = "https://kiir.us/api.php/?key=2F6E713BD4BA889A21166251DEDE9&cmd=q&rcon=q&ip=" + server + call;
+            var apiCall = "https://kiir.us/api.php/?key=" + cfg.api + "&cmd=q&rcon=q&ip=" + server + call;
             //Log it ... or not
             //log("[Q] [POP] Built API call: " + apiCall);
 
@@ -283,7 +283,7 @@ var parseServers = cron.job("*/5 * * * * *", function() {
     //console.log(onlServers);
     lupus(0, totS, function(n) {
         var ip = servers.get(n);
-        requestify.get('https://kiir.us/api.php/?key=2F6E713BD4BA889A21166251DEDE9&ip=' + ip + '&cmd=both').then(response => parseServerAPIResponse(response));
+        requestify.get('https://kiir.us/api.php/?key=' + cfg.api + '&ip=' + ip + '&cmd=both').then(response => parseServerAPIResponse(response));
     }, function() {
         //log("[S] Server Query: DONE");
     });
@@ -291,7 +291,7 @@ var parseServers = cron.job("*/5 * * * * *", function() {
     /*for (var i = 0; i < totS; i++) {
         var ip = servers.get(i);
         //Get hostname and players (ignore JSHint BS)
-        requestify.get('https://kiir.us/api.php/?key=2F6E713BD4BA889A21166251DEDE9&ip=' + ip + '&cmd=both').then(response => parseServerAPIResponse(response));
+        requestify.get('https://kiir.us/api.php/?key=<apikey>&ip=' + ip + '&cmd=both').then(response => parseServerAPIResponse(response));
     }*/
 });
 
@@ -411,7 +411,7 @@ function parse(channel, sid, from, input) {
             //UNIMPLEMENTED
             //https://kiir.us/api.php/?cmd=b&key=<apikey>&sid=(SID)
             /*case "ban":
-                requestify.get('https://kiir.us/api.php/?cmd=b&key=2F6E713BD4BA889A21166251DEDE9&sid=STEAM_0:1:32732494').then(function(response) {
+                requestify.get('https://kiir.us/api.php/?cmd=b&key=<apikey>&sid=STEAM_0:1:32732494').then(function(response) {
                     var r = response.getBody();
                     log("WEB: :" + r.toString() + ":");
                     reply(channel, r.toString());
@@ -434,7 +434,7 @@ function parse(channel, sid, from, input) {
             //User requests theirs or another player's stats
         case "stats":
             //Query stats API
-            requestify.get('https://kiir.us/api.php/?cmd=stats&key=2F6E713BD4BA889A21166251DEDE9&name=' + from).then(function(response) {
+            requestify.get('https://kiir.us/api.php/?cmd=stats&key=' + cfg.api + '&name=' + from).then(function(response) {
                 var r = response.getBody();
                 //kr~xp~wins~losses
                 var stats = r.split('~');
