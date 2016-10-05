@@ -82,18 +82,19 @@ var totS = servers.size();
 //Populate server pool and connect to REDIS
 if (process.argv.length > 2) {
     if (process.argv[2] == "dev") {
-        populateServers("conf/dev-servers.txt", servers);
         log("~ D E V E L O P M E N T    M O D E ~");
+        cfg.region = 0;
+        populateServers(cfg.servers[cfg.region], servers);
         cfg.backend = "beak.tech";
         cfg.dev = true;
     } else {
-        populateServers("conf/us-e-servers.txt", servers);
+        populateServers(cfg.servers[cfg.region], servers);
     }
     if(process.argv[2] == "nofw"){
         cfg.firewallEnabled = false;
     }
 } else {
-    populateServers("conf/us-e-servers.txt", servers);
+    populateServers(cfg.servers[cfg.region], servers);
 }
 
 //Populate allowed panel IPs from list
