@@ -39,6 +39,9 @@ cfg.port = parseInt(process.env.TALON_PORT) || 3000;
 //Secret used for random hash generation
 cfg.secret = process.env.TALON_APP_SECRET || 'keyboard cat';
 
+//API key for KIWI web API
+cfg.api = process.env.KIWI_API_KEY;
+
 //Redis datastore authentication password
 cfg.auth = process.env.TALON_REDIS_PW;
 
