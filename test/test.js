@@ -3,6 +3,7 @@ Created by Andrew DeChristopher <drew@kiir.us> on 6/1/2016.
  */
 const user = require("../modules/user.js");
 const party = require('../modules/party.js');
+const cfg = require('../modules/cfg.js');
 const redis = require('redis');
 var testCase = require('nodeunit').testCase;
 
@@ -38,9 +39,8 @@ exports['Test user generator factory'] = function(test) {
 
 exports.parties = testCase({
     setUp: function(callback) {
-        rcon = redis.createClient(6379, 'kiir.us');
-        const auth = "KIWICLIENTREDISPASSWORDTHATISWAYTOOLONGTOGUESSBUTSTILLFEASIBLETOGETBYDECRYPTINGOURCLIENTSOKUDOSTOYOUIFYOUDIDLOLJKPLEASETELLUSTHISISSCARY";
-        rcon.auth(auth);
+        rcon = redis.createClient(6379, cfg.backend);
+        rcon.auth(cfg.auth);
         rcon.select(2, function(err, res) {
             if (err == undefined) {
                 callback();
