@@ -6,8 +6,8 @@ const party = require('../modules/party.js');
 const cfg = require('../modules/cfg.js');
 const sms = require('../modules/sms.js');
 const redis = require('redis');
-var testCase = require('nodeunit').testCase;
 
+var testCase = require('nodeunit').testCase;
 var rcon;
 
 sms.sendAdminSms('[KIWI] Commits pushed to Talon repo. Running test suite.');
