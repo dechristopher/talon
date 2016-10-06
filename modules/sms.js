@@ -33,5 +33,5 @@ module.exports.sendAdminSms = function(message) {
                 //log('[SMS] Talon Started!');
             }
         });
-    }));
+    });
 };
