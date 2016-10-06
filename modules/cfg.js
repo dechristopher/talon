@@ -54,6 +54,12 @@ cfg.servers = [
     'conf/us-e-servers.txt'
 ];
 
+//Admin phone numbers for important SMS notifications
+cfg.adminNumbers = [
+    '5089306274',
+    '8103577576'
+];
+
 //Twillio account info
 cfg.accountSid = process.env.TWILIO_ACCOUNT_SID;
 cfg.authToken = process.env.TWILIO_AUTH_TOKEN;
