@@ -127,7 +127,6 @@ var checkForDemos = cron.job("*/30 * * * * *", function() {
                 log(gutil.colors.red('Errors: ' + err), '-demo-client');
             }
             for (var i = 0; i < files.length; i++) {
-                log(DEMO + 'Demo parsed: ' + files[i], '-demo-client')
                 upload(files[i]);
             }
             // Files is an array of filenames
