@@ -42,3 +42,8 @@ io.sockets.on('connection', function(socket) {
         stream.pipe(fs.createWriteStream(cfg.demoDir + filename));
     });
 });
+
+//Log express server start
+server.listen(80, function() {
+    log(TP + 'Demo download μSrvc started.');
+});
