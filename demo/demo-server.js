@@ -16,6 +16,7 @@ const cfg = require('../modules/cfg');
 
 const KIWI = '[' + gutil.colors.green('KIWI') + '] ';
 const DEMO = '[' + gutil.colors.green('DEMO') + '] ';
+const DOWN = '[' + gutil.colors.cyan('DOWN') + '] ';
 
 log(KIWI + 'Demo Transit Server', '-demo-server');
 
