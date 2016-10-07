@@ -788,7 +788,6 @@ getAnnouncement.start();
 reportMetrics.start();
 
 //BEGIN talonPanel shite
-var port = 3000;
 
 //app.use(express.static('px'));
 
@@ -806,7 +805,7 @@ function firewall(ip) {
 }
 
 //Log express server start
-server.listen(port, function() {
+server.listen(cfg.port, function() {
     log(TP + 'talonPanel μSrvc started.');
     log(TP + 'Express server started.');
     /*db.select(1, function () {
