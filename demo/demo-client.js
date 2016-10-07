@@ -83,7 +83,7 @@ function populateDemoFolders(file, list) {
                     list.add(line);
                 }
             });
-            console.log(DEMO + 'FILLED:', list);
+            log(DEMO + 'FILLED: ' + list, '-demo-client');
         } else {
             throw new Error(ERROR_NO_FOLDER + file);
             //log('DEMO LOCATION FILE DOES NOT EXIST! HALTING');
