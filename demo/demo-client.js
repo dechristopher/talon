@@ -19,6 +19,7 @@ const HashMap = require("hashmap");
 const requestify = require('requestify');
 const gutil = require('gulp-util');
 const os = require('os');
+const recursive = require('recursive-readdir');
 
 //talon libraries
 const log = require('../modules/log');
