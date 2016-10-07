@@ -61,7 +61,25 @@ app.get('/', function(req, res, next) {
 app.get('/:id', function(req, res, next) {
     try {
         var id = req.params.id;
-        res.download(path.join(cfg.demoDir, 'kiwi-' + id + '.dem'));
+        fs.exists(path.join(cfg.demoDir, 'kiwi-' + id + '.dem'), function(exists) {
+            if(exists){
+                //res.download(path.join(cfg.demoDir, 'kiwi-' + id + '.dem'));
+
+                log(DOWN + 'Found demo @ ' + path.join(cfg.demoDir, 'kiwi-' + id + '.dem'))
+
+                var filename = path.join(cfg.demoDir, 'kiwi-' + id + '.dem');
+                var mimetype = mime.lookup(filename);
+
+                res.setHeader('Content-disposition', 'attachment; filename=' + filename);
+                res.setHeader('Content-type', mimetype);
+
+                var filestream = fs.createReadStream(filename);
+                filestream.pipe(res);
+            }else{
+                res.send('Invalid demo ID. Returning to previous page.<script>setTimeout(function(){ window.history.back(); }, 3000);</script>');
+            }
+        });
+
         log(DOWN + '[' + req.ip + '] GET /' + id + ' ~ kiwi-' + id + '.dem');
     } catch (e) {
         next(e);
