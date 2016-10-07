@@ -107,3 +107,64 @@ function upload(filename){
 
     }
 }
+
+//Checks for demo files and uploads them a minute
+//after their file size has stopped increasing
+var checkForDemos = cron.job("*/30 * * * * *", function() {
+    log(DEMO + 'Checking directories...', '-demo-client');
+    //Find new demo files
+    demoFolders.each(function(value) {
+        recursive(value, /*[ignoreFunc],*/ function(err, files) {
+            if (err !== null) {
+                log(gutil.colors.red('Errors: ' + err), '-demo-client');
+            }
+            for (var i = 0; i < files.length; i++) {
+                log(DEMO + 'Demo parsed: ' + files[i], '-demo-client')
+                //upload(files[i]);
+            }
+            // Files is an array of filenames
+            /*for (var i = 0; i < files.length; i++) {
+                if (!dList.has(files[i]) && contains(files[i], ".dem")) {
+                    log(gutil.colors.blue('ADDED: ' + files[i]), '-demo-client');
+                    dList.set(files[i], getFilesizeInBytes(files[i]));
+                    checkdList.set(files[i], 0);
+                }
+            }*/
+        });
+    });
+});
+
+var checkDemoGrowth = cron.job("*/20 * * * * *", function() {
+    dList.forEach(function(value, key) {
+        //Check for demo file growth
+        var currSize = getFilesizeInBytes(key);
+        if (currSize > value) {
+            log("STILL RECORDING: " + getDemoName(key));
+            dList.set(key, currSize);
+            checkdList.set(key, 0);
+        } else {
+            //Add 1 to value of 20 second intervals file size has been the same
+            log("UNCHANGED: " + getDemoName(key), '-demo-client');
+            checkdList.set(key, checkdList.get(key) + 1);
+            //If a minute has passed with no growth
+            if (checkdList.get(key) == 3) {
+                log("UPLOADING: " + getDemoName(key));
+                //Upload demo to CDN, check for success, and delete demo from local server
+                delList.set(key, 0);
+                sendFileToDemoCDN(key);
+            }
+        }
+    });
+});
+
+var checkToDelete = cron.job("*/5 * * * * *", function() {
+    if (delList.count() > 0) {
+        log(DEMO + 'Checking for uploaded demos.', '-demo-client');
+        delList.forEach(function(value, key) {
+            log('CHECKING FOR: http://demo.kiir.us/demos/' + getDemoName(key), '-demo-client');
+            demoExistsOnCDN('http://demo.kiir.us/demos/' + getDemoName(key), deleteDemo, key);
+        });
+    }
+});
+
+checkForDemos.start();
