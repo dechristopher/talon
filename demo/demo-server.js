@@ -68,13 +68,15 @@ app.get('/:id', function(req, res, next) {
 
                 log(DOWN + 'Found demo @ ' + path.join(cfg.demoDir, 'kiwi-' + id + '.dem'))
 
-                var filename = path.join(cfg.demoDir, 'kiwi-' + id + '.dem');
+                var file = path.join(cfg.demoDir, 'kiwi-' + id + '.dem');
+
+                var filename = path.basename(file);
                 var mimetype = mime.lookup(filename);
 
                 res.setHeader('Content-disposition', 'attachment; filename=' + filename);
                 res.setHeader('Content-type', mimetype);
 
-                var filestream = fs.createReadStream(filename);
+                var filestream = fs.createReadStream(file);
                 filestream.pipe(res);
             }else{
                 res.send('Invalid demo ID. Returning to previous page.<script>setTimeout(function(){ window.history.back(); }, 3000);</script>');
