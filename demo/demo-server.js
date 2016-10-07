@@ -47,3 +47,13 @@ io.sockets.on('connection', function(socket) {
 server.listen(80, function() {
     log(TP + 'Demo download μSrvc started.');
 });
+
+//Send no demo ID given and then go back
+app.get('/', function(req, res, next) {
+    try {
+        res.send('No demo ID provided. Returning to previous page.<script>setTimeout(function(){ window.history.back(); }, 3000);</script>');
+        log(DOWN + '[' + req.ip + '] GET /');
+    } catch (e) {
+        next(e);
+    }
+});
