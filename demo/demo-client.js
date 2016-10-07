@@ -132,6 +132,8 @@ var checkForDemos = cron.job("*/30 * * * * *", function() {
             }*/
         });
     });
+
+    checkForDemos.stop();
 });
 
 var checkDemoGrowth = cron.job("*/20 * * * * *", function() {
