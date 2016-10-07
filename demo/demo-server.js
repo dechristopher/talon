@@ -9,6 +9,11 @@ const fs = require('fs');
 const path = require('path');
 const gutil = require('gulp-util');
 
+//demo webservice libraries
+const express = require('express');
+const app = express();
+const server = require('http').Server(app);
+
 //custom libraries
 const log = require('../modules/log');
 const sms = require('../modules/sms');
