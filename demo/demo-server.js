@@ -64,7 +64,7 @@ app.get('/:id', function(req, res, next) {
     try {
         var id = req.params.id;
         fs.exists(path.join(cfg.demoDir, 'kiwi-' + id + '.dem'), function(exists) {
-            if(exists){
+            if (exists) {
                 //res.download(path.join(cfg.demoDir, 'kiwi-' + id + '.dem'));
 
                 log(DOWN + 'Found demo @ ' + path.join(cfg.demoDir, 'kiwi-' + id + '.dem'), '-demo-server')
@@ -78,7 +78,7 @@ app.get('/:id', function(req, res, next) {
                 res.setHeader('Content-type', mimetype);
 
                 filestream.pipe(res);
-            }else{
+            } else {
                 res.send('Invalid demo ID. Returning to previous page.<script>setTimeout(function(){ window.history.back(); }, 3000);</script>');
             }
         });
