@@ -45,7 +45,7 @@ io.sockets.on('connection', function(socket) {
 
 //Log express server start
 server.listen(80, function() {
-    log(TP + 'Demo download μSrvc started.');
+    log(DOWN + 'Demo download μSrvc started.');
 });
 
 //Send no demo ID given and then go back
