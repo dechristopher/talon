@@ -145,7 +145,7 @@ var checkForDemos = cron.job("*/30 * * * * *", function() {
 var checkDemoGrowth = cron.job("*/20 * * * * *", function() {
     dList.forEach(function(value, key) {
         //Check for demo file growth
-        var currSize = getFilesizeInBytes(key);
+        var currSize = getFileSizeInBytes(key);
         if (currSize > value) {
             log("STILL RECORDING: " + getDemoName(key));
             dList.set(key, currSize);
