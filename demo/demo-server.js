@@ -32,14 +32,15 @@ io.sockets.on('connection', function(socket) {
     ss(socket).on('us-nj1', function(stream, data) {
         var filename = path.basename(data.name).split('\\');
         var filename = filename[filename.length - 1];
-        log(DEMO + 'Uploading: ' + filename);
+        var filesize = data.size;
+        log(DEMO + 'Uploading: ' + filename + '~' + filesize + 'B', '-demo-server');
         stream.pipe(fs.createWriteStream(cfg.demoDir + filename));
     });
     //For uploads from US-NJ2
     ss(socket).on('us-nj2', function(stream, data) {
         var filename = path.basename(data.name).split('\\');
         var filename = filename[filename.length - 1];
-        log(DEMO + 'Uploading: ' + filename);
+        log(DEMO + 'Uploading: ' + filename + '~' + filesize + 'B', '-demo-server');
         stream.pipe(fs.createWriteStream(cfg.demoDir + filename));
     });
 });
