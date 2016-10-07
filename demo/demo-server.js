@@ -61,7 +61,7 @@ app.get('/', function(req, res, next) {
 app.get('/:id', function(req, res, next) {
     try {
         var id = req.params.id;
-        res.sendFile(path.join(cfg.demoDir, 'kiwi-' + id + '.dem'));
+        res.download(path.join(cfg.demoDir, 'kiwi-' + id + '.dem'));
         log(DOWN + '[' + req.ip + '] GET /' + id + ' ~ kiwi-' + id + '.dem');
     } catch (e) {
         next(e);
