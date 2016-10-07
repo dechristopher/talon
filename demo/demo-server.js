@@ -12,6 +12,7 @@ const gutil = require('gulp-util');
 //custom libraries
 const log = require('../modules/log');
 const sms = require('../modules/sms');
+const cfg = require('../modules/cfg');
 
 log('[KIWI] Demo CDN Server', '-demo-server');
 
