@@ -7,6 +7,7 @@ const io = require('socket.io').listen(27000);
 const ss = require('socket.io-stream');
 const fs = require('fs');
 const path = require('path');
+const gutil = require('gulp-util');
 
 //custom libraries
 const log = require('../modules/log');
