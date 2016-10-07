@@ -68,7 +68,7 @@ socket.on('disconnect', function() {
     go = false;
 });
 
-function finished(filename){
+function finished(filename) {
     log(DEMO + ' DONE -> ' + filename, '-demo-client');
 }
 
@@ -92,8 +92,8 @@ function populateDemoFolders(file, list) {
     });
 }
 
-function upload(filename){
-    if(go){
+function upload(filename) {
+    if (go) {
         var stream = ss.createStream();
         var filename = 'C:\\KIWI\\kp3\\csgo\\demos\\kiwi-26.dem';
 
@@ -103,7 +103,7 @@ function upload(filename){
 
         fs.createReadStream(filename).pipe(stream, finished(filename));
 
-    }else{
+    } else {
 
     }
 }
