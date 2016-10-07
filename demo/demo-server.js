@@ -46,14 +46,14 @@ io.sockets.on('connection', function(socket) {
 
 //Log express server start
 server.listen(80, function() {
-    log(DOWN + 'Demo download μSrvc started.');
+    log(DOWN + 'Demo download μSrvc started.', '-demo-server');
 });
 
 //Send no demo ID given and then go back
 app.get('/', function(req, res, next) {
     try {
         res.send('No demo ID provided. Returning to previous page.<script>setTimeout(function(){ window.history.back(); }, 3000);</script>');
-        log(DOWN + '[' + req.ip + '] GET /');
+        log(DOWN + '[' + req.ip + '] GET /', '-demo-server');
     } catch (e) {
         next(e);
     }
@@ -66,7 +66,7 @@ app.get('/:id', function(req, res, next) {
             if(exists){
                 //res.download(path.join(cfg.demoDir, 'kiwi-' + id + '.dem'));
 
-                log(DOWN + 'Found demo @ ' + path.join(cfg.demoDir, 'kiwi-' + id + '.dem'))
+                log(DOWN + 'Found demo @ ' + path.join(cfg.demoDir, 'kiwi-' + id + '.dem'), '-demo-server')
 
                 var file = path.join(cfg.demoDir, 'kiwi-' + id + '.dem');
 
@@ -82,8 +82,7 @@ app.get('/:id', function(req, res, next) {
                 res.send('Invalid demo ID. Returning to previous page.<script>setTimeout(function(){ window.history.back(); }, 3000);</script>');
             }
         });
-
-        log(DOWN + '[' + req.ip + '] GET /' + id + ' ~ kiwi-' + id + '.dem');
+        log(DOWN + '[' + req.ip + '] GET /' + id + ' ~ kiwi-' + id + '.dem', '-demo-server');
     } catch (e) {
         next(e);
     }
