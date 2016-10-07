@@ -101,18 +101,24 @@ function populateDemoFolders(file, list) {
 
 function upload(filename) {
     if (go) {
-        var stream = ss.createStream();
-        //var filename = 'C:\\KIWI\\kp3\\csgo\\demos\\kiwi-26.dem';
-        fs.stat(__dirname + '/path/to/original/file.ext', function (err, stat) {
-            if (err) return console.error(err);
-            ss(socket).emit(sock, stream, {
-                name: filename,
-                size: stat.size
-            });
-            fs.createReadStream(filename).pipe(stream, finished(filename));
+        fs.exists(filename, function(exists) {
+            if (exists) {
+                var stream = ss.createStream();
+                fs.stat(__dirname + '/path/to/original/file.ext', function(err, stat) {
+                    if (err) return console.error(err);
+                    ss(socket).emit(sock, stream, {
+                        name: filename,
+                        size: stat.size
+                    });
+                    fs.createReadStream(filename).pipe(stream, finished(filename));
+                    log(DEMO + 'Demo sending: ' + filename + ' ~' + stat.size + 'B', '-demo-client');
+                });
+            }else{
+                throw new Error(ERROR_BAD_DEMO + filename);
+            }
         });
     } else {
-
+        log(DEMO + 'Uploading disabled, disconnected from server.', '-demo-client');
     }
 }
 
