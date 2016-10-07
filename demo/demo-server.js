@@ -57,3 +57,13 @@ app.get('/', function(req, res, next) {
         next(e);
     }
 });
+
+app.get('/:id', function(req, res, next) {
+    try {
+        var id = req.params.id;
+        res.sendFile(path.join(cfg.demoDir, 'kiwi-' + id + '.dem'));
+        log(DOWN + '[' + req.ip + '] GET /' + id + ' ~ kiwi-' + id + '.dem');
+    } catch (e) {
+        next(e);
+    }
+});
