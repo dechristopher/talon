@@ -72,6 +72,12 @@ function finished(filename) {
     log(DEMO + ' DONE -> ' + filename, '-demo-client');
 }
 
+//Returns size of file given by filename
+function getFileSizeInBytes(filename) {
+    var stats = fs.statSync(filename);
+    return stats['size'];
+}
+
 //Fill the servers[] array with lines from
 //a given text file
 function populateDemoFolders(file, list) {
