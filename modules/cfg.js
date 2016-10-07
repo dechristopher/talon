@@ -60,6 +60,9 @@ cfg.adminNumbers = [
     '8103577576'
 ];
 
+//Directory used by demo-server.js to dump uploaded demos
+cfg.demoDir = process.env.TALON_DEMO_DIR || '/mnt/volume-nyc1-01/demos/';
+
 //Twillio account info
 cfg.accountSid = process.env.TWILIO_ACCOUNT_SID;
 cfg.authToken = process.env.TWILIO_AUTH_TOKEN;
