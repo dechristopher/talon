@@ -14,9 +14,10 @@ const log = require('../modules/log');
 const sms = require('../modules/sms');
 const cfg = require('../modules/cfg');
 
+const KIWI = '[' + gutil.colors.green('KIWI') + '] ';
 const DEMO = '[' + gutil.colors.green('DEMO') + '] ';
 
-log('[KIWI] Demo CDN Server', '-demo-server');
+log(KIWI + 'Demo Transit Server', '-demo-server');
 
 io.sockets.on('connection', function(socket) {
     log('Client connected', '-demo-server');
