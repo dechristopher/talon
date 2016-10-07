@@ -28,6 +28,7 @@ const log = require('../modules/log');
 const ERROR_NO_FOLDER = '[' + gutil.colors.red('ERROR') + '] Given demo folder does not exist: ';
 const ERROR_NO_REGION = '[' + gutil.colors.red('ERROR') + '] Please use a package.json script to define region.';
 const ERROR_BAD_REGION = '[' + gutil.colors.red('ERROR') + '] Invalid region specified.';
+const ERROR_BAD_DEMO = '[' + gutil.colors.red('ERROR') + '] Invalid demo found: ';
 const DEMO = '[' + gutil.colors.green('DEMO') + '] ';
 const DEMO_RED = '[' + gutil.colors.red('DEMO') + '] ';
 
