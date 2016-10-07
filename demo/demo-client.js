@@ -95,7 +95,7 @@ function populateDemoFolders(file, list) {
 function upload(filename) {
     if (go) {
         var stream = ss.createStream();
-        var filename = 'C:\\KIWI\\kp3\\csgo\\demos\\kiwi-26.dem';
+        //var filename = 'C:\\KIWI\\kp3\\csgo\\demos\\kiwi-26.dem';
 
         ss(socket).emit(sock, stream, {
             name: filename
@@ -120,7 +120,7 @@ var checkForDemos = cron.job("*/30 * * * * *", function() {
             }
             for (var i = 0; i < files.length; i++) {
                 log(DEMO + 'Demo parsed: ' + files[i], '-demo-client')
-                //upload(files[i]);
+                upload(files[i]);
             }
             // Files is an array of filenames
             /*for (var i = 0; i < files.length; i++) {
