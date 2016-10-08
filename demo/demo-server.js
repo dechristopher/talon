@@ -29,6 +29,7 @@ const NJ2 = '[' + gutil.colors.magenta('NJ2') + '] ';
 
 log(KIWI + 'Demo Transit Server', '-demo-server');
 
+//Demo upload socket handling and transit logistics
 io.sockets.on('connection', function(socket) {
     log(KIWI + 'Client connected', '-demo-server');
     //For uploads from US-NJ1
