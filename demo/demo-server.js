@@ -20,6 +20,7 @@ const log = require('../modules/log');
 const sms = require('../modules/sms');
 const cfg = require('../modules/cfg');
 
+//Define ERRORS and other constants
 const KIWI = '[' + gutil.colors.green('KIWI') + '] ';
 const DEMO = '[' + gutil.colors.green('DEMO') + '] ';
 const DOWN = '[' + gutil.colors.cyan('DOWN') + '] ';
