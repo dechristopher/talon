@@ -44,7 +44,7 @@ io.sockets.on('connection', function(socket) {
     ss(socket).on('us-nj2', function(stream, data) {
         var filename = path.basename(data.name).split('\\');
         var filename = filename[filename.length - 1];
-        log(DEMO + 'Uploading: ' + filename + ' ~' + filesize + ' B', '-demo-server');
+        log(DEMO + NJ2 + 'Uploading: ' + filename + ' ~' + filesize + ' B', '-demo-server');
         stream.pipe(fs.createWriteStream(cfg.demoDir + filename));
     });
 });
