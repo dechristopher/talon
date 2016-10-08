@@ -27,7 +27,7 @@ const DOWN = '[' + gutil.colors.cyan('DOWN') + '] ';
 log(KIWI + 'Demo Transit Server', '-demo-server');
 
 io.sockets.on('connection', function(socket) {
-    log('Client connected', '-demo-server');
+    log(KIWI + 'Client connected', '-demo-server');
     //For uploads from US-NJ1
     ss(socket).on('us-nj1', function(stream, data) {
         var filename = path.basename(data.name).split('\\');
