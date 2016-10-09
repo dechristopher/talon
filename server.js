@@ -758,9 +758,9 @@ function renderPanel(refresh, req) {
         "<h3>Players:</h3>" + webPlayerList(refresh).toString() + "<br />" +
         "<hr>" + "TALON v" + cfg.version;
     if (refresh) {
-        panel += " (<a href='http:\/\/" + req.hostname + ":" + port + "'>No refresh</a>)";
+        panel += " (<a href='http:\/\/" + req.hostname + ":" + cfg.port + "'>No refresh</a>)";
     } else {
-        panel += " (<a href='http:\/\/" + req.hostname + ":" + port + "/refresh'>Auto refresh</a>)";
+        panel += " (<a href='http:\/\/" + req.hostname + ":" + cfg.port + "/refresh'>Auto refresh</a>)";
     }
     panel += "</body></html>";
     return panel;
