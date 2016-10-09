@@ -756,7 +756,6 @@ function renderPanel(refresh, req) {
         panel += "<meta http-equiv='Refresh' content='5'>";
     }
     panel += "<link href='https://fonts.googleapis.com/css?family=Exo+2' rel='stylesheet'>" +
-        "<style>body{ -webkit-font-smoothing: antialiased; font-family: 'Exo 2', sans-serif;}</style>" +
         "<style>body{ -webkit-font-smoothing: antialiased; font-family: 'Exo 2', sans-serif;} input[type='text']{width: 300px;}</style>" +
         "</head><body>" +
         "<h2>talonPanel</h2>" + "<hr><br />" +
