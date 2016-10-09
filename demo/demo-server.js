@@ -83,6 +83,7 @@ app.get('/:id', function(req, res, next) {
 
                 filestream.pipe(res);
             } else {
+                log(DOWN + 'Invalid demo ID given: ' + id, '-demo-server');
                 res.send('Invalid demo ID. Returning to previous page.<script>setTimeout(function(){ window.history.back(); }, 3000);</script>');
             }
         });
