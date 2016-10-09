@@ -763,6 +763,8 @@ function renderPanel(refresh, req) {
         "Online players: " + pList.count() + "<br />" +
         "Queued players: " + qList.count() + "<br /><hr>" +
         "<h3>Players:</h3>" + webPlayerList(refresh).toString() + "<br />" +
+        "<hr>" + "<h2>Announcement</h2>" + "<p>" + annoucement + "</p><br />" +
+        "<form action='/ann' method='post'><input type='text' name='announcement' value='' placeholder='Set announcement text here'/><input type='submit' name='submit' value='Submit'/></form>" +
         "<hr>" + "TALON v" + cfg.version;
     if (refresh) {
         panel += " (<a href='http:\/\/" + req.hostname + ":" + cfg.port + "'>No refresh</a>)";
