@@ -633,9 +633,12 @@ var getAnnouncement = cron.job("*/45 * * * * *", function() {
     requestify.get('http://kiir.us/api.php/?cmd=ann&key=2F6E713BD4BA889A21166251DEDE9').then(response => sendAnnouncement(response.getBody()));
 });
 
-function sendAnnouncement(announcement) {
-    bcast("a~" + announcement);
-    log(ANNO + '[SENT] ' + announcement);
+function sendAnnouncement(anno) {
+    //Set local announcement variable
+    announcement = anno;
+    //Then broadcast it
+    bcast("a~" + anno);
+    log(ANNO + '[SENT] ' + anno);
 }
 
 //Fill the servers[] array with lines from
