@@ -62,6 +62,9 @@ const HBC = '[' + gutil.colors.yellow('HBC') + '] ';
 const ANNO = '[' + gutil.colors.magenta('A') + '] ';
 const LOGIN = '[' + gutil.colors.green('LOGIN') + '] ';
 
+//Local announcement variable
+var announcement = '';
+
 //Declare queue variables
 var currQ = 0;
 var currS = 0;
