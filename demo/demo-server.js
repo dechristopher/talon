@@ -71,7 +71,7 @@ app.get('/:id', function(req, res, next) {
             if (exists) {
                 //res.download(path.join(cfg.demoDir, 'kiwi-' + id + '.dem'));
 
-                log(DOWN + 'Found demo @ ' + path.join(cfg.demoDir, 'kiwi-' + id + '.dem'), '-demo-server')
+                log(DOWN + 'Found demo @ ' + path.join(cfg.demoDir, 'kiwi-' + id + '.dem'), '-demo-server');
 
                 var file = path.join(cfg.demoDir, 'kiwi-' + id + '.dem');
                 var filename = path.basename(file);
