@@ -886,6 +886,7 @@ app.post('/ann', function(req, res, next) {
     try {
         log(TP + '[' + req.ip + '] POST /ann');
         requestify.get('http://kiir.us/api.php/?cmd=setann&key=2F6E713BD4BA889A21166251DEDE9&ann=' + req.body.announcement).then(response => sendAnnouncement(response.getBody()));
+        res.redirect('http://' + req.hostname + ':' + cfg.port);
     } catch (e) {
         next(e);
     }
