@@ -18,6 +18,7 @@
   "license": "ISC",
   "dependencies": {
     "arraylist": "^0.1.0",
+    "body-parser": "^1.15.2",
     "cron": "^1.1.0",
     "datadog-metrics": "^0.3.0",
     "dotenv": "^2.0.0",
