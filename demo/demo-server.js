@@ -51,7 +51,7 @@ io.sockets.on('connection', function(socket) {
 
 //Log express server start
 server.listen(80, function() {
-    log(DOWN + 'Demo download μSrvc started.', '-demo-server');
+    log(KIWI + 'Demo download μSrvc started.', '-demo-server');
 });
 
 //Send no demo ID given and then go back
