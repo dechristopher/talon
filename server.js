@@ -825,7 +825,7 @@ server.listen(cfg.port, function() {
 //Use body-parser to get POST data from requests
 app.use(bodyParser.json()); // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
-  extended: true
+    extended: true
 }));
 
 //Checks if request IP is allowed to access talonPanel before
