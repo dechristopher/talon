@@ -5,6 +5,8 @@ Created by Andrew DeChristopher <drew@kiir.us> on 8/30/2016.
 //socket libraries
 const io = require('socket.io-client');
 const ss = require('socket.io-stream');
+
+//connect to demo CDN on port 27000
 const socket = io.connect('http://demo.kiir.us:27000', {
     reconnect: true
 });
