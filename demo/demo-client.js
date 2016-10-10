@@ -113,7 +113,7 @@ function upload(filename) {
                     fs.createReadStream(filename).pipe(stream, finished(filename));
                     log(DEMO + 'Demo sending: ' + filename + ' ~' + stat.size + 'B', '-demo-client');
                 });
-            }else{
+            } else {
                 throw new Error(ERROR_BAD_DEMO + filename);
             }
         });
