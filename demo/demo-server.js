@@ -58,6 +58,7 @@ server.listen(80, function() {
 app.get('/', function(req, res, next) {
     try {
         res.send('No demo ID provided. Returning to previous page.<script>setTimeout(function(){ window.history.back(); }, 3000);</script>');
+        //Disable logging for UptimeRobot requests to '/'
         if (res.ip != "::ffff:63.143.42.242") {
             log(DOWN + '[' + req.ip + '] GET /', '-demo-server');
         }
