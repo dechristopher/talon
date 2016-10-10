@@ -67,6 +67,7 @@ app.get('/', function(req, res, next) {
     }
 });
 
+//Request for demo ID (ex. http://demo.kiir.us/15 OR http://demo.kiir.us/582)
 app.get('/:id', function(req, res, next) {
     try {
         var id = req.params.id;
