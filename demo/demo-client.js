@@ -179,8 +179,8 @@ var checkToDelete = cron.job("*/5 * * * * *", function() {
     if (delList.count() > 0) {
         log(DEMO + 'Checking for uploaded demos.', '-demo-client');
         delList.forEach(function(value, key) {
-            log('CHECKING FOR: http://demo.kiir.us/demos/' + getDemoName(key), '-demo-client');
-            demoExistsOnCDN('http://demo.kiir.us/demos/' + getDemoName(key), deleteDemo, key);
+            log('CHECKING FOR: http://demo.kiir.us/' + getDemoName(key), '-demo-client');
+            demoExistsOnCDN('http://demo.kiir.us/' + getDemoName(key), deleteDemo, key);
         });
     }
 });
