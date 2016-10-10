@@ -43,6 +43,7 @@ var go = false;
 
 log(DEMO + 'KIWI Demo Uploader - initializing..', '-demo-client');
 
+//Fill demoFolders ArrayList with directores demos are found in
 populateDemoFolders("conf/demo.txt", demoFolders);
 
 //Set correct socket.io channel
