@@ -27,6 +27,7 @@ const DOWN = '[' + gutil.colors.cyan('DOWN') + '] ';
 const NJ1 = '[' + gutil.colors.magenta('NJ1') + '] ';
 const NJ2 = '[' + gutil.colors.magenta('NJ2') + '] ';
 
+//Log startup
 log(KIWI + 'Demo Transit Server', '-demo-server');
 
 //Demo upload socket handling and transit logistics
