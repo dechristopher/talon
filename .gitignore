@@ -42,3 +42,6 @@ jspm_packages
 
 # Environment variable file .env
 .env
+
+# Braindump files
+*.dump
