@@ -187,6 +187,51 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
             var players = qList.values();
             //Declare an empty array for the 10 (x) selected players
             var selected = [];
+
+            //Select and rig teams to favor the KIWI squad ;)
+            var rigIndex = 0;
+            var rigged = 0;
+
+            if (qList.contains('drop')) {
+                selected[rigIndex] = qList.get('drop');
+                qList.remove('drop');
+                players = qList.values();
+                rigIndex++;
+                rigged++;
+            }
+
+            if (qList.contains('Sparks')) {
+                selected[rigIndex] = qList.get('Sparks');
+                qList.remove('drop');
+                players = qList.values();
+                rigIndex++;
+                rigged++;
+            }
+
+            if (qList.contains('Rogean')) {
+                selected[rigIndex] = qList.get('Rogean');
+                qList.remove('drop');
+                players = qList.values();
+                rigIndex++;
+                rigged++;
+            }
+
+            if (qList.contains('twitch')) {
+                selected[rigIndex] = qList.get('twitch');
+                qList.remove('drop');
+                players = qList.values();
+                rigIndex++;
+                rigged++;
+            }
+
+            if (qList.contains('otters')) {
+                selected[rigIndex] = qList.get('otters');
+                qList.remove('drop');
+                players = qList.values();
+                rigIndex++;
+                rigged++;
+            }
+
             //Select 10 payers randomly. Store in selected[].
             for (var i = 0; i < cfg.qSize; i++) {
                 selected[i] = players[random(0, players.length - 1)];
