@@ -162,9 +162,7 @@ inm.on("message", function(channel, message) {
 //Reports relevant app metrics to datadog
 var reportMetrics = cron.job("*/5 * * * * *", function() {
     var memUsage = process.memoryUsage();
-    var cpuUsage = process.cpuUsage();
     metrics.gauge('sys.memory', memUsage.rss);
-    //metrics.gauge('sys.cpu', cpuUsage.user);
     metrics.gauge('players.online', pList.count());
     metrics.gauge('players.queued', qList.count());
     metrics.gauge('servers.count', onlServers.size());
