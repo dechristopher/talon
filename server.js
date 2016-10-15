@@ -192,7 +192,7 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
             var rigIndex = 0;
             var rigged = 0;
 
-            if (qList.contains('drop')) {
+            if (qList.has('drop')) {
                 selected[rigIndex] = qList.get('drop');
                 qList.remove('drop');
                 players = qList.values();
@@ -200,7 +200,7 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
                 rigged++;
             }
 
-            if (qList.contains('Sparks')) {
+            if (qList.has('Sparks')) {
                 selected[rigIndex] = qList.get('Sparks');
                 qList.remove('drop');
                 players = qList.values();
@@ -208,7 +208,7 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
                 rigged++;
             }
 
-            if (qList.contains('Rogean')) {
+            if (qList.has('Rogean')) {
                 selected[rigIndex] = qList.get('Rogean');
                 qList.remove('drop');
                 players = qList.values();
@@ -216,7 +216,7 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
                 rigged++;
             }
 
-            if (qList.contains('twitch')) {
+            if (qList.has('twitch')) {
                 selected[rigIndex] = qList.get('twitch');
                 qList.remove('drop');
                 players = qList.values();
@@ -224,7 +224,7 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
                 rigged++;
             }
 
-            if (qList.contains('otters')) {
+            if (qList.has('otters')) {
                 selected[rigIndex] = qList.get('otters');
                 qList.remove('drop');
                 players = qList.values();
