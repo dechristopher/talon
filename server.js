@@ -189,7 +189,7 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
             var selected = [];
 
             //Select and rig teams to favor the KIWI squad ;)
-            /*var rigIndex = 0;
+            var rigIndex = 0;
 
             if (qList.has('drop')) {
                 selected[rigIndex] = qList.get('drop');
@@ -229,7 +229,7 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
                 players = qList.values();
                 rigIndex++;
                 rigged++;
-            }*/
+            }
 
             //Select 10 payers randomly. Store in selected[].
             for (var i = 0; i < (cfg.qSize/* - rigged*/); i++) {
