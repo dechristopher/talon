@@ -196,7 +196,6 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
                 qList.remove('drop');
                 players = qList.values();
                 rigIndex++;
-                rigged++;
             }
 
             if (qList.has('Sparks')) {
@@ -204,7 +203,6 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
                 qList.remove('drop');
                 players = qList.values();
                 rigIndex++;
-                rigged++;
             }
 
             if (qList.has('Rogean')) {
@@ -212,7 +210,6 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
                 qList.remove('drop');
                 players = qList.values();
                 rigIndex++;
-                rigged++;
             }
 
             if (qList.has('twitch')) {
@@ -220,7 +217,6 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
                 qList.remove('drop');
                 players = qList.values();
                 rigIndex++;
-                rigged++;
             }
 
             if (qList.has('otters')) {
@@ -228,7 +224,6 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
                 qList.remove('drop');
                 players = qList.values();
                 rigIndex++;
-                rigged++;
             }
 
             //Select 10 payers randomly. Store in selected[].
