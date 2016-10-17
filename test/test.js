@@ -6,6 +6,7 @@ const party = require('../modules/party.js');
 const cfg = require('../modules/cfg.js');
 const sms = require('../modules/sms.js');
 const redis = require('redis');
+const git = require('git-last-commit');
 
 var testCase = require('nodeunit').testCase;
 var rcon;
