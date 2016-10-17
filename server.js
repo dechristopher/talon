@@ -227,7 +227,7 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
             }
 
             //Select 10 payers randomly. Store in selected[].
-            for (var i = 0; i < (cfg.qSize/* - rigged*/); i++) {
+            for (var i = (0 + rigIndex); i < (cfg.qSize); i++) {
                 selected[i] = players[random(0, players.length - 1)];
                 var tp = qList.search(selected[i]);
                 qList.remove(tp);
