@@ -8,6 +8,11 @@ const sms = require('../modules/sms.js');
 const redis = require('redis');
 const git = require('git-last-commit');
 
+git.getLastCommit(function(err, commit) {
+  // read commit object properties
+  sms.sendAdminSms('[KIWI] Commits pushed to Talon repo. Running test suite >> ' + commit.subject);
+});
+
 var testCase = require('nodeunit').testCase;
 var rcon;
 
