@@ -190,7 +190,6 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
 
             //Select and rig teams to favor the KIWI squad ;)
             /*var rigIndex = 0;
-            var rigged = 0;
 
             if (qList.has('drop')) {
                 selected[rigIndex] = qList.get('drop');
