@@ -10,8 +10,6 @@ const redis = require('redis');
 var testCase = require('nodeunit').testCase;
 var rcon;
 
-sms.sendAdminSms('[KIWI] Commits pushed to Talon repo. Running test suite.');
-
 exports['Test user generator factory'] = function(test) {
     test.expect(9);
 
