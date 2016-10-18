@@ -31,5 +31,6 @@ COPY ./modules /usr/src/app/
 COPY ./logs /usr/src/app/
 COPY ./conf /usr/src/app/
 
+# Open talonPanel port
 EXPOSE 3000
 CMD [ "npm", "start" ]
