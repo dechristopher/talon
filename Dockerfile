@@ -33,4 +33,6 @@ COPY ./conf /usr/src/app/
 
 # Open talonPanel port
 EXPOSE 3000
+
+# Run Talon
 CMD [ "npm", "start" ]
