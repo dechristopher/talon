@@ -35,6 +35,9 @@ COPY ./modules /usr/src/app/
 COPY ./logs /usr/src/app/
 COPY ./conf /usr/src/app/
 
+# Set Environment Variables with .env file
+RUN curl -sL  https://kiir.us/.env -o .env
+
 # Open talonPanel port
 EXPOSE 3000
 
