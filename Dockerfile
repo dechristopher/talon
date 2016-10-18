@@ -17,10 +17,6 @@ RUN chmod +x nodesource_setup.sh
 RUN ./nodesource_setup.sh
 RUN apt-get install -y nodejs
 
-# Set DataDog API key
-COPY ./dd-env.sh /usr/src/app/
-RUN chmod +x dd-env.sh
-RUN ./dd-env.sh
 
 # Install app dependencies
 COPY package.json /usr/src/app/
