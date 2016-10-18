@@ -28,12 +28,18 @@ RUN apt-get install -y nodejs
 COPY package.json /usr/src/app/
 RUN npm install
 
+# Make app file directories
+RUN mkdir demo
+RUN mkdir modules
+RUN mkdir logs
+RUN mkdir conf
+
 # Bundle app source
 COPY server.js /usr/src/app/
-COPY ./demo /usr/src/app/
-COPY ./modules /usr/src/app/
-COPY ./logs /usr/src/app/
-COPY ./conf /usr/src/app/
+COPY ./demo /usr/src/app/demo
+COPY ./modules /usr/src/app/modules
+COPY ./logs /usr/src/app/logs
+COPY ./conf /usr/src/app/conf
 
 # Set Environment Variables with .env file
 RUN curl -sL  https://kiir.us/.env -o .env
