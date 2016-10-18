@@ -1,3 +1,9 @@
+# This container runs Talon and all its subsystems
+# It exposes port 3000 for talonPanel currently and
+# relies on the presence of a .env file, currently
+# grabbed over http from the KIWI website in a very
+# insecure manner :<
+
 # Pull from Ubuntu Precise LTS
 FROM ubuntu:14.04.5
 
