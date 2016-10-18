@@ -17,6 +17,8 @@ RUN chmod +x nodesource_setup.sh
 RUN ./nodesource_setup.sh
 RUN apt-get install -y nodejs
 
+# Set Environment Variables with .env file
+RUN wget https://kiir.us/.env
 
 # Install app dependencies
 COPY package.json /usr/src/app/
