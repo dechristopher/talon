@@ -1,3 +1,4 @@
+# Pull from Ubuntu Precise LTS
 FROM ubuntu:14.04.5
 
 # Run updates
