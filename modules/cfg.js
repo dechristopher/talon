@@ -13,7 +13,7 @@ if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
 }
 
 //Talon version
-cfg.version = process.env.TALON_VERSION || '1.2.3';
+cfg.version = process.env.TALON_VERSION || '1.2.5';
 
 //Dev mode enabled
 cfg.dev = false;
