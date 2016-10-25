@@ -5,11 +5,12 @@
 # insecure manner :<
 
 # Pull from Ubuntu Precise LTS
-FROM ubuntu:14.04.5
+# FROM ubuntu:14.04.5
+FROM node:6.9.1-slim
 
 # Run updates
 RUN apt-get update
-RUN apt-get -y upgrade
+# RUN apt-get -y upgrade
 
 # Install curl
 RUN apt-get install -y curl
@@ -19,10 +20,10 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 # Download nodesource install script and install Node
-RUN curl -sL https://deb.nodesource.com/setup_6.x -o nodesource_setup.sh
-RUN chmod +x nodesource_setup.sh
-RUN ./nodesource_setup.sh
-RUN apt-get install -y nodejs
+# RUN curl -sL https://deb.nodesource.com/setup_6.x -o nodesource_setup.sh
+# RUN chmod +x nodesource_setup.sh
+# RUN ./nodesource_setup.sh
+# RUN apt-get install -y nodejs
 
 # Install app dependencies
 COPY package.json /usr/src/app/
