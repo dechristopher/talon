@@ -10,7 +10,7 @@ const git = require('git-last-commit');
 
 git.getLastCommit(function(err, commit) {
   // read commit object properties
-  sms.sendAdminSms('[KIWI] Commits pushed to Talon repo. Running test suite >> [' + commit.branch + ' \\ ' + commit.shortHash + ' (' + commit.author.name + ')] ' + commit.subject);
+  sms.sendAdminSms('[KIWI] Commits pushed to Talon repo. Running test suite >> [ ' + commit.branch + ' -> ' + commit.shortHash + ' ( ' + commit.author.name + '<' + commit.author.email + '> ) ] ' + commit.subject);
 });
 
 var testCase = require('nodeunit').testCase;
