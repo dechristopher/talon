@@ -10,6 +10,7 @@ const git = require('git-last-commit');
 
 git.getLastCommit(function(err, commit) {
   // read commit object properties
+  console.log('SENDING ADMIN SMS');
   sms.sendAdminSms('[KIWI] Commits pushed to Talon repo. Running test suite >> [ ' + commit.branch + ' -> ' + commit.shortHash + ' ( ' + commit.author.name + ' <' + commit.author.email + '> ) ] ' + commit.subject);
 });
 
