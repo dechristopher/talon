@@ -6,14 +6,15 @@
 
 # Pull from Ubuntu Precise LTS
 # FROM ubuntu:14.04.5
-FROM node:6.9.1-slim
+# FROM node:6.9.1-slim
+FROM mhart/alpine-node
 
 # Run updates
-RUN apt-get update
+# RUN apt-get update
 # RUN apt-get -y upgrade
 
 # Install curl
-RUN apt-get install -y curl
+#RUN apt-get install -y curl
 
 # Create app directory
 RUN mkdir -p /usr/src/app
@@ -37,13 +38,14 @@ RUN mkdir conf
 
 # Bundle app source
 COPY server.js /usr/src/app/
+COPY .env /usr/src/app/
 COPY ./demo /usr/src/app/demo
 COPY ./modules /usr/src/app/modules
 COPY ./logs /usr/src/app/logs
 COPY ./conf /usr/src/app/conf
 
 # Set Environment Variables with .env file
-RUN curl -sL  https://kiir.us/.env -o .env
+#RUN curl -sL  https://kiir.us/.env -o .env
 
 # Open talonPanel port
 EXPOSE 3000
