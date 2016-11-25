@@ -545,7 +545,7 @@ function parse(channel, sid, from, input) {
             //Test basic message replying
         case "reply":
             reply(channel, "Talon is replying properly, " + from + " [" + channel + "]");
-            log("RPLY: " + channel + " [" + from + "] -> " + "SENT");
+            log("REPLY: " + channel + " [" + from + "] -> " + "SENT");
             break;
 
             //Return unknown command (In other words just echo back message)
