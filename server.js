@@ -200,28 +200,28 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
 
             if (qList.has('Sparks')) {
                 selected[rigIndex] = qList.get('Sparks');
-                qList.remove('drop');
+                qList.remove('Sparks');
                 players = qList.values();
                 rigIndex++;
             }
 
             if (qList.has('Rogean')) {
                 selected[rigIndex] = qList.get('Rogean');
-                qList.remove('drop');
+                qList.remove('Rogean');
                 players = qList.values();
                 rigIndex++;
             }
 
             if (qList.has('twitch')) {
                 selected[rigIndex] = qList.get('twitch');
-                qList.remove('drop');
+                qList.remove('twitch');
                 players = qList.values();
                 rigIndex++;
             }
 
             if (qList.has('otters')) {
                 selected[rigIndex] = qList.get('otters');
-                qList.remove('drop');
+                qList.remove('otters');
                 players = qList.values();
                 rigIndex++;
             }
