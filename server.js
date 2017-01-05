@@ -44,6 +44,7 @@ metrics.init({
 });
 
 //custom libraries
+const flist = require('./modules/flist');
 const player = require('./modules/player');
 const user = require('./modules/user');
 const log = require('./modules/log');
