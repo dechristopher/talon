@@ -668,7 +668,7 @@ function parseServerAPIResponse(response) {
 
 //Gets most recent announcement every 45 seconds and passes it to sendAnnouncement()
 var getAnnouncement = cron.job("*/45 * * * * *", function() {
-    requestify.get('http://kiir.us/api.php/?cmd=ann&key=2F6E713BD4BA889A21166251DEDE9').then(response => sendAnnouncement(response.getBody()));
+    requestify.get('https://kiir.us/api.php/?cmd=ann&key=' + cfg.api).then(response => sendAnnouncement(response.getBody()));
 });
 
 //Sends out announcement to all connected clients
@@ -923,7 +923,7 @@ app.get('/kick/:username/refresh', function(req, res, next) {
 app.post('/ann', function(req, res, next) {
     try {
         log(TP + '[' + req.ip + '] POST /ann');
-        requestify.get('http://kiir.us/api.php/?cmd=setann&key=2F6E713BD4BA889A21166251DEDE9&ann=' + req.body.announcement).then(response => sendAnnouncement(response.getBody()));
+        requestify.get('https://kiir.us/api.php/?cmd=setann&key=' + cfg.api + '&ann=' + req.body.announcement).then(response => sendAnnouncement(response.getBody()));
         res.redirect('http://' + req.hostname + ':' + cfg.port);
     } catch (e) {
         next(e);
