@@ -95,21 +95,24 @@ if (process.argv.length > 2) {
     if (process.argv[2] == "dev") {
         log("~ D E V E L O P M E N T    M O D E ~");
         cfg.region = 0;
-        populateServers(cfg.servers[cfg.region], servers);
+        flist.fill(cfg.servers[cfg.region], servers, 'Servers', ERROR_NO_SERV_FILE);
         cfg.backend = "beak.tech";
         cfg.dev = true;
     } else {
-        populateServers(cfg.servers[cfg.region], servers);
+        flist.fill(cfg.servers[cfg.region], servers, 'Servers', ERROR_NO_SERV_FILE);
     }
     if (process.argv[2] == "nofw") {
         cfg.firewallEnabled = false;
     }
 } else {
-    populateServers(cfg.servers[cfg.region], servers);
+    flist.fill(cfg.servers[cfg.region], servers, 'Servers', ERROR_NO_SERV_FILE);
 }
 
+//Update total servers number
+totS = servers.size();
+
 //Populate allowed panel IPs from list
-populateFirewallIPs('conf/ips.txt');
+flist.fill('conf/ips.txt', firewallIPs, 'Firewall IPs', ERROR_NO_FWIP_FILEs);
 
 //Placeholder variable for redis connection
 var inm = redis.createClient(6379, cfg.backend);
