@@ -300,10 +300,10 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
                     log(Q + '[POP] [S] >> ' + server + ' : ' + pass);
                     //Pop the queue for all selected players
                     for (var k = 0; k < selected.length; k++) {
-                        log(Q + '[POP] [P] >> ' + selected[k].channel + ' - ' + selected[k].steamid + ' - ' + selected[k].nm);
+                        log(Q + '[POP] [P] >> ' + selected[k].channel + ' - ' + selected[k].sid + ' - ' + selected[k].nm);
                         reply(selected[k].channel, "p~" + server + "~" + pass);
                     }
-                    //Else if the call fails
+                //Else if the call fails
                 } else {
                     //Call 911
                     log(Q + '[POP] [S] FAILED >> ' + server);
