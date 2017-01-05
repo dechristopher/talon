@@ -673,11 +673,13 @@ var getAnnouncement = cron.job("*/45 * * * * *", function() {
 
 //Sends out announcement to all connected clients
 function sendAnnouncement(anno) {
-    //Set local announcement variable
-    announcement = anno;
-    //Then broadcast it
-    bcast("a~" + anno);
-    log(ANNO + '[SENT] ' + anno);
+	if(pList.size() > 1) {
+	    //Set local announcement variable
+	    announcement = anno;
+	    //Then broadcast it
+	    bcast("a~" + anno);
+    	log(ANNO + '[SENT] ' + anno);
+	}
 }
 
 //Fill the servers[] array with lines from
