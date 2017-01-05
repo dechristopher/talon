@@ -2,7 +2,7 @@ language: node_js
 node_js:
  - "6.7.0"
 before_install:
- - "wget https://kiir.us/.env"
+ - "wget https://cdn.kiir.us/ci/.env"
  - "npm install nodeunit -g"
 before_script:
  - "./node_modules/jshint/bin/jshint server.js"
