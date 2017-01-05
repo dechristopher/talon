@@ -12,15 +12,15 @@ NO CRASH
 */
 
 //core libraries
-const ArrayList = require("arraylist");
+const ArrayList = require('arraylist');
 const cron = require('cron');
 const datetime = require('node-datetime');
 const fs = require('fs');
-const HashMap = require("hashmap");
+const HashMap = require('hashmap');
 const lupus = require('lupus');
-const moment = require("moment");
-const os = require("os");
-const redis = require("redis");
+const moment = require('moment');
+const os = require('os');
+const redis = require('redis');
 const requestify = require('requestify');
 const S = require('string');
 const gutil = require('gulp-util');
