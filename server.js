@@ -686,41 +686,6 @@ function sendAnnouncement(anno) {
 	}
 }
 
-//Fill the servers[] array with lines from
-//a given text file
-function populateServers(file, list) {
-    fs.exists(file, function(exists) {
-        if (exists) {
-            fs.readFileSync(file).toString().split('\n').forEach(function(line) {
-                if (line !== '') {
-                    list.add(line);
-                }
-            });
-            totS = servers.size();
-            log('FILLED: [ ' + list + ' ]');
-        } else {
-            throw new Error(ERROR_NO_SERV_FILE + file);
-        }
-    });
-}
-
-//Fill the firewallIPs[] array with lines from
-//a given text file
-function populateFirewallIPs(file) {
-    fs.exists(file, function(exists) {
-        if (exists) {
-            fs.readFileSync(file).toString().split('\n').forEach(function(line) {
-                if (line !== '') {
-                    firewallIPs.add(line);
-                }
-            });
-            log('FIREWALL IPs: [ ' + firewallIPs + ' ]');
-        } else {
-            throw new Error(ERROR_NO_FWIP_FILE + file);
-        }
-    });
-}
-
 //Generate a random integer within
 //an interval inclusively
 function random(min, max) {
