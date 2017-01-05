@@ -441,7 +441,7 @@ function parse(channel, sid, from, input) {
             //Set their HBCheck to true for another 30 seconds
             if (pList.has(from)) {
                 hbCheck.set(from, true);
-                log(HB + '>> ' + from);
+                log(HB + '>> ' + from + webPrintStar(isPlayerInQueue(from)));
                 reply(channel + "-hb", "hb");
             }
             break;
