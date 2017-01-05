@@ -1,6 +1,7 @@
-/**
- * Created by Drew on 4/22/2016.
+/*
+Created by Andrew DeChristopher <drew@kiir.us> on 4/22/2016.
  */
+
 module.exports = Player;
 
 function Player(n, s, c) {
