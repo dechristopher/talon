@@ -88,31 +88,35 @@ var onlServers = new ArrayList();
 var firewallIPs = new ArrayList();
 
 //Total number of servers
-var totS = servers.size();
+var totS = 0;
+
+//Total number of firewall IPs
+var totIP = 0;
 
 //Populate server pool and connect to REDIS
 if (process.argv.length > 2) {
     if (process.argv[2] == "dev") {
         log("~ D E V E L O P M E N T    M O D E ~");
         cfg.region = 0;
-        flist.fill(cfg.servers[cfg.region], servers, 'Servers', ERROR_NO_SERV_FILE);
+        flist.fill(cfg.servers[cfg.region], servers, totS, 'Servers', ERROR_NO_SERV_FILE);
         cfg.backend = "beak.tech";
         cfg.dev = true;
+        cfg.firewallEnabled = false;
     } else {
-        flist.fill(cfg.servers[cfg.region], servers, 'Servers', ERROR_NO_SERV_FILE);
+        flist.fill(cfg.servers[cfg.region], servers, totS, 'Servers', ERROR_NO_SERV_FILE);
     }
     if (process.argv[2] == "nofw") {
         cfg.firewallEnabled = false;
     }
 } else {
-    flist.fill(cfg.servers[cfg.region], servers, 'Servers', ERROR_NO_SERV_FILE);
+    flist.fill(cfg.servers[cfg.region], servers, totS, 'Servers', ERROR_NO_SERV_FILE);
 }
 
 //Update total servers number
 totS = servers.size();
 
 //Populate allowed panel IPs from list
-flist.fill('conf/ips.txt', firewallIPs, 'Firewall IPs', ERROR_NO_FWIP_FILEs);
+flist.fill('conf/ips.txt', firewallIPs, totIP, 'Firewall IPs', ERROR_NO_FWIP_FILE);
 
 //Placeholder variable for redis connection
 var inm = redis.createClient(6379, cfg.backend);
@@ -327,6 +331,7 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
 //Checks server status every 5 seconds for matches still
 //going on and adds/removes them from onlServers[]
 var parseServers = cron.job("*/5 * * * * *", function() {
+    totS = servers.size();
     //log("[S] Server Query...");
     //console.log(onlServers);
     lupus(0, totS, function(n) {
@@ -341,6 +346,7 @@ var parseServers = cron.job("*/5 * * * * *", function() {
         //Get hostname and players (ignore JSHint BS)
         requestify.get('https://kiir.us/api.php/?key=<apikey>&ip=' + ip + '&cmd=both').then(response => parseServerAPIResponse(response));
     }*/
+    //log(totS + ' - ' +servers);
 });
 
 //Checks to see if a user has sent heartbeats in the past
