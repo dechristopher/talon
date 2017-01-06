@@ -321,10 +321,10 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
             //Update currQ to reflect queue pop
             currQ = qList.count();
         } else {
-            log(Q + '{S: ' + currS + '/' + totS + '}(P: ' + currQ + '/' + cfg.qSize + ')->> Waiting for players');
+            log(Q + '(S: ' + currS + '/' + totS + ') :: (P: ' + currQ + '/' + cfg.qSize + ') --> Waiting...');
         }
     } else {
-        log(Q + '{S: ' + currS + '/' + totS + '}(P: ' + currQ + '/' + cfg.qSize + ')->> No servers');
+        log(Q + '(S: ' + currS + '/' + totS + ') :: (P: ' + currQ + '/' + cfg.qSize + ') --> No servers!');
     }
 });
 
