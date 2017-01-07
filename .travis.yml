@@ -1,4 +1,6 @@
 language: node_js
+notifications:
+  slack: kiirus:kYXYWFfVV7FGS9R0rMj1l11a
 node_js:
  - "6.7.0"
 before_install:
