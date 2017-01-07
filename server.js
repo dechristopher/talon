@@ -44,6 +44,7 @@ metrics.init({
 });
 
 //custom libraries
+const util = require('./modules/util');
 const flist = require('./modules/flist');
 const player = require('./modules/player');
 const user = require('./modules/user');
@@ -56,6 +57,7 @@ const sms = require('./modules/sms');
 //Define ERRORS and other constants
 const ERROR_NO_FWIP_FILE = '[' + gutil.colors.red('ERROR') + '] Given ip file does not exist: ';
 const ERROR_NO_SERV_FILE = '[' + gutil.colors.red('ERROR') + '] Given servers file does not exist: ';
+const TALN = '[' + gutil.colors.magenta('TALN') + '] ';
 const SRV = '[' + gutil.colors.cyan('S') + '] ';
 const TP = '[' + gutil.colors.blue('TP') + '] ';
 const Q = '[' + gutil.colors.green('Q') + '] ';
@@ -63,6 +65,12 @@ const HB = '[' + gutil.colors.yellow('HB') + '] ';
 const HBC = '[' + gutil.colors.yellow('HBC') + '] ';
 const ANNO = '[' + gutil.colors.magenta('A') + '] ';
 const LOGIN = '[' + gutil.colors.green('LOGIN') + '] ';
+
+//Has already connected
+var connectYet = false;
+
+//Number of backend connection retries
+var connectRet = 0;
 
 //Local announcement variable
 var announcement = '';
@@ -96,7 +104,7 @@ var totIP = 0;
 //Populate server pool and connect to REDIS
 if (process.argv.length > 2) {
     if (process.argv[2] == "dev") {
-        log("~ D E V E L O P M E N T    M O D E ~");
+        log(TALN + "D E V E L O P M E N T    M O D E");
         cfg.region = 0;
         flist.fill(cfg.servers[cfg.region], servers, totS, 'Servers', ERROR_NO_SERV_FILE);
         cfg.backend = "beak.tech";
@@ -126,32 +134,48 @@ if (cfg.dev === false) {
     inm.auth(cfg.auth);
 }
 
-//Begin...
-process.title = 'talon-v' + cfg.version;
+log(TALN + 'TALON v' + cfg.version);
 
-console.log("\n" +
-    " ▄▄▄█████▓ ▄▄▄       ██▓     ▒█████   ███▄    █ \n" +
-    " ▓  ██▒ ▓▒▒████▄    ▓██▒    ▒██▒  ██▒ ██ ▀█   █ \n" +
-    " ▒ ▓██░ ▒░▒██  ▀█▄  ▒██░    ▒██░  ██▒▓██  ▀█ ██▒\n" +
-    " ░ ▓██▓ ░ ░██▄▄▄▄██ ▒██░    ▒██   ██░▓██▒  ▐▌██▒\n" +
-    "   ▒██▒ ░  ▓█   ▓██▒░██████▒░ ████▓▒░▒██░   ▓██░\n" +
-    "   ▒ ░░    ▒▒   ▓▒█░░ ▒░▓  ░░ ▒░▒░▒░ ░ ▒░   ▒ ▒ \n" +
-    "     ░      ▒   ▒▒ ░░ ░ ▒  ░  ░ ▒ ▒░ ░ ░░   ░ ▒░\n" +
-    "   ░        ░   ▒     ░ ░   ░ ░ ░ ▒     ░   ░ ░ \n" +
-    "                ░  ░    ░  ░    ░ ░           ░ \n\n" +
-    " Copyright 2016 Kiirus Technologies Inc."
-);
+log(TALN + 'Connecting to backend...');
 
-log("~ TALON v" + cfg.version);
+var retryConnect = cron.job("*/2 * * * * *", function() {
+    if(connectRet == 5) {
+        log(TALN + 'FAILED TO CONNECT TO BACKEND!');
+        log(TALN + 'Shutting down...');
+        process.exit();
+    }
+    log(TALN + 'Connecting to backend...');
+    connectRet++;
+});
+
+retryConnect.start();
+
+inm.on('connect', function() {
+    if(!connectYet){
+        //Begin...
+        process.title = 'talon-v' + cfg.version;
+
+		util.ascii();
+        log(TALN + 'Copyright 2016-2017 KIWI GAMING (of Kiirus Technologies Inc.)');
+
+        //log('Connected!');
+        retryConnect.stop();
+
+        //Start timers and program loop
+        startLoop();
+
+        connectYet = true;
+    }
+});
 
 //Subscribe local talon redis client to global message queue
-inm.on("subscribe", function(channel, count) {
+inm.on('subscribe', function(channel, count) {
     pList.set("talon", new player("talon", "STEAM_0:1:39990", "ThIsIsAcHaNnElId"));
-    log("~ Listening: " + channel + os.EOL);
+    log(TALN + "Listening: " + channel + os.EOL);
 });
 
 //Run this callback every time a message is received from a client
-inm.on("message", function(channel, message) {
+inm.on('message', function(channel, message) {
     //Split the message into parts
     var parts = message.split("￮");
     var chan = parts[0];
@@ -800,16 +824,27 @@ function webKickPlayer(username) {
     log(TP + '[KICK] ' + username);
 }
 
-//Starts message listener
-inm.subscribe("talon");
-
 //Starts tasks
-//showOnline.start();
-parseQueue.start();
-parseServers.start();
-parseHeartbeats.start();
-getAnnouncement.start();
-reportMetrics.start();
+function startLoop() {
+    //showOnline.start();
+    parseQueue.start();
+    parseServers.start();
+    parseHeartbeats.start();
+    getAnnouncement.start();
+    reportMetrics.start();
+
+    //Starts message listener
+    inm.subscribe("talon");
+
+    //Log TP express server start
+    server.listen(cfg.port, function() {
+        log(TP + 'talonPanel μSrvc started.');
+        log(TP + 'Express server started.');
+        /*db.select(1, function () {
+            console.log('[SYS] Connected to database');
+        });*/
+    });
+}
 
 //BEGIN talonPanel shite
 
@@ -827,15 +862,6 @@ function firewall(ip) {
         return true;
     }
 }
-
-//Log express server start
-server.listen(cfg.port, function() {
-    log(TP + 'talonPanel μSrvc started.');
-    log(TP + 'Express server started.');
-    /*db.select(1, function () {
-        console.log('[SYS] Connected to database');
-    });*/
-});
 
 //Use body-parser to get POST data from requests
 app.use(bodyParser.json()); // to support JSON-encoded bodies
