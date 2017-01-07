@@ -1,5 +1,8 @@
 const fs = require('fs');
 const log = require('./log');
+const gutil = require('gulp-util');
+
+const TALN = '[' + gutil.colors.magenta('TALN') + '] ';
 
 var flist = {};
 
@@ -12,7 +15,7 @@ flist.fill = function(file, list, numSrv, displayname, err) {
                     list.add(line);
                 }
             });
-            log('FILLED ' + displayname + ': [ ' + list + ' ]');
+            log(TALN + 'FILLED ' + displayname + ': [ ' + list + ' ]');
 			numSrv = list.size();
         } else {
             throw new Error(err + file);
