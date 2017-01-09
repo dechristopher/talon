@@ -475,7 +475,7 @@ function parse(channel, sid, from, input) {
             //Set their HBCheck to true for another 30 seconds
             if (pList.has(from)) {
                 hbCheck.set(from, true);
-                log(HB + '>> ' + from + webPrintStar(isPlayerInQueue(from)));
+                log(HB + '>> ' + from + boolStar(isPlayerInQueue(from)));
                 reply(channel + "-hb", "hb");
             }
             break;
@@ -740,7 +740,7 @@ function isPlayerInQueue(name) {
 }
 
 //Prints an asterisk if bool
-function webPrintStar(bool) {
+function boolStar(bool) {
     if (bool) {
         return '*';
     } else {
@@ -756,9 +756,9 @@ function webPlayerList(refresh) {
         pList.forEach(function(value, key) {
             var queued = isPlayerInQueue(key);
             if (refresh) {
-                list += "<b>-</b> " + webPrintStar(queued) + key + " ( " + value.sid + " || " + value.channel + " ) ( <a href='http://steamcommunity.com/profiles/" + sidTo64(value.sid) + "'>Steam Profile</a> ) [ <a href='/kick/" + key + "/refresh'>KICK</a> ]<br />";
+                list += "<b>-</b> " + boolStar(queued) + key + " ( " + value.sid + " || " + value.channel + " ) ( <a href='http://steamcommunity.com/profiles/" + sidTo64(value.sid) + "'>Steam Profile</a> ) [ <a href='/kick/" + key + "/refresh'>KICK</a> ]<br />";
             } else {
-                list += "<b>-</b> " + webPrintStar(queued) + key + " ( " + value.sid + " || " + value.channel + " ) ( <a href='http://steamcommunity.com/profiles/" + sidTo64(value.sid) + "'>Steam Profile</a> ) [ <a href='/kick/" + key + "'>KICK</a> ]<br />";
+                list += "<b>-</b> " + boolStar(queued) + key + " ( " + value.sid + " || " + value.channel + " ) ( <a href='http://steamcommunity.com/profiles/" + sidTo64(value.sid) + "'>Steam Profile</a> ) [ <a href='/kick/" + key + "'>KICK</a> ]<br />";
             }
         });
     } else {
