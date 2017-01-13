@@ -741,11 +741,7 @@ function isPlayerInQueue(name) {
 
 //Prints an asterisk if bool
 function boolStar(bool) {
-    if (bool) {
-        return '*';
-    } else {
-        return '';
-    }
+    return (bool ? "*" : "");
 }
 
 //returns a formatted list of '-username [steamid] = [channel] = [hwid]'
