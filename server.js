@@ -65,6 +65,7 @@ const HB = '[' + gutil.colors.yellow('HB') + '] ';
 const HBC = '[' + gutil.colors.yellow('HBC') + '] ';
 const ANNO = '[' + gutil.colors.magenta('A') + '] ';
 const LOGIN = '[' + gutil.colors.green('LOGIN') + '] ';
+const LOGOUT = '[' + gutil.colors.magenta('LOGOUT') + '] ';
 
 //Has already connected
 var connectYet = false;
@@ -444,13 +445,13 @@ function parse(channel, sid, from, input) {
             //Then set their playerID and add them to HBC
             pList.set(p.nm, p);
             hbCheck.set(p.nm, true);
-            log(LOGIN + p.nm + ":[" + p.channel + " - " + p.sid + "]");
+            log(LOGIN + p.nm + ' : [' + p.channel + ' - ' + p.sid + ']');
             metrics.increment('talon.user.login');
             break;
 
             //User logs out
         case "lo":
-            //Rape && pillage their user object
+            //Pillage their user object
             if (pList.has(from)) {
                 pList.remove(from);
                 if (qList.has(from)) {
@@ -459,8 +460,8 @@ function parse(channel, sid, from, input) {
                     currQ = qList.count();
                     bcast("q~" + currQ + "~" + currS);
                     bcast("l~" + currQ + "~" + from);
-                    log(from + " >> LOG OUT");
                 }
+				log(LOGOUT + from + ' : [' + channel + ' - ' + sid + ']');
             }
             break;
 
