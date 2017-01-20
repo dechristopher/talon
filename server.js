@@ -715,12 +715,6 @@ function sendAnnouncement(anno) {
 	}
 }
 
-//Generate a random integer within
-//an interval inclusively
-function random(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 //Wrapper for indexOf
 //Checks if a string A contains an
 //instance of string B
