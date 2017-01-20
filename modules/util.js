@@ -35,4 +35,9 @@ util.contains = function(a, b) {
     return str(a).contains(b);
 }
 
+//return steamid64 representation of normal steamid
+util.sidTo64 = function(steamid) {
+    return sidconvert.convertTo64(steamid);
+}
+
 module.exports = util;
