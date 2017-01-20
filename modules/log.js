@@ -9,11 +9,12 @@ const LOG = '[' + gutil.colors.blue('LOG') + '] ';
 function log(message, logname) {
     var time = datetime.create().format('m-d-y H:M:S');
     var today = datetime.create().format('m-d-y');
-    var file = "";
+    var file = '';
+    var line = '';
     if(logname === undefined){
-        file = "logs/" + today + ".log";
+        file = 'logs/' + today + '.log';
     }else{
-        file = "logs/" + today + logname + ".log";
+        file = 'logs/' + today + '-' + logname + '.log';
     }
     console.log('[' + time + '] ' + message);
 
