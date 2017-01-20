@@ -1,5 +1,7 @@
 const log = require('./log');
 const gutil = require('gulp-util');
+const str = require('string');
+const sidconvert = require('steamidconvert')();
 
 const TALN = '[' + gutil.colors.magenta('TALN') + '] ';
 
