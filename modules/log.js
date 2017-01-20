@@ -13,24 +13,27 @@ function log(message, logname) {
     var line = '';
     if(logname === undefined){
         file = 'logs/' + today + '.log';
+		line = '[' + time + '] ' + message;
     }else{
         file = 'logs/' + today + '-' + logname + '.log';
+		line = '[' + time + '][' + logname + ']' + message;
     }
-    console.log('[' + time + '] ' + message);
+
+    console.log(line);
 
     fs.exists(file, function(exists) {
         if (exists) {
-            fs.appendFile(file, '[' + time + '] ' + message + os.EOL, function(err) {
+            fs.appendFile(file, line + os.EOL, function(err) {
                 if (err) {
-                    return console.log("FILE LOGGING FAILED AT " + time + "for MSG: " + message);
+                    return console.log(LOG + "FILE LOGGING FAILED AT " + time + "for MSG: " + line);
                 }
             });
         } else {
             fs.writeFile(file, 'BEGIN TALON LOG FOR ' + today + os.EOL, function(err) {
                 if (err) {
-                    return console.log("FILE CREATION FAILED AT " + time + "for FILE: " + file);
+                    return console.log(LOG + "LOG FILE CREATION FAILED AT " + time + "for FILE: " + file);
                 }
-                console.log('Created new log >> ' + file);
+                console.log(LOG + 'Created new log >> ' + file);
             });
         }
     });
