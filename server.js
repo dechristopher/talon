@@ -656,7 +656,7 @@ function procQueue(user, channel) {
 //online status
 function parseServerAPIResponse(response) {
     var r, hostname, ip, players;
-    if (contains(response.getBody(), "~")) {
+    if (util.contains(response.getBody(), "~")) {
         //console.log(response.getBody());
         r = response.getBody().split('~');
         ip = r[0];
@@ -666,7 +666,7 @@ function parseServerAPIResponse(response) {
         //
         // 108.61.129.168:27015~KIWI::OFF~0
         //
-        if (((players !== "1" || contains(hostname, "LIVE")) || contains(response.getBody(), "offline")) && onlServers.contains(ip)) {
+        if (((players !== "1" || util.contains(hostname, "LIVE")) || util.contains(response.getBody(), "offline")) && onlServers.contains(ip)) {
             onlServers.remove(ip);
             log(SRV + '[-] > ' + ip);
         }
