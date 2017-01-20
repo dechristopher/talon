@@ -720,11 +720,6 @@ function isPlayerInQueue(name) {
     return qList.has(name);
 }
 
-//Prints an asterisk if bool
-function boolStar(bool) {
-    return (bool ? "*" : "");
-}
-
 //returns a formatted list of '-username [steamid] = [channel] = [hwid]'
 //bool refresh to add /refresh in the end of the kick URL
 function webPlayerList(refresh) {
