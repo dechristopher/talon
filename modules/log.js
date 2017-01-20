@@ -1,6 +1,9 @@
 const datetime = require('node-datetime');
 const fs = require('fs');
+const gutil = require('gulp-util');
 const os = require('os');
+
+const LOG = '[' + gutil.colors.blue('LOG') + '] ';
 
 //Wraps console.log for printing date in front
 function log(message, logname) {
