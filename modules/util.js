@@ -40,4 +40,9 @@ util.sidTo64 = function(steamid) {
     return sidconvert.convertTo64(steamid);
 }
 
+//Returns an asterisk if true
+util.boolStar = function(bool) {
+    return (bool ? "*" : "");
+}
+
 module.exports = util;
