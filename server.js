@@ -259,14 +259,14 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
 
             //Select 10 payers randomly. Store in selected[].
             for (var i = (0 /*+ rigIndex*/); i < (cfg.qSize); i++) {
-                selected[i] = players[random(0, players.length - 1)];
+                selected[i] = players[util.random(0, players.length - 1)];
                 var tp = qList.search(selected[i]);
                 qList.remove(tp);
                 players = qList.values();
             }
 
             //Pick a random server
-            var srvNum = random(0, onlServers.size() - 1);
+            var srvNum = util.random(0, onlServers.size() - 1);
             var server = onlServers.get(srvNum);
             onlServers.remove(server);
 
