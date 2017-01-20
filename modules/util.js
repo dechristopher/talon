@@ -28,4 +28,11 @@ util.random = function(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+//Wrapper for indexOf
+//Checks if a string A contains an
+//instance of string B
+util.contains = function(a, b) {
+    return str(a).contains(b);
+}
+
 module.exports = util;
