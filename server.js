@@ -715,13 +715,6 @@ function sendAnnouncement(anno) {
 	}
 }
 
-//Wrapper for indexOf
-//Checks if a string A contains an
-//instance of string B
-function contains(a, b) {
-    return S(a).contains(b);
-}
-
 //return steamid64 representation of normal steamid
 function sidTo64(steamid) {
     return sidconvert.convertTo64(steamid);
