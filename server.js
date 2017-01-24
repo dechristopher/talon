@@ -793,7 +793,7 @@ function webKickPlayer(username) {
     if (isPlayerInQueue(username)) {
         qList.remove(username);
     }
-    log(TP + '[KICK] ' + username);
+    log(TP + '[KICK] ' + username, 'web');
 }
 
 //Starts tasks
@@ -810,8 +810,8 @@ function startLoop() {
 
     //Log TP express server start
     server.listen(cfg.port, function() {
-        log(TP + 'talonPanel μSrvc started.');
-        log(TP + 'Express server started.');
+        log(TP + 'talonPanel μSrvc started.', 'web');
+        log(TP + 'Express server started.', 'web');
         /*db.select(1, function () {
             console.log('[SYS] Connected to database');
         });*/
@@ -823,7 +823,7 @@ function startLoop() {
 //app.use(express.static('px'));
 
 /*db.on("error", function (err) {
-    log('[ERR] Redis: ' + err);
+    log('[ERR] Redis: ' + err, 'web');
 });*/
 
 //Checks if given IP is in allowed talonPanel IPs.
@@ -848,7 +848,7 @@ app.use(function(req, res, next) {
     if (firewall(ip)) {
         next();
     } else {
-        log(TP + 'DISALLOWED: ' + ip);
+        log(TP + 'DISALLOWED: ' + ip, 'web');
         res.end();
     }
 });
@@ -856,7 +856,7 @@ app.use(function(req, res, next) {
 app.get('/', function(req, res, next) {
     try {
         res.send(renderPanel(false, req));
-        log(TP + '[' + req.ip + '] GET /');
+        log(TP + '[' + req.ip + '] GET /', 'web');
         metrics.increment('panel.view.norefresh');
     } catch (e) {
         next(e);
@@ -866,7 +866,7 @@ app.get('/', function(req, res, next) {
 app.get('/refresh', function(req, res, next) {
     try {
         res.send(renderPanel(true, req));
-        log(TP + '[' + req.ip + '] GET /refresh');
+        log(TP + '[' + req.ip + '] GET /refresh', 'web');
         metrics.increment('panel.view.refresh');
     } catch (e) {
         next(e);
@@ -878,7 +878,7 @@ app.get('/kick/:username', function(req, res, next) {
         var username = req.params.username;
         webKickPlayer(username);
         res.redirect('http://' + req.hostname + ':' + cfg.port);
-        log(TP + '[' + req.ip + '] GET /kick/' + username);
+        log(TP + '[' + req.ip + '] GET /kick/' + username, 'web');
     } catch (e) {
         next(e);
     }
@@ -889,7 +889,7 @@ app.get('/kick/:username/refresh', function(req, res, next) {
         var username = req.params.username;
         webKickPlayer(username);
         res.redirect('http://' + req.hostname + ':' + cfg.port + '/refresh');
-        log(TP + '[' + req.ip + '] GET /kick/' + username);
+        log(TP + '[' + req.ip + '] GET /kick/' + username, 'web');
     } catch (e) {
         next(e);
     }
@@ -897,7 +897,7 @@ app.get('/kick/:username/refresh', function(req, res, next) {
 
 app.post('/ann', function(req, res, next) {
     try {
-        log(TP + '[' + req.ip + '] POST /ann');
+        log(TP + '[' + req.ip + '] POST /ann', 'web');
         requestify.get('https://kiir.us/api.php/?cmd=setann&key=' + cfg.api + '&ann=' + req.body.announcement).then(response => sendAnnouncement(response.getBody()));
         res.redirect('http://' + req.hostname + ':' + cfg.port);
     } catch (e) {
