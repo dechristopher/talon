@@ -443,7 +443,7 @@ function parse(channel, sid, from, input) {
             //Then set their playerID and add them to HBC
             pList.set(p.nm, p);
             hbCheck.set(p.nm, true);
-            log(LOGIN + p.nm + ' : [' + p.channel + ' - ' + p.sid + ']');
+            log(LOGIN + p.nm + ' : [' + p.channel + ' - ' + p.sid + ']', 'auth');
             metrics.increment('talon.user.login');
             break;
 
@@ -459,7 +459,7 @@ function parse(channel, sid, from, input) {
                     bcast("q~" + currQ + "~" + currS);
                     bcast("l~" + currQ + "~" + from);
                 }
-				log(LOGOUT + from + ' : [' + channel + ' - ' + sid + ']');
+				log(LOGOUT + from + ' : [' + channel + ' - ' + sid + ']', 'auth');
             }
             break;
 
