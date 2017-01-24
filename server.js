@@ -318,7 +318,7 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
             //Concatenate the built API call with the required properties to make the full call
             var apiCall = "https://kiir.us/api.php/?key=" + cfg.api + "&cmd=q&rcon=q&ip=" + server + call;
             //Log it ... or not
-            //log("[Q] [POP] Built API call: " + apiCall);
+            //log("[Q] [POP] Built API call: " + apiCall, 'mm');
 
             //Send the API request
             requestify.get(apiCall).then(function(response) {
@@ -327,27 +327,27 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
                 if (pass != "failed") {
                     //Log everything
                     var now = datetime.create().format('m-d-y H:M:S');
-                    log(Q + '[POP] Match created @ ' + now);
-                    log(Q + '[POP] [S] >> ' + server + ' : ' + pass);
+                    log(Q + '[POP] Match created @ ' + now, 'mm');
+                    log(Q + '[POP] [S] >> ' + server + ' : ' + pass, 'mm');
                     //Pop the queue for all selected players
                     for (var k = 0; k < selected.length; k++) {
-                        log(Q + '[POP] [P] >> ' + selected[k].channel + ' - ' + selected[k].sid + ' - ' + selected[k].nm);
+                        log(Q + '[POP] [P] >> ' + selected[k].channel + ' - ' + selected[k].sid + ' - ' + selected[k].nm, 'mm');
                         reply(selected[k].channel, "p~" + server + "~" + pass);
                     }
                 //Else if the call fails
                 } else {
                     //Call 911
-                    log(Q + '[POP] [S] FAILED >> ' + server);
+                    log(Q + '[POP] [S] FAILED >> ' + server, 'mm');
                 }
             });
 
             //Update currQ to reflect queue pop
             currQ = qList.count();
         } else {
-            log(Q + '(S: ' + currS + '/' + totS + ') :: (P: ' + currQ + '/' + cfg.qSize + ') --> Waiting...');
+            log(Q + '(S: ' + currS + '/' + totS + ') :: (P: ' + currQ + '/' + cfg.qSize + ') --> Waiting...', 'mm');
         }
     } else {
-        log(Q + '(S: ' + currS + '/' + totS + ') :: (P: ' + currQ + '/' + cfg.qSize + ') --> No servers!');
+        log(Q + '(S: ' + currS + '/' + totS + ') :: (P: ' + currQ + '/' + cfg.qSize + ') --> No servers!', 'mm');
     }
 });
 
@@ -500,11 +500,11 @@ function parse(channel, sid, from, input) {
             if (procQueue(from, channel)) {
                 bcast("q~" + currQ + "~" + currS);
                 bcast("j~" + currQ + "~" + from);
-                log(Q + '[+] ' + from);
+                log(Q + '[+] ' + from, 'mm');
             } else {
                 bcast("q~" + currQ + "~" + currS);
                 bcast("l~" + currQ + "~" + from);
-                log(Q + '[-] ' + from);
+                log(Q + '[-] ' + from, 'mm');
             }
             break;
 
@@ -640,13 +640,13 @@ function procQueue(user, channel) {
     if (qList.has(user)) {
         qList.remove(user);
         currQ = qList.count();
-        log(Q + '[?-] ' + user);
+        log(Q + '[?-] ' + user, 'mm');
         return false;
         //User joins queue
     } else {
         qList.set(user, pList.get(user));
         currQ = qList.count();
-        log(Q + '[?+] ' + user);
+        log(Q + '[?+] ' + user), 'mm';
         return true;
     }
 }
