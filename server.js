@@ -646,7 +646,7 @@ function procQueue(user, channel) {
     } else {
         qList.set(user, pList.get(user));
         currQ = qList.count();
-        log(Q + '[?+] ' + user), 'mm';
+        log(Q + '[?+] ' + user, 'mm');
         return true;
     }
 }
