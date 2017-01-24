@@ -361,7 +361,7 @@ var parseServers = cron.job("*/5 * * * * *", function() {
         var ip = servers.get(n);
         requestify.get('https://kiir.us/api.php/?key=' + cfg.api + '&ip=' + ip + '&cmd=both').then(response => parseServerAPIResponse(response));
     }, function() {
-        //log("[S] Server Query: DONE");
+        //log("[S] Server Query: DONE", 'srv');
     });
     //Old shit that jshint hated
     /*for (var i = 0; i < totS; i++) {
@@ -369,7 +369,7 @@ var parseServers = cron.job("*/5 * * * * *", function() {
         //Get hostname and players (ignore JSHint BS)
         requestify.get('https://kiir.us/api.php/?key=<apikey>&ip=' + ip + '&cmd=both').then(response => parseServerAPIResponse(response));
     }*/
-    //log(totS + ' - ' +servers);
+    //log(totS + ' - ' +servers, 'srv');
 });
 
 //Checks to see if a user has sent heartbeats in the past
@@ -668,12 +668,12 @@ function parseServerAPIResponse(response) {
         //
         if (((players !== "1" || util.contains(hostname, "LIVE")) || util.contains(response.getBody(), "offline")) && onlServers.contains(ip)) {
             onlServers.remove(ip);
-            log(SRV + '[-] > ' + ip);
+            log(SRV + '[-] > ' + ip, 'srv');
         }
         //Online or freshly spawned check
         if (hostname === "KIWI::OFF" && players === "1" && !onlServers.contains(ip) && hostname !== "KIWI::LIVE") {
             onlServers.add(ip);
-            log(SRV + '[+] > ' + ip);
+            log(SRV + '[+] > ' + ip, 'srv');
         }
     } else {
         //console.log(response.getBody());
@@ -684,7 +684,7 @@ function parseServerAPIResponse(response) {
 
         if (onlServers.contains(ip)) {
             onlServers.remove(ip);
-            log(SRV + '[-] > ' + ip);
+            log(SRV + '[-] > ' + ip, 'srv');
         }
     }
 
@@ -695,7 +695,7 @@ function parseServerAPIResponse(response) {
     bcast("q~" + currQ + "~" + currS);
 
     if (cfg.displayServers) {
-        log('[S] >> AVAILABLE: ' + onlServers.length);
+        log('[S] >> AVAILABLE: ' + onlServers.length, 'srv');
     }
 }
 
