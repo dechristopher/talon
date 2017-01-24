@@ -377,11 +377,11 @@ var parseServers = cron.job("*/5 * * * * *", function() {
 //
 //TODO comment this
 var parseHeartbeats = cron.job("*/30 * * * * *", function() {
-    //log('[HBC] >> RUNNING...');
+    //log('[HBC] >> RUNNING...', 'hb');
     var i = 0;
     //Check EVERY user
     hbCheck.forEach(function(value, key) {
-        //log('Checking ' + key + ' -> ' + value);
+        //log('Checking ' + key + ' -> ' + value, 'hb');
         if (value === false) {
             if (!hbChance.has(key)) {
                 hbChance.set(key, 2);
@@ -391,7 +391,7 @@ var parseHeartbeats = cron.job("*/30 * * * * *", function() {
                     hbCheck.remove(key);
                     hbChance.remove(key);
                     pList.remove(key);
-                    log(HBC + 'REM >> ' + key);
+                    log(HBC + 'REM >> ' + key, 'hb');
                 } else {
                     hbChance.set(key, chance - 1);
                     i++;
@@ -403,12 +403,12 @@ var parseHeartbeats = cron.job("*/30 * * * * *", function() {
                 bcast("q~" + currQ + "~" + currS);
                 bcast("l~" + currQ + "~" + key);
             }
-            //log('[HBC] >> ' + key + ' >> OFFLINE');
+            //log('[HBC] >> ' + key + ' >> OFFLINE', 'hb');
         } else {
             hbCheck.set(key, false);
         }
     });
-    log(HBC + '>> OFFENDERS: ' + i);
+    log(HBC + '>> OFFENDERS: ' + i, 'hb');
 });
 
 //Parse client commands
@@ -474,7 +474,7 @@ function parse(channel, sid, from, input) {
             //Set their HBCheck to true for another 30 seconds
             if (pList.has(from)) {
                 hbCheck.set(from, true);
-                log(HB + '>> ' + from + util.boolStar(isPlayerInQueue(from)));
+                log(HB + '>> ' + from + util.boolStar(isPlayerInQueue(from)), 'hb');
                 reply(channel + "-hb", "hb");
             }
             break;
