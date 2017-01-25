@@ -82,7 +82,7 @@ exports.parties = testCase({
     testGetNumPartyMembers: function(test) {
         party.getNumPartyMembers('party:KTSotnN', rcon, function(reply) {
             test.expect(1);
-            test.strictEqual(reply, 4, "Tests that all party members returned in array properly");
+            test.strictEqual(reply, 4, "Tests that all party members returned in array properly.");
             test.done();
         });
     },
@@ -90,7 +90,7 @@ exports.parties = testCase({
     testGetPartyMembers: function(test) {
         party.getPartyMembers('party:KTSotnN', rcon, function(reply) {
             test.expect(1);
-            test.strictEqual(reply.length, 4, "Tests that all party members returned in array properly");
+            test.strictEqual(reply.length, 4, "Tests that all party members returned in array properly.");
             test.done();
         });
     }
