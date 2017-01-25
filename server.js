@@ -173,9 +173,9 @@ inm.on('subscribe', function(channel, count) {
     log(TALN + "Listening: " + channel + os.EOL);
 });
 
+//Handles basic timeout errors. Needs work...
 inm.on('error', function(error) {
 	console.log(error);
-	
 });
 
 //Run this callback every time a message is received from a client
