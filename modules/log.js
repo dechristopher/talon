@@ -13,7 +13,7 @@ function log(message, logname) {
     var line = '';
     if(logname === undefined){
         file = 'logs/' + today + '.log';
-		line = '[' + time + '] ' + message;
+		line = '[' + time + ']' + message;
     }else{
         file = 'logs/' + today + '-' + logname + '.log';
 		line = '[' + time + '][' + logname + ']' + message;
