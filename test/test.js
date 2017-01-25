@@ -17,6 +17,8 @@ git.getLastCommit(function(err, commit) {
 
 var testCase = require('nodeunit').testCase;
 var rcon;
+var testPlayer = user('testuser', 'STEAM_0:0:TESTING', 'TESTCHANNEL');
+var testMatch = match(1337, 'team_drop', 'team_sparks', [testPlayer, testPlayer, testPlayer, testPlayer]);
 
 exports['Test user generator factory'] = function(test) {
     test.expect(9);
