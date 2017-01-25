@@ -173,6 +173,11 @@ inm.on('subscribe', function(channel, count) {
     log(TALN + "Listening: " + channel + os.EOL);
 });
 
+inm.on('error', function(error) {
+	console.log(error);
+	
+});
+
 //Run this callback every time a message is received from a client
 inm.on('message', function(channel, message) {
     //Split the message into parts
