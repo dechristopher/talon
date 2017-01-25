@@ -20,6 +20,7 @@ var rcon;
 var testPlayer = user('testuser', 'STEAM_0:0:TESTING', 'TESTCHANNEL');
 var testMatch = match(1337, 'team_drop', 'team_sparks', [testPlayer, testPlayer, testPlayer, testPlayer]);
 
+//user.js test cases - NEEDS CONVERSION
 exports['Test user generator factory'] = function(test) {
     test.expect(9);
 
@@ -48,6 +49,7 @@ exports['Test user generator factory'] = function(test) {
     test.done();
 };
 
+//party.js test cases
 exports.parties = testCase({
     setUp: function(callback) {
         rcon = redis.createClient(6379, cfg.backend);
