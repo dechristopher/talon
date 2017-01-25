@@ -1,11 +1,23 @@
 /*
 Created by Andrew DeChristopher <drew@kiir.us> on 1/25/2017.
  */
-const match = (mid, t1n, t2n, pl) => {
+const match = (mid, mip, pw, t1n, t2n, pl) => {
     //ID of the match
     var matchid = Object.undefined;
     if (mid !== "") {
         matchid = mid;
+    }
+
+	//IP of match server
+	var matchip = Object.undefined;
+    if (mip !== "") {
+        matchip = mip;
+    }
+
+	//Password of match server
+	var matchpw = Object.undefined;
+    if (pw !== "") {
+        matchpw = pw;
     }
 
     //Name of team one
@@ -30,6 +42,12 @@ const match = (mid, t1n, t2n, pl) => {
     return {
         getMatchID: () => {
             return matchid;
+        },
+		getMatchIP: () => {
+            return matchip;
+        },
+		getMatchPassword: () => {
+            return matchpw;
         },
         getTeamOneName: () => {
             return teamOneName;
