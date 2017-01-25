@@ -104,6 +104,16 @@ exports.match = testCase({
     		test.done();
     },
 
+	testGetMatchIP: function(test) {
+    		test.expect(1);
+    		test.strictEqual(testMatch.getMatchIP(), '8.8.8.8:27015', "Tests that match id is returned properly.");
+    		test.done();
+    },
+	testGetMatchPassword: function(test) {
+    		test.expect(1);
+    		test.strictEqual(testMatch.getMatchPassword(), 'jR0mW3', "Tests that match id is returned properly.");
+    		test.done();
+    },
     testGetTeamOneName: function(test) {
     		test.expect(1);
     		test.strictEqual(testMatch.getTeamOneName(), 'team_drop', "Tests that team one name is returned properly.");
