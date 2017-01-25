@@ -95,3 +95,36 @@ exports.parties = testCase({
         });
     }
 });
+
+//match.js test cases
+exports.match = testCase({
+    testGetMatchID: function(test) {
+    		test.expect(1);
+    		test.strictEqual(testMatch.getMatchID(), 1337, "Tests that match id is returned properly.");
+    		test.done();
+    },
+
+    testGetTeamOneName: function(test) {
+    		test.expect(1);
+    		test.strictEqual(testMatch.getTeamOneName(), 'team_drop', "Tests that team one name is returned properly.");
+    		test.done();
+    },
+
+    testGetTeamTwoName: function(test) {
+    		test.expect(1);
+    		test.strictEqual(testMatch.getTeamTwoName(), 'team_sparks', "Tests that team two name is returned properly.");
+    		test.done();
+    },
+
+    testGetPlayers: function(test) {
+    		test.expect(1);
+    		test.strictEqual(testMatch.getPlayers()[0], testPlayer, "Tests that match players are returned properly.");
+    		test.done();
+    },
+
+    testGetNumPlayers: function(test) {
+    		test.expect(1);
+    		test.strictEqual(testMatch.getNumPlayers(), 4, "Tests that number of players in match is returned properly.");
+    		test.done();
+    },
+});
