@@ -3,6 +3,7 @@ Created by Andrew DeChristopher <drew@kiir.us> on 6/1/2016.
  */
 const user = require('../modules/user.js');
 const party = require('../modules/party.js');
+const match = require('../modules/match.js');
 const cfg = require('../modules/cfg.js');
 const sms = require('../modules/sms.js');
 const redis = require('redis');
