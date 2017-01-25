@@ -16,7 +16,7 @@ function log(message, logname) {
 		line = '[' + time + ']' + message;
     }else{
         file = 'logs/' + today + '-' + logname + '.log';
-		line = '[' + time + '][' + logname + ']' + message;
+		line = '[' + time + ']' /*+ [' + logname + ']*/ + message;
     }
 
     console.log(line);
