@@ -170,7 +170,7 @@ inm.on('connect', function() {
 //Subscribe local talon redis client to global message queue
 inm.on('subscribe', function(channel, count) {
     pList.set("talon", new player("talon", "STEAM_0:1:39990", "ThIsIsAcHaNnElId"));
-    log(TALN + "Listening: " + channel + os.EOL);
+    log(TALN + "Connected! Listening: " + channel + os.EOL);
 });
 
 //Handles basic timeout errors. Needs work...
