@@ -62,12 +62,10 @@ exports.parties = testCase({
             }
         });
     },
-
     tearDown: function(callback) {
         rcon.quit();
         callback();
     },
-
     testPartyCreation: function(test) {
         const partymember = user('partymember', 'STEAM_0:0:PARTY', 'PARTYCHANNEL');
         party.createParty(partymember.getUsername(), rcon, function(id) {
@@ -78,7 +76,6 @@ exports.parties = testCase({
             });
         });
     },
-
     testGetNumPartyMembers: function(test) {
         party.getNumPartyMembers('party:KTSotnN', rcon, function(reply) {
             test.expect(1);
@@ -86,7 +83,6 @@ exports.parties = testCase({
             test.done();
         });
     },
-
     testGetPartyMembers: function(test) {
         party.getPartyMembers('party:KTSotnN', rcon, function(reply) {
             test.expect(1);
@@ -103,7 +99,6 @@ exports.match = testCase({
     		test.strictEqual(testMatch.getMatchID(), 1337, "Tests that match id is returned properly.");
     		test.done();
     },
-
 	testGetMatchIP: function(test) {
     		test.expect(1);
     		test.strictEqual(testMatch.getMatchIP(), '8.8.8.8:27015', "Tests that match id is returned properly.");
@@ -119,19 +114,16 @@ exports.match = testCase({
     		test.strictEqual(testMatch.getTeamOneName(), 'team_drop', "Tests that team one name is returned properly.");
     		test.done();
     },
-
     testGetTeamTwoName: function(test) {
     		test.expect(1);
     		test.strictEqual(testMatch.getTeamTwoName(), 'team_sparks', "Tests that team two name is returned properly.");
     		test.done();
     },
-
     testGetPlayers: function(test) {
     		test.expect(1);
     		test.strictEqual(testMatch.getPlayers()[0], testPlayer, "Tests that match players are returned properly.");
     		test.done();
     },
-
     testGetNumPlayers: function(test) {
     		test.expect(1);
     		test.strictEqual(testMatch.getNumPlayers(), 4, "Tests that number of players in match is returned properly.");
