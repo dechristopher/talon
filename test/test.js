@@ -18,7 +18,7 @@ git.getLastCommit(function(err, commit) {
 var testCase = require('nodeunit').testCase;
 var rcon;
 var testPlayer = user('testuser', 'STEAM_0:0:TESTING', 'TESTCHANNEL');
-var testMatch = match(1337, 'team_drop', 'team_sparks', [testPlayer, testPlayer, testPlayer, testPlayer]);
+var testMatch = match(1337, '8.8.8.8:27015', 'jR0mW3', 'team_drop', 'team_sparks', [testPlayer, testPlayer, testPlayer, testPlayer]);
 
 //user.js test cases - NEEDS CONVERSION
 exports['Test user generator factory'] = function(test) {
