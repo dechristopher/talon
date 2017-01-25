@@ -152,7 +152,7 @@ retryConnect.start();
 inm.on('connect', function() {
     if(!connectYet){
         //Begin...
-        process.title = 'talon-v' + cfg.version;
+        process.title = 'TALON BACKEND v' + cfg.version;
 
 		util.ascii();
         log(TALN + 'Copyright 2015-2017 KIWI GAMING (of Kiirus Technologies Inc.)');
