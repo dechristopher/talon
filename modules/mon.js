@@ -8,8 +8,11 @@ const cron = require('cron');
 const datetime = require('node-datetime');
 const sp = require('stringpad');
 
+//import configuration
+const cfg = require('./cfg');
+
 const mon = redis.createClient(6379, "kiir.us");
-mon.auth("KIWICLIENTREDISPASSWORDTHATISWAYTOOLONGTOGUESSBUTSTILLFEASIBLETOGETBYDECRYPTINGOURCLIENTSOKUDOSTOYOUIFYOUDIDLOLJKPLEASETELLUSTHISISSCARY");
+mon.auth(cfg.auth);
 //messages that have been received this second
 var mts = 0;
 var mtm = 0;
