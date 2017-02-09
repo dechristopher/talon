@@ -1,3 +1,7 @@
+/*
+Created by Andrew DeChristopher <drew@kiir.us> on 10/5/2016.
+ */
+
 const cfg = require('./cfg');
 const log = require('./log');
 const client = require('twilio')(cfg.accountSid, cfg.authToken);
