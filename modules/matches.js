@@ -22,7 +22,7 @@ const M = '[' + gutil.colors.magenta('M') + '] ';
 //matches export object
 var m = {};
 
-//class variables and methods
+//CLASS VARIABLES AND METHODS
 
 //Active match servers
 //K: server ip:port combination
