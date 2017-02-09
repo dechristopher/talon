@@ -56,7 +56,7 @@ exports.parties = testCase({
         rcon = redis.createClient(6379, cfg.backend);
         rcon.auth(cfg.auth);
         rcon.select(2, function(err, res) {
-            if (err === undefined) {
+            if (err == undefined) {
                 callback();
             } else {
                 throw new Error(err);
