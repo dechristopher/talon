@@ -1,3 +1,7 @@
+/*
+Created by Andrew DeChristopher <drew@kiir.us> on 9/1/2016.
+ */
+
 const datetime = require('node-datetime');
 const fs = require('fs');
 const gutil = require('gulp-util');
