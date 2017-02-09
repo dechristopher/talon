@@ -35,9 +35,10 @@ m.init = function() {
 //V: match object from match.js
 m.active = new HashMap();
 
-m.jobCheckActive = cron.job("*/30 * * * * *", function() {
+//Checks active match servers for match end
+m.jobCheckActive = cron.job("*/5 * * * * *", function() {
 	m.active.forEach(function(value, key) {
-		//implement
+		r.get('https://kiir.us/api.php/?key=' + cfg.api + '&ip=' + key + '&cmd=both').then(response => parseStatus(response));
 	});
 });
 
