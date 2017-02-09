@@ -24,6 +24,12 @@ var m = {};
 
 //CLASS VARIABLES AND METHODS
 
+//Start the check active matches cron job
+//ENSURE this is run at server init
+m.init = function() {
+	m.jobCheckActive.start();
+};
+
 //Active match servers
 //K: server ip:port combination
 //V: match object from match.js
