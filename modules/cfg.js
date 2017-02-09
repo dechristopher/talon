@@ -3,6 +3,8 @@ Created by Andrew DeChristopher <drew@kiir.us> on 10/5/2016.
  */
 
 var dotenv = require('dotenv');
+var util = require('./util');
+
 var cfg = {};
 
 if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
