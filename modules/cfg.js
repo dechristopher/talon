@@ -1,3 +1,7 @@
+/*
+Created by Andrew DeChristopher <drew@kiir.us> on 10/5/2016.
+ */
+
 var dotenv = require('dotenv');
 var cfg = {};
 
