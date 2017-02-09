@@ -1,6 +1,7 @@
 /**
- * Created by Drew on 4/30/2016.
+ * Created by Andrew DeChristopher <drew@kiir.us> on 4/30/2016.
  */
+
 const redis = require("redis");
 const ArrayList = require("arraylist");
 const requestify = require('requestify');
