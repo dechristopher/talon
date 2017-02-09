@@ -42,6 +42,24 @@ m.jobCheckActive = cron.job("*/5 * * * * *", function() {
 	});
 });
 
+//Parse API response and verify match end
+function parseStatus(response) {
+	var r, hostname, ipp, players;
+    if (util.contains(response.getBody(), "~")) {
+        r = response.getBody().split('~');
+        ipp = r[0];
+        hostname = r[1];
+        players = r[2];
+        //Server has restarted, thusly match has ended
+		// 108.61.129.168:27015~KIWI::OFF~0
+        if (hostname === "KIWI::OFF" && players === "1" && !onlServers.contains(ip) && hostname !== "KIWI::LIVE") {
+            m.active.remove(ipp);
+            log(M + '[END] > ' + ipp, 'match');
+			if(cfg.debug) { log('matches.js -> m.checkActive(' + ipp + ') -> ' + m.active.has(ipp), 'debug'); }
+        }
+    }
+}
+
 //(boolean) Adds running match to actives
 //returns false if already added
 //ipp: (string) ip:port combination
