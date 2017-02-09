@@ -94,7 +94,7 @@ exports.createParty = function(username, rcon, callback) {
             });
         }
     });
-}
+};
 
 //not sure if this should just implement changeParties or not...
 function joinParty(username, party, rcon, callback) {
