@@ -22,6 +22,9 @@ cfg.version = process.env.TALON_VERSION || '1.2.6';
 //Dev mode enabled
 cfg.dev = false;
 
+//Debug mode enabled
+cfg.debug = process.env.TALON_DEBUG.bool || false;
+
 //Firewall enabled
 cfg.firewallEnabled = true;
 
