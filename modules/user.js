@@ -1,6 +1,7 @@
 /*
 Created by Andrew DeChristopher <drew@kiir.us> on 6/1/2016.
  */
+
 const user = (u, s, c, h) => {
     var username = Object.undefined;
     if (u !== "") {
