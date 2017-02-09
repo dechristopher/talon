@@ -155,7 +155,7 @@ exports.isMemberOfParty = function(party, username, rcon, callback) {
             throw new Error(ERROR_FAILED_SISMEMBER + party + os.EOL + err);
         }
     });
-}
+};
 
 function isMemberOfParty(party, username, rcon, callback) {
     rcon.sismember([party, username], function(err, reply) {
@@ -196,7 +196,7 @@ exports.partyExists = function(party, rcon, callback) {
             throw new Error(ERROR_FAILED_EXISTS + party + os.EOL + err);
         }
     });
-}
+};
 
 function partyExists(party, rcon, callback) {
     rcon.exists(party, function(err, reply) {
@@ -236,7 +236,7 @@ exports.getNumPartyMembers = function(party, rcon, callback) {
             console.log('Party DNE');
         }
     });
-}
+};
 
 function getNumPartyMembers(party, rcon, callback) {
     partyExists(party, rcon, function(tf) {
@@ -275,7 +275,7 @@ function getNumPartyMembers(party, rcon, callback) {
              console.log('Party DNE');
          }
      });
- }
+ };
 
 function getPartyMembers(party, rcon, callback) {
     partyExists(party, rcon, function(tf) {
