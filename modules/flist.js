@@ -1,3 +1,7 @@
+/*
+Created by Andrew DeChristopher <drew@kiir.us> on 1/5/2017.
+ */
+
 const fs = require('fs');
 const log = require('./log');
 const gutil = require('gulp-util');
