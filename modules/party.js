@@ -52,7 +52,7 @@ exports.createParty = function(username, rcon, callback) {
             rcon.sadd([id, username], function(err, reply) {
                 if (err == undefined) {
                     if (reply == 1) {
-                        console.log(PARTY + id + ' created. Added: ' + username + '. Adding to party sets.')
+                        console.log(PARTY + id + ' created. Added: ' + username + '. Adding to party sets.');
                             //Add new party to global parties set
                         rcon.sadd([partiesG, id], function(err, reply) {
                             if (err == undefined) {
