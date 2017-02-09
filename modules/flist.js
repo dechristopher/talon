@@ -25,6 +25,6 @@ flist.fill = function(file, list, numSrv, displayname, err) {
             throw new Error(err + file);
         }
     });
-}
+};
 
 module.exports = flist;
