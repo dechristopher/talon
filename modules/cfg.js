@@ -89,9 +89,4 @@ if (!isConfigured) {
     throw new Error(errorMessage);
 }
 
-//Adds string to bool conversion
-String.prototype.bool = function() {
-    return (/^true$/i).test(this);
-};
-
 module.exports = cfg;
