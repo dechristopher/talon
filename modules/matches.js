@@ -42,10 +42,10 @@ m.jobCheckActive = cron.job("*/30 * * * * *", function() {
 m.add = function(ipp, match) {
 	if(!m.active.has(ipp)) {
 		m.active.set(ipp, match);
-		log(M + 'Match added on ' + ipp);
+		log(M + '[START] > ' + ipp, 'match');
 		return true;
 	} else {
-		log(M + 'Match already running on ' + ipp);
+		log(M + 'Match already running on ' + ipp, 'match');
 		return false;
 	}
 };
