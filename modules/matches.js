@@ -27,6 +27,7 @@ var m = {};
 //Start the check active matches cron job
 //ENSURE this is run at server init
 m.init = function() {
+	if(cfg.debug) { log('matches.js -> m.init()', 'debug'); }
 	m.jobCheckActive.start();
 };
 
@@ -37,6 +38,7 @@ m.active = new HashMap();
 
 //Checks active match servers for match end
 m.jobCheckActive = cron.job("*/5 * * * * *", function() {
+	if(cfg.debug) { log('matches.js -> m.jobCheckActive(' + m.active.count() + ' matches)', 'debug'); }
 	m.active.forEach(function(value, key) {
 		r.get('https://kiir.us/api.php/?key=' + cfg.api + '&ip=' + key + '&cmd=both').then(response => parseStatus(response));
 	});
@@ -50,6 +52,9 @@ function parseStatus(response) {
         ipp = r[0];
         hostname = r[1];
         players = r[2];
+
+		if(cfg.debug) { log('matches.js -> m.parseStatus(' + ipp + ', ' + hostname + ', ' + players +  ')', 'debug'); }
+
         //Server has restarted, thusly match has ended
 		// 108.61.129.168:27015~KIWI::OFF~0
         if (hostname === "KIWI::OFF" && players === "1" && !onlServers.contains(ip) && hostname !== "KIWI::LIVE") {
@@ -68,9 +73,11 @@ m.add = function(ipp, match) {
 	if(!m.active.has(ipp)) {
 		m.active.set(ipp, match);
 		log(M + '[START] > ' + ipp, 'match');
+		if(cfg.debug) { log('matches.js -> m.add(' + ipp + ') -> true', 'debug'); }
 		return true;
 	} else {
 		log(M + 'Match already running on ' + ipp, 'match');
+		if(cfg.debug) { log('matches.js -> m.add(' + ipp + ') -> false', 'debug'); }
 		return false;
 	}
 };
@@ -78,6 +85,7 @@ m.add = function(ipp, match) {
 //(boolean) Checks if match server has match running
 //ipp: (string) ip:port combination
 m.checkActive = function(ipp) {
+	if(cfg.debug) { log('matches.js -> m.checkActive(' + ipp + ') -> ' + m.active.has(ipp), 'debug'); }
 	return m.active.has(ipp);
 };
 
