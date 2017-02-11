@@ -157,7 +157,7 @@ inm.on('connect', function() {
         //Begin...
         process.title = 'TALON BACKEND v' + package.version;
 
-		util.ascii();
+		tutil.ascii();
         log(TALN + 'Copyright 2015-2017 KIWI GAMING (of Kiirus Technologies Inc.)');
 
         //log('Connected!');
@@ -267,14 +267,14 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
 
             //Select 10 payers randomly. Store in selected[].
             for (var i = (0 /*+ rigIndex*/); i < (cfg.qSize); i++) {
-                selected[i] = players[util.random(0, players.length - 1)];
+                selected[i] = players[tutil.random(0, players.length - 1)];
                 var tp = qList.search(selected[i]);
                 qList.remove(tp);
                 players = qList.values();
             }
 
             //Pick a random server
-            var srvNum = util.random(0, onlServers.size() - 1);
+            var srvNum = tutil.random(0, onlServers.size() - 1);
             var server = onlServers.get(srvNum);
             onlServers.remove(server);
 
@@ -482,7 +482,7 @@ function parse(channel, sid, from, input) {
             //Set their HBCheck to true for another 30 seconds
             if (pList.has(from)) {
                 hbCheck.set(from, true);
-                log(HB + '>> ' + from + util.boolStar(isPlayerInQueue(from)), 'hb');
+                log(HB + '>> ' + from + tutil.boolStar(isPlayerInQueue(from)), 'hb');
                 reply(channel + "-hb", "hb");
             }
             break;
@@ -664,7 +664,7 @@ function procQueue(user, channel) {
 //online status
 function parseServerAPIResponse(response) {
     var r, hostname, ip, players;
-    if (util.contains(response.getBody(), "~")) {
+    if (tutil.contains(response.getBody(), "~")) {
         //console.log(response.getBody());
         r = response.getBody().split('~');
         ip = r[0];
@@ -674,7 +674,7 @@ function parseServerAPIResponse(response) {
         //
         // 108.61.129.168:27015~KIWI::OFF~0
         //
-        if (((players !== "1" || util.contains(hostname, "LIVE")) || util.contains(response.getBody(), "offline")) && onlServers.contains(ip)) {
+        if (((players !== "1" || tutil.contains(hostname, "LIVE")) || tutil.contains(response.getBody(), "offline")) && onlServers.contains(ip)) {
             onlServers.remove(ip);
             log(SRV + '[-] > ' + ip, 'srv');
         }
@@ -736,9 +736,9 @@ function webPlayerList(refresh) {
         pList.forEach(function(value, key) {
             var queued = isPlayerInQueue(key);
             if (refresh) {
-                list += "<b>-</b> " + util.boolStar(queued) + key + " ( " + value.sid + " || " + value.channel + " ) ( <a href='http://steamcommunity.com/profiles/" + util.sidTo64(value.sid) + "'>Steam Profile</a> ) [ <a href='/kick/" + key + "/refresh'>KICK</a> ]<br />";
+                list += "<b>-</b> " + tutil.boolStar(queued) + key + " ( " + value.sid + " || " + value.channel + " ) ( <a href='http://steamcommunity.com/profiles/" + tutil.sidTo64(value.sid) + "'>Steam Profile</a> ) [ <a href='/kick/" + key + "/refresh'>KICK</a> ]<br />";
             } else {
-                list += "<b>-</b> " + util.boolStar(queued) + key + " ( " + value.sid + " || " + value.channel + " ) ( <a href='http://steamcommunity.com/profiles/" + util.sidTo64(value.sid) + "'>Steam Profile</a> ) [ <a href='/kick/" + key + "'>KICK</a> ]<br />";
+                list += "<b>-</b> " + tutil.boolStar(queued) + key + " ( " + value.sid + " || " + value.channel + " ) ( <a href='http://steamcommunity.com/profiles/" + tutil.sidTo64(value.sid) + "'>Steam Profile</a> ) [ <a href='/kick/" + key + "'>KICK</a> ]<br />";
             }
         });
     } else {
