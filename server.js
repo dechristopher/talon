@@ -51,6 +51,7 @@ const match = require('./modules/match');
 const matches = require('./modules/matches');
 const log = require('./modules/log');
 const sms = require('./modules/sms');
+const msg = require('./modules/msg');
 
 //Define ERRORS and other constants
 const ERROR_NO_FWIP_FILE = '[' + gutil.colors.red('ERROR') + '] Given ip file does not exist: ';
