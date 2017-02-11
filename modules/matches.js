@@ -2,11 +2,11 @@
 Created by Andrew DeChristopher <drew@kiir.us> on 2/6/2017.
  */
 
- //core libraries
- const cron = require('cron');
- const gutil = require('gulp-util');
- const HashMap = require('hashmap');
- const r = require('requestify');
+//core libraries
+const cron = require('cron');
+const gutil = require('gulp-util');
+const HashMap = require('hashmap');
+const r = require('requestify');
 
 //import configuration
 const cfg = require('./cfg');
