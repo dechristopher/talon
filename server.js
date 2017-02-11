@@ -109,7 +109,7 @@ if (process.argv.length > 2) {
         log(TALN + "D E V E L O P M E N T    M O D E");
         cfg.region = 0;
         flist.fill(cfg.servers[cfg.region], servers, totS, 'Servers', ERROR_NO_SERV_FILE);
-        cfg.backend = "beak.tech";
+        cfg.backend = cfg.backendDev;
         cfg.dev = true;
         cfg.firewallEnabled = false;
     } else {
