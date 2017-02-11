@@ -28,6 +28,7 @@ cfg.firewallEnabled = true;
 
 //Backend Redis datastore and MQ to use
 cfg.backend = process.env.TALON_BACKEND || 'kiir.us';
+cfg.backendDev = process.env.TALON_BACKENDDEV || 'beak.tech';
 
 //Talon instance region
 cfg.region = parseInt(process.env.TALON_REGION) || 1;
