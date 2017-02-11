@@ -19,7 +19,7 @@ if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
 }
 
 //Dev mode enabled
-cfg.dev = false;
+cfg.dev = util.stringToBool(process.env.TALON_DEV) || false;
 
 //Debug mode enabled
 cfg.debug = util.stringToBool(process.env.TALON_DEBUG) || false;
