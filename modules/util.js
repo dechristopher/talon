@@ -59,4 +59,60 @@ util.boolStar = function(bool) {
     return (bool ? "*" : "");
 };
 
+util.rank = function(xp) {
+	if (xp < 27) {
+		return "♟ Pawn";
+	} else if (xp >= 27 && xp < 45) {
+		return "♙ Pawn+";
+	} else if (xp >= 45 && xp < 70) {
+		return "♞ Knight";
+	} else if (xp >= 70 && xp < 105) {
+		return "♘ Knight+";
+	} else if (xp >= 105 && xp < 136) {
+		return "♝ Bishop";
+	} else if (xp >= 136 && xp < 180) {
+		return "♗ Bishop+";
+	} else if (xp >= 180 && xp < 221) {
+		return "♜ Rook";
+	} else if (xp >= 221 && xp < 270) {
+		return "♖ Rook+";
+	} else if (xp >= 270 && xp < 330) {
+		return "♛ Queen";
+	} else if (xp >= 330 && xp < 420) {
+		return "♕ Queen+";
+	} else if (xp >= 420 && xp < 461) {
+		return "♔ King";
+	} else if (xp >= 461) {
+		return "Ⓛ Legend";
+	}
+};
+
+util.xptot = function(xp) {
+	if (xp < 27) {
+		return xp + " / 27";
+	} else if (xp >= 27 && xp < 45) {
+		return xp + " / 45";
+	} else if (xp >= 45 && xp < 70) {
+		return xp + " / 70";
+	} else if (xp >= 70 && xp < 105) {
+		return xp + " / 205";
+	} else if (xp >= 105 && xp < 136) {
+		return xp + " / 136";
+	} else if (xp >= 136 && xp < 180) {
+		return xp + " / 180";
+	} else if (xp >= 180 && xp < 221) {
+		return xp + " / 221";
+	} else if (xp >= 221 && xp < 270) {
+		return xp + " / 270";
+	} else if (xp >= 270 && xp < 330) {
+		return xp + " / 330";
+	} else if (xp >= 330 && xp < 420) {
+		return xp + " / 420";
+	} else if (xp >= 420 && xp < 461) {
+		return xp + " / 460";
+	} else if (xp >= 461) {
+		return xp;
+	}
+};
+
 module.exports = util;
