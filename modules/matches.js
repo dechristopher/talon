@@ -52,7 +52,17 @@ function parseStatus(response) {
         //Server has restarted, thusly match has ended
 		// 108.61.129.168:27015~KIWI::OFF~0
         if (hostname === "KIWI::OFF" && players === "1" && !onlServers.contains(ip) && hostname !== "KIWI::LIVE") {
-            m.active.remove(ipp);
+			//broadcast match over to all players in match
+			var match = m.active.get(ipp);
+			var matchid = match.getMatchID();
+			var mplayers = match.getPlayers();
+
+			//CHECK CLIENT FOR MATCH OVER MESSAGE SYNTAX!!
+			for(var i = 0; i < mplayers.length; i++){
+				msg.reply(mplayers[i].channel, '[SOMETHING HERE]' + matchid);
+			}
+
+			m.active.remove(ipp);
             log(M + '[END] > ' + ipp, 'match');
 			if(cfg.debug) { log('matches.js -> m.checkActive(' + ipp + ') -> ' + m.active.has(ipp), 'debug'); }
         }
