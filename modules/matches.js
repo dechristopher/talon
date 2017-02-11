@@ -15,6 +15,7 @@ const cfg = require('./cfg');
 const log = require('./log');
 const util = require('./util');
 const match = require('./match');
+const msg = require('./msg');
 
 //logging constants
 const M = '[' + gutil.colors.magenta('M') + '] ';
