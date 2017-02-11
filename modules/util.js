@@ -2,11 +2,13 @@
 Created by Andrew DeChristopher <drew@kiir.us> on 1/7/2017.
  */
 
+//core libraries
 const log = require('./log');
 const gutil = require('gulp-util');
 const str = require('string');
 const sidconvert = require('steamidconvert')();
 
+//logging constants
 const TALN = '[' + gutil.colors.magenta('TALN') + '] ';
 
 //Export object
