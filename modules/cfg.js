@@ -42,9 +42,6 @@ cfg.displayServers = false;
 //Port of the talonPanel
 cfg.port = parseInt(process.env.TALON_PORT) || 3000;
 
-//Secret used for random hash generation
-cfg.secret = process.env.TALON_APP_SECRET || 'keyboard cat';
-
 //API key for KIWI web API
 cfg.api = process.env.TALON_API_KEY;
 
