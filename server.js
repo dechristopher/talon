@@ -32,6 +32,7 @@ const io = require('socket.io')(server);
 const bodyParser = require('body-parser');
 
 //import configuration
+const package = require('./package.json');
 const cfg = require('./modules/cfg');
 
 //datadog api
