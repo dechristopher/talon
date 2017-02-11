@@ -18,7 +18,7 @@ const match = require('./match');
 const msg = require('./msg');
 
 //logging constants
-const M = '[' + gutil.colors.magenta('M') + '] ';
+const M = '[' + gutil.colors.blue('MTCH') + '] ';
 
 //matches export object
 var m = {};
