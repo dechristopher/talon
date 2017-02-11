@@ -23,6 +23,7 @@ const os = require('os');
 const redis = require('redis');
 const requestify = require('requestify');
 const gutil = require('gulp-util');
+const util = require('util');
 
 //talonPanel libraries
 const express = require('express');
@@ -43,7 +44,7 @@ metrics.init({
 });
 
 //custom libraries
-const util = require('./modules/util');
+const tutil = require('./modules/util');
 const flist = require('./modules/flist');
 const player = require('./modules/player');
 const user = require('./modules/user');
