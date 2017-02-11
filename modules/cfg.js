@@ -45,6 +45,15 @@ cfg.port = parseInt(process.env.TALON_PORT) || 3000;
 //API key for KIWI web API
 cfg.api = process.env.TALON_API_KEY;
 
+//Object for holding API endpoint strings
+cfg.endpoints = {};
+cfg.endpoints.matchCreate = process.env.TALON_E_MATCHCREATE || undefined;
+cfg.endpoints.serverQuery = process.env.TALON_E_SERVERQUERY || undefined;
+cfg.endpoints.statsQuery = process.env.TALON_E_STATSQUERY || undefined;
+cfg.endpoints.getAnnouncement = process.env.TALON_E_GETANN || undefined;
+cfg.endpoints.setAccouncement = process.env.TALON_E_SETANN || undefined;
+
+
 //Redis datastore authentication password
 cfg.auth = process.env.TALON_REDIS_PW;
 
