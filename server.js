@@ -49,9 +49,6 @@ const user = require('./modules/user');
 const log = require('./modules/log');
 const sms = require('./modules/sms');
 
-//sms.sendSms('5089306274', '[KIWI] Talon is now online. This is an automated message. Please do not reply.');
-//sms.sendSms('8103577576', '[KIWI] Talon is now online. This is an automated message. Please do not reply.');
-
 //Define ERRORS and other constants
 const ERROR_NO_FWIP_FILE = '[' + gutil.colors.red('ERROR') + '] Given ip file does not exist: ';
 const ERROR_NO_SERV_FILE = '[' + gutil.colors.red('ERROR') + '] Given servers file does not exist: ';
