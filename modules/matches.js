@@ -34,7 +34,8 @@ m.active = new HashMap();
 m.jobCheckActive = cron.job("*/5 * * * * *", function() {
 	if(cfg.debug) { log('matches.js -> m.jobCheckActive(' + m.active.count() + ' matches)', 'debug'); }
 	m.active.forEach(function(value, key) {
-		r.get('https://kiir.us/api.php/?key=' + cfg.api + '&ip=' + key + '&cmd=both').then(response => parseStatus(response));
+		var endpoint = util.format(cfg.endpoints.serverQuery, cfg.api, key);
+		r.get(endpoint).then(response => parseStatus(response));
 	});
 });
 

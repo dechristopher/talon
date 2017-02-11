@@ -324,8 +324,7 @@ var parseQueue = cron.job("*/10 * * * * *", function() {
             call += "&numPl=" + (cfg.qSize / 2);
 
             //Concatenate the built API call with the required properties to make the full call
-            var apiCall = "https://kiir.us/api.php/?key=" + cfg.api + "&cmd=q&rcon=q&ip=" + server + call;
-            //Log it ... or not
+            var apiCall = util.format(cfg.endpoints.matchCreate, cfg.api, server, call);
             //log("[Q] [POP] Built API call: " + apiCall, 'mm');
 
             //Send the API request
@@ -367,7 +366,8 @@ var parseServers = cron.job("*/5 * * * * *", function() {
     //console.log(onlServers);
     lupus(0, totS, function(n) {
         var ip = servers.get(n);
-        requestify.get('https://kiir.us/api.php/?key=' + cfg.api + '&ip=' + ip + '&cmd=both').then(response => parseServerAPIResponse(response));
+		var endpoint = util.format(cfg.endpoints.serverQuery, cfg.api, ip);
+        requestify.get(endpoint).then(response => parseServerAPIResponse(response));
     }, function() {
         //log("[S] Server Query: DONE", 'srv');
     });
@@ -511,7 +511,8 @@ function parse(channel, sid, from, input) {
             //User requests theirs or another player's stats
         case "stats":
             //Query stats API
-            requestify.get('https://kiir.us/api.php/?cmd=stats&key=' + cfg.api + '&name=' + from).then(function(response) {
+            var endpoint = util.format(cfg.endpoints.statsQuery, cfg.api, from);
+            requestify.get(endpoint).then(function(response) {
                 var r = response.getBody();
                 //kr~xp~wins~losses
                 var stats = r.split('~');
@@ -646,7 +647,8 @@ function parseServerAPIResponse(response) {
 
 //Gets most recent announcement every 45 seconds and passes it to sendAnnouncement()
 var getAnnouncement = cron.job("*/45 * * * * *", function() {
-    requestify.get('https://kiir.us/api.php/?cmd=ann&key=' + cfg.api).then(response => sendAnnouncement(response.getBody()));
+	var endpoint = util.format(cfg.endpoints.getAnnouncement, cfg.api);
+    requestify.get(endpoint).then(response => sendAnnouncement(response.getBody()));
 });
 
 //Sends out announcement to all connected clients
@@ -843,7 +845,8 @@ app.get('/kick/:username/refresh', function(req, res, next) {
 app.post('/ann', function(req, res, next) {
     try {
         log(TP + '[' + req.ip + '] POST /ann', 'web');
-        requestify.get('https://kiir.us/api.php/?cmd=setann&key=' + cfg.api + '&ann=' + req.body.announcement).then(response => sendAnnouncement(response.getBody()));
+        var endpoint = util.format(cfg.endpoints.setAnnouncement, cfg.api, req.body.announcement);
+        requestify.get(endpoint).then(response => sendAnnouncement(response.getBody()));
         res.redirect('http://' + req.hostname + ':' + cfg.port);
     } catch (e) {
         next(e);
