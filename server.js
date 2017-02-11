@@ -371,18 +371,10 @@ var parseServers = cron.job("*/5 * * * * *", function() {
     }, function() {
         //log("[S] Server Query: DONE", 'srv');
     });
-    //Old shit that jshint hated
-    /*for (var i = 0; i < totS; i++) {
-        var ip = servers.get(i);
-        //Get hostname and players (ignore JSHint BS)
-        requestify.get('https://kiir.us/api.php/?key=<apikey>&ip=' + ip + '&cmd=both').then(response => parseServerAPIResponse(response));
-    }*/
-    //log(totS + ' - ' +servers, 'srv');
 });
 
 //Checks to see if a user has sent heartbeats in the past
 //30 seconds. If not, removes them from qList and hbCheck
-//
 //TODO comment this
 var parseHeartbeats = cron.job("*/30 * * * * *", function() {
     //log('[HBC] >> RUNNING...', 'hb');
