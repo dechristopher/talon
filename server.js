@@ -89,6 +89,7 @@ var hbChance = new HashMap();
 var servers = new ArrayList();
 var onlServers = new ArrayList();
 
+//Allowed talonPanel IPs
 var firewallIPs = new ArrayList();
 
 //Total number of servers
