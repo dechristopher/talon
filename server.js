@@ -48,6 +48,7 @@ const flist = require('./modules/flist');
 const player = require('./modules/player');
 const user = require('./modules/user');
 const match = require('./modules/match');
+const matches = require('./modules/matches');
 const log = require('./modules/log');
 const sms = require('./modules/sms');
 
