@@ -3,7 +3,6 @@ Created by Andrew DeChristopher <drew@kiir.us> on 10/5/2016.
  */
 
 var dotenv = require('dotenv');
-var util = require('./util');
 
 var cfg = {};
 
@@ -19,10 +18,10 @@ if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
 }
 
 //Dev mode enabled
-cfg.dev = util.stringToBool(process.env.TALON_DEV) || false;
+cfg.dev = tutil.stringToBool(process.env.TALON_DEV) || false;
 
 //Debug mode enabled
-cfg.debug = util.stringToBool(process.env.TALON_DEBUG) || false;
+cfg.debug = tutil.stringToBool(process.env.TALON_DEBUG) || false;
 
 //Firewall enabled
 cfg.firewallEnabled = true;
