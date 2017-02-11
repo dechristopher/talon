@@ -31,13 +31,5 @@ Runs on the demo CDN and accepts all file transfers from the demo-client.js inst
 
 ---
 
-####modules/mon.js####
+####modules/mon.js [DEPRECATED]####
 A lightweight node app that can be used from anywhere to monitor basic backend throughput in messages per second and minute.
-
-####modules/user.js####
-A generator function to create user objects and such.
-
----
-
-####test/test.js####
-Unit tests for various things that need unit tests.
