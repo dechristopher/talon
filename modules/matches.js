@@ -25,13 +25,6 @@ var m = {};
 
 //CLASS VARIABLES AND METHODS
 
-//Start the check active matches cron job
-//ENSURE this is run at server init
-m.init = function() {
-	if(cfg.debug) { log('matches.js -> m.init()', 'debug'); }
-	m.jobCheckActive.start();
-};
-
 //Active match servers
 //K: server ip:port combination
 //V: match object from match.js
@@ -89,6 +82,15 @@ m.checkActive = function(ipp) {
 	if(cfg.debug) { log('matches.js -> m.checkActive(' + ipp + ') -> ' + m.active.has(ipp), 'debug'); }
 	return m.active.has(ipp);
 };
+
+//Start the check active matches cron job
+//ENSURE this is run at server init!
+//YOU WILL SEE THE MESSAGE! (Hopefully...)
+(function() {
+	if(cfg.debug) { log('matches.js -> m.init()', 'debug'); }
+	m.jobCheckActive.start();
+	log(M + 'STARTED JOB -> Check Active Matches');
+})();
 
 //Export matches module
 module.exports = m;
