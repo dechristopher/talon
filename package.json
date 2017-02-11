@@ -6,9 +6,9 @@
   "main": "server.js",
   "scripts": {
     "test": "nodeunit",
-    "start": "node server.js",
-    "nofw": "node server.js nofw",
-    "dev": "node server.js dev",
+    "start": "TALON_DEV=false node server.js",
+    "nofw": "TALON_DEV=false node server.js nofw",
+    "dev": "TALON_DEV=true node server.js dev",
     "demo-client-us-nj1": "node demo/demo-client.js us-nj1",
     "demo-client-us-nj2": "node demo/demo-client.js us-nj2",
     "demo-server": "node demo/demo-server.js",
