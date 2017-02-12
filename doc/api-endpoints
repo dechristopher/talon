@@ -1,0 +1,16 @@
+LIST OF DIFFERENT API ENDPOINTS USED IN TALON.JS
+
+MATCH CREATE API CALL
+https://kiir.us/api.php/?key=%s&cmd=q&rcon=q&ip=%s%s
+
+SERVER QUERY API CALL
+https://kiir.us/api.php/?key=%s&ip=%s&cmd=both
+
+STATS QUERY API CALL
+https://kiir.us/api.php/?cmd=stats&key=%s&name=%s
+
+GET ANNOUNCEMENT API CALL
+https://kiir.us/api.php/?cmd=ann&key=%s
+
+SET ANNOUNCEMENT API CALL
+https://kiir.us/api.php/?key=%s&cmd=setann&ann=%s
