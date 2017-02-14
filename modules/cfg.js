@@ -49,7 +49,7 @@ cfg.qSize = parseInt(process.env.TALON_QSIZE);
 cfg.displayServers = false;
 
 //Port of the talonPanel
-cfg.port = parseInt(process.env.TALON_PORT) || 3000;
+cfg.port = parseInt(process.env.TALON_PORT);
 
 //API key for KIWI web API
 cfg.api = process.env.TALON_API_KEY;
