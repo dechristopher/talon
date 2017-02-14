@@ -87,7 +87,7 @@ cfg.demoDir = process.env.TALON_DEMO_DIR;
 //Twillio account info
 cfg.accountSid = process.env.TWILIO_ACCOUNT_SID;
 cfg.authToken = process.env.TWILIO_AUTH_TOKEN;
-cfg.sendingNumber = process.env.TWILIO_NUMBER || '9093411337';
+cfg.sendingNumber = process.env.TWILIO_NUMBER;
 
 var requiredConfig = [cfg.accountSid, cfg.authToken, cfg.sendingNumber];
 var isConfigured = requiredConfig.every(function(configValue) {
