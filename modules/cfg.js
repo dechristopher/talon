@@ -40,7 +40,7 @@ cfg.backend = process.env.TALON_BACKEND;
 cfg.backendDev = process.env.TALON_BACKENDDEV;
 
 //Talon instance region
-cfg.region = parseInt(process.env.TALON_REGION) || 1;
+cfg.region = parseInt(process.env.TALON_REGION);
 
 //Set the default queue size
 cfg.qSize = parseInt(process.env.TALON_QSIZE) || 10;
