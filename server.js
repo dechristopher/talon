@@ -645,6 +645,51 @@ function parseServerAPIResponse(response) {
     }
 }
 
+function buildCall(selected) {
+	let call = '';
+	if (cfg.qSize == 10) {
+		for (let j = 1; j <= cfg.qSize; j++) {
+			call += "&p" + j + "=" + selected[j - 1].sid;
+		}
+		call += "&t1n=team_" + selected[0].nm;
+		call += "&t2n=team_" + selected[5].nm;
+	} else if (cfg.qSize == 8) {
+		call += "&p1=" + selected[0].sid;
+		call += "&p2=" + selected[1].sid;
+		call += "&p3=" + selected[2].sid;
+		call += "&p4=" + selected[3].sid;
+		call += "&p6=" + selected[4].sid;
+		call += "&p7=" + selected[5].sid;
+		call += "&p8=" + selected[6].sid;
+		call += "&p9=" + selected[7].sid;
+		call += "&t1n=team_" + selected[0].nm;
+		call += "&t2n=team_" + selected[4].nm;
+	} else if (cfg.qSize == 6) {
+		call += "&p1=" + selected[0].sid;
+		call += "&p2=" + selected[1].sid;
+		call += "&p3=" + selected[2].sid;
+		call += "&p6=" + selected[3].sid;
+		call += "&p7=" + selected[4].sid;
+		call += "&p8=" + selected[5].sid;
+		call += "&t1n=team_" + selected[0].nm;
+		call += "&t2n=team_" + selected[3].nm;
+	} else if (cfg.qSize == 4) {
+		call += "&p1=" + selected[0].sid;
+		call += "&p2=" + selected[1].sid;
+		call += "&p6=" + selected[2].sid;
+		call += "&p7=" + selected[3].sid;
+		call += "&t1n=team_" + selected[0].nm;
+		call += "&t2n=team_" + selected[2].nm;
+	} else if (cfg.qSize == 2) {
+		call += "&p1=" + selected[0].sid;
+		call += "&p6=" + selected[1].sid;
+		call += "&t1n=team_" + selected[0].nm;
+		call += "&t2n=team_" + selected[1].nm;
+	}
+	call += "&numPl=" + (cfg.qSize / 2);
+	return call;
+}
+
 //Gets most recent announcement every 45 seconds and passes it to sendAnnouncement()
 var getAnnouncement = cron.job("*/45 * * * * *", function() {
 	var endpoint = util.format(cfg.endpoints.getAnnouncement, cfg.api);
