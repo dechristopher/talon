@@ -2,8 +2,13 @@
 Created by Andrew DeChristopher <drew@kiir.us> on 10/5/2016.
  */
 
-var dotenv = require('dotenv');
-var tutil = require('./util');
+//core libraries
+const dotenv = require('dotenv');
+const tutil = require('./util');
+const gutil = require('gulp-util');
+
+//custom libraries
+const log = require('./log');
 
 var cfg = {};
 
