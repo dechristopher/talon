@@ -43,7 +43,7 @@ cfg.backendDev = process.env.TALON_BACKENDDEV;
 cfg.region = parseInt(process.env.TALON_REGION);
 
 //Set the default queue size
-cfg.qSize = parseInt(process.env.TALON_QSIZE) || 10;
+cfg.qSize = parseInt(process.env.TALON_QSIZE);
 
 //Boolean to display all server IPs every parseServer tick
 cfg.displayServers = false;
