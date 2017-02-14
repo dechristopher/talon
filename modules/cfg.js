@@ -10,6 +10,9 @@ const gutil = require('gulp-util');
 //custom libraries
 const log = require('./log');
 
+//logging constants
+const CONF = '[' + gutil.colors.green('CONF') + '] ';
+
 var cfg = {};
 
 if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
