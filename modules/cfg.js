@@ -82,7 +82,7 @@ cfg.adminNumbers = [
 ];
 
 //Directory used by demo-server.js to dump uploaded demos
-cfg.demoDir = process.env.TALON_DEMO_DIR || '/mnt/volume-nyc1-01/demos/';
+cfg.demoDir = process.env.TALON_DEMO_DIR;
 
 //Twillio account info
 cfg.accountSid = process.env.TWILIO_ACCOUNT_SID;
