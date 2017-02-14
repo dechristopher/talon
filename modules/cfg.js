@@ -89,16 +89,29 @@ cfg.accountSid = process.env.TWILIO_ACCOUNT_SID;
 cfg.authToken = process.env.TWILIO_AUTH_TOKEN;
 cfg.sendingNumber = process.env.TWILIO_NUMBER;
 
-var requiredConfig = [cfg.accountSid, cfg.authToken, cfg.sendingNumber];
-var isConfigured = requiredConfig.every(function(configValue) {
-    return configValue || false;
-});
+let verifyConfig = function(c, silent) {
+    if (!silent) { log(CONF + 'Validating configuration...'); }
+    Object.keys(c).forEach(function(key) {
+        var val = c[key];
+        if(cfg.debug) { console.log(key, ':', val, typeof val); }
+        //console.log(key, ':', val, typeof val);
+        if(typeof val == "object") {
+            verifyConfig(val, true);
+        } else if(val === undefined) {
+            log(CONF + 'UNSPECIFIED CONFIGURATION (undefined) -> cfg.' + key + ' -> ' + val);
+            process.exit(0);
+        } else if(typeof val != "string" && typeof val != "number" && typeof val != "boolean") {
+            log(CONF + 'UNSPECIFIED CONFIGURATION (unset) -> cfg.' + key + ' -> ' + val);
+            process.exit(0);
+        } else if(typeof val == "number" && isNaN(val)) {
+            log(CONF + 'UNSPECIFIED CONFIGURATION (NaN) -> cfg.' + key + ' -> ' + val);
+            process.exit(0);
+        }
+    });
+    if (!silent) { log(CONF + 'Validated configuration!'); }
+	return true;
+};
 
-if (!isConfigured) {
-    var errorMessage =
-        'TALON_REDIS_PW, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, and TWILIO_NUMBER must be set.';
-
-    throw new Error(errorMessage);
-}
+verifyConfig(cfg, false);
 
 module.exports = cfg;
