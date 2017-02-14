@@ -89,6 +89,8 @@ cfg.accountSid = process.env.TWILIO_ACCOUNT_SID;
 cfg.authToken = process.env.TWILIO_AUTH_TOKEN;
 cfg.sendingNumber = process.env.TWILIO_NUMBER;
 
+//Verifies that all values in an object are set properly
+//Has a much wider use case than simply verifying the cfg
 let verifyConfig = function(c, silent) {
     if (!silent) { log(CONF + 'Validating configuration...'); }
     Object.keys(c).forEach(function(key) {
@@ -112,6 +114,7 @@ let verifyConfig = function(c, silent) {
 	return true;
 };
 
+//Run the config verification
 verifyConfig(cfg, false);
 
 module.exports = cfg;
