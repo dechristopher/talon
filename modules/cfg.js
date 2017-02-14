@@ -99,13 +99,13 @@ let verifyConfig = function(c, silent) {
             verifyConfig(val, true);
         } else if(val === undefined) {
             log(CONF + 'UNSPECIFIED CONFIGURATION (undefined) -> cfg.' + key + ' -> ' + val);
-            process.exit(0);
+            process.exit(1);
         } else if(typeof val != "string" && typeof val != "number" && typeof val != "boolean") {
             log(CONF + 'UNSPECIFIED CONFIGURATION (unset) -> cfg.' + key + ' -> ' + val);
-            process.exit(0);
+            process.exit(1);
         } else if(typeof val == "number" && isNaN(val)) {
             log(CONF + 'UNSPECIFIED CONFIGURATION (NaN) -> cfg.' + key + ' -> ' + val);
-            process.exit(0);
+            process.exit(1);
         }
     });
     if (!silent) { log(CONF + 'Validated configuration!'); }
