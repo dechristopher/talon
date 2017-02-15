@@ -771,12 +771,6 @@ function startLoop() {
 
 //BEGIN talonPanel shite
 
-//app.use(express.static('px'));
-
-/*db.on("error", function (err) {
-    log('[ERR] Redis: ' + err, 'web');
-});*/
-
 //Checks if given IP is in allowed talonPanel IPs.
 function firewall(ip) {
     if (cfg.firewallEnabled) {
