@@ -6,7 +6,7 @@ Created by Andrew DeChristopher <drew@kiir.us> on 2/10/2017.
 module.exports = function (dev, backend, auth) {
 	// core libraries
 	const redis = require('redis');
-	const gutil = require('gulp-util');
+	const c = require('chalk');
 
 	// import configuration
 	const log = require('./log');
@@ -58,7 +58,7 @@ module.exports = function (dev, backend, auth) {
 		cli.quit();
 	};
 
-	log('[' + gutil.colors.yellow('MESG') + '] Messaging initialized');
+	log('[' + c.yellow('MESG') + '] Messaging initialized');
 
 	return m;
 };
