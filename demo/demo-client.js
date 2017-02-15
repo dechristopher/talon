@@ -19,7 +19,7 @@ const ArrayList = require('arraylist');
 const lupus = require('lupus');
 const HashMap = require('hashmap');
 const requestify = require('requestify');
-const gutil = require('gulp-util');
+const c = require('chalk');
 const os = require('os');
 const recursive = require('recursive-readdir');
 
@@ -27,12 +27,12 @@ const recursive = require('recursive-readdir');
 const log = require('../modules/log');
 
 // Define ERORS and other constants
-const ERROR_NO_FOLDER = '[' + gutil.colors.red('ERROR') + '] Given demo folder does not exist: ';
-const ERROR_NO_REGION = '[' + gutil.colors.red('ERROR') + '] Please use a package.json script to define region.';
-const ERROR_BAD_REGION = '[' + gutil.colors.red('ERROR') + '] Invalid region specified.';
-const ERROR_BAD_DEMO = '[' + gutil.colors.red('ERROR') + '] Invalid demo found: ';
-const DEMO = '[' + gutil.colors.green('DEMO') + '] ';
-const DEMO_RED = '[' + gutil.colors.red('DEMO') + '] ';
+const ERROR_NO_FOLDER = '[' + c.red('ERROR') + '] Given demo folder does not exist: ';
+const ERROR_NO_REGION = '[' + c.red('ERROR') + '] Please use a package.json script to define region.';
+const ERROR_BAD_REGION = '[' + c.red('ERROR') + '] Invalid region specified.';
+const ERROR_BAD_DEMO = '[' + c.red('ERROR') + '] Invalid demo found: ';
+const DEMO = '[' + c.green('DEMO') + '] ';
+const DEMO_RED = '[' + c.red('DEMO') + '] ';
 
 var demoFolders = new ArrayList();
 
