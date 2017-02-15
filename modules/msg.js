@@ -12,7 +12,7 @@ module.exports = function(dev, backend, auth) {
 	const log = require('./log');
 
 	//Msg export object
-	var msg = {};
+	let msg = {};
 
 	//set local variables
 	msg.dev = dev;
