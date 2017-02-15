@@ -334,7 +334,8 @@ var parseServers = cron.job("*/5 * * * * *", function() {
 
 //Checks to see if a user has sent heartbeats in the past
 //30 seconds. If not, removes them from qList and hbCheck
-//TODO comment this
+//
+//PLEASE comment this
 var parseHeartbeats = cron.job("*/30 * * * * *", function() {
     //log('[HBC] >> RUNNING...', 'hb');
     var i = 0;
