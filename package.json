@@ -50,10 +50,13 @@
   },
   "xo": {
     "rules": {
-      "new-cap": ["error", {
-			    "newIsCap": false,
-			    "capIsNew": false
-		  }]
+      "new-cap": [
+        "error",
+        {
+          "newIsCap": false,
+          "capIsNew": false
+        }
+      ]
     }
   }
 }
