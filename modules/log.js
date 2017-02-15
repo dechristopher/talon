@@ -4,7 +4,7 @@ Created by Andrew DeChristopher <drew@kiir.us> on 9/1/2016.
 
 const fs = require('fs');
 const os = require('os');
-const c= require('chalk');
+const c = require('chalk');
 const datetime = require('node-datetime');
 
 const LOG = '[' + c.blue('LOG') + '] ';
