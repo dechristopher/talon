@@ -39,17 +39,13 @@ module.exports = function(dev, backend, auth) {
 	};
 
 	//Broadcast excluding a single user or channel.
-	msg.bcastex = function(msg, ex) {
-	    var pub = redis.createClient(6379, backend);
-	    if (!dev) {
-	        pub.auth(auth);
-	    }
-	    var players = pList.values();
-	    for (var i = 0; i < players.length; i++) {
-	        var p = players[i];
-	        if (p != ex) {
-	            pub.publish(p.channel, msg);
-	        }
+	msg.bcastex = function(msg, ex, pList) {
+	    let pub = redis.createClient(6379, backend);
+	    if (!dev) { pub.auth(auth); }
+	    let players = pList.values();
+	    for (let i = 0; i < players.length; i++) {
+	        let p = players[i];
+	        if (p != ex) { pub.publish(p.channel, msg); }
 	    }
 	    pub.quit();
 	};
