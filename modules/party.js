@@ -229,7 +229,7 @@ exports.getNumPartyMembers = function(party, rcon, callback) {
                     console.log(MEMBERS + reply);
                     callback(reply);
                 } else {
-                    throw new Error(ERORR_FAILED_SCARD);
+                    throw new Error(ERROR_FAILED_SCARD);
                 }
             });
         } else {
@@ -246,7 +246,7 @@ function getNumPartyMembers(party, rcon, callback) {
                     console.log(MEMBERS + reply);
                     callback(reply);
                 } else {
-                    throw new Error(ERORR_FAILED_SCARD);
+                    throw new Error(ERROR_FAILED_SCARD);
                 }
             });
         } else {
@@ -268,7 +268,7 @@ function getNumPartyMembers(party, rcon, callback) {
                      console.log(MEMBERS + reply.length);
                      callback(reply);
                  } else {
-                     throw new Error(ERORR_FAILED_SMEMBERS);
+                     throw new Error(ERROR_FAILED_SMEMBERS);
                  }
              });
          } else {
@@ -285,7 +285,7 @@ function getPartyMembers(party, rcon, callback) {
                     console.log(MEMBERS + reply.length);
                     callback(reply);
                 } else {
-                    throw new Error(ERORR_FAILED_SMEMBERS);
+                    throw new Error(ERROR_FAILED_SMEMBERS);
                 }
             });
         } else {
