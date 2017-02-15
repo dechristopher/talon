@@ -26,7 +26,7 @@ const HashMap = require('hashmap');
 const lupus = require('lupus');
 const redis = require('redis');
 const requestify = require('requestify');
-const gutil = require('gulp-util');
+const c = require('chalk');
 
 // datadog api
 const metrics = require('datadog-metrics');
@@ -47,17 +47,17 @@ const log = require('./modules/log');
 let msg = require('./modules/msg');
 
 // Define ERRORS and other constants
-const ERROR_NO_FWIP_FILE = '[' + gutil.colors.red('ERROR') + '] Given ip file does not exist: ';
-const ERROR_NO_SERV_FILE = '[' + gutil.colors.red('ERROR') + '] Given servers file does not exist: ';
-const TALN = '[' + gutil.colors.magenta('TALN') + '] ';
-const SRV = '[' + gutil.colors.cyan('S') + '] ';
-const TP = '[' + gutil.colors.blue('TALP') + '] ';
-const Q = '[' + gutil.colors.green('Q') + '] ';
-const HB = '[' + gutil.colors.yellow('HB') + '] ';
-const HBC = '[' + gutil.colors.yellow('HBC') + '] ';
-const ANNO = '[' + gutil.colors.magenta('A') + '] ';
-const LOGIN = '[' + gutil.colors.green('LOGIN') + '] ';
-const LOGOUT = '[' + gutil.colors.magenta('LOGOUT') + '] ';
+const ERROR_NO_FWIP_FILE = '[' + c.red('ERROR') + '] Given ip file does not exist: ';
+const ERROR_NO_SERV_FILE = '[' + c.red('ERROR') + '] Given servers file does not exist: ';
+const TALN = '[' + c.magenta('TALN') + '] ';
+const SRV = '[' + c.cyan('S') + '] ';
+const TP = '[' + c.blue('TALP') + '] ';
+const Q = '[' + c.green('Q') + '] ';
+const HB = '[' + c.yellow('HB') + '] ';
+const HBC = '[' + c.yellow('HBC') + '] ';
+const ANNO = '[' + c.magenta('A') + '] ';
+const LOGIN = '[' + c.green('LOGIN') + '] ';
+const LOGOUT = '[' + c.magenta('LOGOUT') + '] ';
 
 // Has already connected
 var connectYet = false;
