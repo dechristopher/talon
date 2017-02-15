@@ -2,16 +2,16 @@
 Created by Andrew DeChristopher <drew@kiir.us> on 9/7/2016.
  */
 
-//core libraries
+// core libraries
 const redis = require('redis');
 const rstr = require('randomstring');
 const gutil = require('gulp-util');
 const os = require('os');
 
-//custom libraries
+// custom libraries
 const user = require('./user');
 
-//ERORS
+// ERORS
 const ERROR_FAILED_CREATE = '[' + gutil.colors.red('ERROR') + '] Party created but didn\'t add user: ';
 const ERROR_FAILED_SADD = '[' + gutil.colors.red('ERROR') + '] Failed to add value to set: ';
 const ERROR_FAILED_SCARD = '[' + gutil.colors.red('ERROR') + '] Failed to get number of members of: ';
@@ -19,14 +19,14 @@ const ERROR_FAILED_SISMEMBER = '[' + gutil.colors.red('ERROR') + '] Failed to ch
 const ERROR_FAILED_SMEMBERS = '[' + gutil.colors.red('ERROR') + '] Failed getting members of: ';
 const ERROR_FAILED_EXISTS = '[' + gutil.colors.red('ERROR') + '] Failed to check existence of key: ';
 
-//PREFIXES
+// PREFIXES
 const EXISTS = '[' + gutil.colors.cyan('EXISTS') + '] ';
 const ISMEMBER = '[' + gutil.colors.cyan('ISMEMBER') + '] ';
 const MEMBERS = '[' + gutil.colors.cyan('MEMBERS') + '] ';
 const PARTY = '[' + gutil.colors.green('PARTY') + '] ';
 const SUCCESS = '[' + gutil.colors.green('SUCCESS') + '] ';
 
-//Redis sets of parties
+// Redis sets of parties
 const partiesG = 'parties';
 const parties1 = 'parties:1';
 const parties2 = 'parties:2';
@@ -39,64 +39,63 @@ const parties5 = 'parties:5';
 	'username' - string
 	RET: generated party ID "party:[7-digit alphanumeric id]"
  */
-exports.createParty = function(username, rcon, callback) {
-    var id = 'party:' + rstr.generate(7);
-    //Check if party with generated ID already exists
-    partyExists(id, rcon, function(tf) {
-        if (tf) {
-            //Somehow generated existing party id, so recursively retry until success.
-            console.log('RETRYING');
-            return createParty(username, callback);
-        } else {
-            //Add user to new party set
-            rcon.sadd([id, username], function(err, reply) {
-                if (err == undefined) {
-                    if (reply == 1) {
-                        console.log(PARTY + id + ' created. Added: ' + username + '. Adding to party sets.');
-                            //Add new party to global parties set
-                        rcon.sadd([partiesG, id], function(err, reply) {
-                            if (err == undefined) {
-                                if (reply == 1) {
-                                    console.log(PARTY + id + ' added to global parties set.');
-                                    //Add new party to parties:1 set
-                                    rcon.sadd([parties1, id], function(err, reply) {
-                                        if (err == undefined) {
-                                            if (reply == 1) {
-                                                console.log(PARTY + id + ' added to parties:1.');
-                                                //Final checks to ensure user in party
-                                                isMemberOfParty(id, username, rcon, function(tf) {
-                                                    if (tf) {
-                                                        callback(id);
-                                                    } else {
-                                                        throw new Error(ERROR_FAILED_CREATE + username + os.EOL + member);
-                                                    }
-                                                });
-                                            } else {
-                                                throw new Erorr('Party already exists!? [2]');
-                                            }
-                                        } else {
-                                            throw new Error(ERROR_FAILED_SADD + parties1 + os.EOL + err);
-                                        }
-                                    });
-                                } else {
-                                    throw new Erorr('Party already exists!? [1]');
-                                }
-                            } else {
-                                throw new Error(ERROR_FAILED_SADD + partiesG + os.EOL + err);
-                            }
-                        });
-                    } else {
-                        throw new Error('User already part of party!? [0]');
-                    }
-                } else {
-                    throw new Error(ERROR_FAILED_SADD + id + os.EOL + err);
-                }
-            });
-        }
-    });
+exports.createParty = function (username, rcon, callback) {
+	var id = 'party:' + rstr.generate(7);
+    // Check if party with generated ID already exists
+	partyExists(id, rcon, function (tf) {
+		if (tf) {
+            // Somehow generated existing party id, so recursively retry until success.
+			console.log('RETRYING');
+			return createParty(username, callback);
+		}
+            // Add user to new party set
+		rcon.sadd([id, username], function (err, reply) {
+			if (err == undefined) {
+				if (reply == 1) {
+					console.log(PARTY + id + ' created. Added: ' + username + '. Adding to party sets.');
+                            // Add new party to global parties set
+					rcon.sadd([partiesG, id], function (err, reply) {
+						if (err == undefined) {
+							if (reply == 1) {
+								console.log(PARTY + id + ' added to global parties set.');
+                                    // Add new party to parties:1 set
+								rcon.sadd([parties1, id], function (err, reply) {
+									if (err == undefined) {
+										if (reply == 1) {
+											console.log(PARTY + id + ' added to parties:1.');
+                                                // Final checks to ensure user in party
+											isMemberOfParty(id, username, rcon, function (tf) {
+												if (tf) {
+													callback(id);
+												} else {
+													throw new Error(ERROR_FAILED_CREATE + username + os.EOL + member);
+												}
+											});
+										} else {
+											throw new Erorr('Party already exists!? [2]');
+										}
+									} else {
+										throw new Error(ERROR_FAILED_SADD + parties1 + os.EOL + err);
+									}
+								});
+							} else {
+								throw new Erorr('Party already exists!? [1]');
+							}
+						} else {
+							throw new Error(ERROR_FAILED_SADD + partiesG + os.EOL + err);
+						}
+					});
+				} else {
+					throw new Error('User already part of party!? [0]');
+				}
+			} else {
+				throw new Error(ERROR_FAILED_SADD + id + os.EOL + err);
+			}
+		});
+	});
 };
 
-//not sure if this should just implement changeParties or not...
+// not sure if this should just implement changeParties or not...
 function joinParty(username, party, rcon, callback) {
 
 }
@@ -139,40 +138,40 @@ function deleteParty(party, rcon, callback) {
 	'username' - string
 	RET: bool - is user in party
  */
-exports.isMemberOfParty = function(party, username, rcon, callback) {
-    rcon.sismember([party, username], function(err, reply) {
-        if (err == undefined) {
-            var tf = false;
-            if (reply == 1) {
-                console.log(ISMEMBER + username + ' -> ' + party + ' >> true');
-                tf = true;
-            } else {
-                console.log(ISMEMBER + username + ' -> ' + party + ' >> false');
-                tf = false;
-            }
-            callback(tf);
-        } else {
-            throw new Error(ERROR_FAILED_SISMEMBER + party + os.EOL + err);
-        }
-    });
+exports.isMemberOfParty = function (party, username, rcon, callback) {
+	rcon.sismember([party, username], function (err, reply) {
+		if (err == undefined) {
+			var tf = false;
+			if (reply == 1) {
+				console.log(ISMEMBER + username + ' -> ' + party + ' >> true');
+				tf = true;
+			} else {
+				console.log(ISMEMBER + username + ' -> ' + party + ' >> false');
+				tf = false;
+			}
+			callback(tf);
+		} else {
+			throw new Error(ERROR_FAILED_SISMEMBER + party + os.EOL + err);
+		}
+	});
 };
 
 function isMemberOfParty(party, username, rcon, callback) {
-    rcon.sismember([party, username], function(err, reply) {
-        if (err == undefined) {
-            var tf = false;
-            if (reply == 1) {
-                console.log(ISMEMBER + username + ' -> ' + party + ' >> true');
-                tf = true;
-            } else {
-                console.log(ISMEMBER + username + ' -> ' + party + ' >> false');
-                tf = false;
-            }
-            callback(tf);
-        } else {
-            throw new Error(ERROR_FAILED_SISMEMBER + party + os.EOL + err);
-        }
-    });
+	rcon.sismember([party, username], function (err, reply) {
+		if (err == undefined) {
+			var tf = false;
+			if (reply == 1) {
+				console.log(ISMEMBER + username + ' -> ' + party + ' >> true');
+				tf = true;
+			} else {
+				console.log(ISMEMBER + username + ' -> ' + party + ' >> false');
+				tf = false;
+			}
+			callback(tf);
+		} else {
+			throw new Error(ERROR_FAILED_SISMEMBER + party + os.EOL + err);
+		}
+	});
 }
 
 /*
@@ -180,40 +179,40 @@ function isMemberOfParty(party, username, rcon, callback) {
 	'party' - string (party:XXXXXXX)
 	RET: bool - party exists
  */
-exports.partyExists = function(party, rcon, callback) {
-    rcon.exists(party, function(err, reply) {
-        if (err == undefined) {
-            var tf = false;
-            if (reply == 1) {
-                console.log(EXISTS + party + ' >> true');
-                tf = true;
-            } else {
-                console.log(EXISTS + party + ' >> false');
-                tf = false;
-            }
-            callback(tf);
-        } else {
-            throw new Error(ERROR_FAILED_EXISTS + party + os.EOL + err);
-        }
-    });
+exports.partyExists = function (party, rcon, callback) {
+	rcon.exists(party, function (err, reply) {
+		if (err == undefined) {
+			var tf = false;
+			if (reply == 1) {
+				console.log(EXISTS + party + ' >> true');
+				tf = true;
+			} else {
+				console.log(EXISTS + party + ' >> false');
+				tf = false;
+			}
+			callback(tf);
+		} else {
+			throw new Error(ERROR_FAILED_EXISTS + party + os.EOL + err);
+		}
+	});
 };
 
 function partyExists(party, rcon, callback) {
-    rcon.exists(party, function(err, reply) {
-        if (err == undefined) {
-            var tf = false;
-            if (reply == 1) {
-                console.log(EXISTS + party + ' >> true');
-                tf = true;
-            } else {
-                console.log(EXISTS + party + ' >> false');
-                tf = false;
-            }
-            callback(tf);
-        } else {
-            throw new Error(ERROR_FAILED_EXISTS + party + os.EOL + err);
-        }
-    });
+	rcon.exists(party, function (err, reply) {
+		if (err == undefined) {
+			var tf = false;
+			if (reply == 1) {
+				console.log(EXISTS + party + ' >> true');
+				tf = true;
+			} else {
+				console.log(EXISTS + party + ' >> false');
+				tf = false;
+			}
+			callback(tf);
+		} else {
+			throw new Error(ERROR_FAILED_EXISTS + party + os.EOL + err);
+		}
+	});
 }
 
 /*
@@ -221,38 +220,38 @@ function partyExists(party, rcon, callback) {
 	'party' - string (party:XXXXXXX)
 	RET: int - num in party
  */
-exports.getNumPartyMembers = function(party, rcon, callback) {
-    partyExists(party, rcon, function(tf) {
-        if (tf) {
-            rcon.scard(party, function(err, reply) {
-                if (err == undefined) {
-                    console.log(MEMBERS + reply);
-                    callback(reply);
-                } else {
-                    throw new Error(ERROR_FAILED_SCARD);
-                }
-            });
-        } else {
-            console.log('Party DNE');
-        }
-    });
+exports.getNumPartyMembers = function (party, rcon, callback) {
+	partyExists(party, rcon, function (tf) {
+		if (tf) {
+			rcon.scard(party, function (err, reply) {
+				if (err == undefined) {
+					console.log(MEMBERS + reply);
+					callback(reply);
+				} else {
+					throw new Error(ERROR_FAILED_SCARD);
+				}
+			});
+		} else {
+			console.log('Party DNE');
+		}
+	});
 };
 
 function getNumPartyMembers(party, rcon, callback) {
-    partyExists(party, rcon, function(tf) {
-        if (tf) {
-            rcon.scard(party, function(err, reply) {
-                if (err == undefined) {
-                    console.log(MEMBERS + reply);
-                    callback(reply);
-                } else {
-                    throw new Error(ERROR_FAILED_SCARD);
-                }
-            });
-        } else {
-            console.log('Party DNE');
-        }
-    });
+	partyExists(party, rcon, function (tf) {
+		if (tf) {
+			rcon.scard(party, function (err, reply) {
+				if (err == undefined) {
+					console.log(MEMBERS + reply);
+					callback(reply);
+				} else {
+					throw new Error(ERROR_FAILED_SCARD);
+				}
+			});
+		} else {
+			console.log('Party DNE');
+		}
+	});
 }
 
 /*
@@ -260,36 +259,36 @@ function getNumPartyMembers(party, rcon, callback) {
 	'party' - string (party:XXXXXXX)
 	RET: array - all player usernames
  */
- exports.getPartyMembers = function(party, rcon, callback) {
-     partyExists(party, rcon, function(tf) {
-         if (tf) {
-             rcon.smembers(party, function(err, reply) {
-                 if (err == undefined) {
-                     console.log(MEMBERS + reply.length);
-                     callback(reply);
-                 } else {
-                     throw new Error(ERROR_FAILED_SMEMBERS);
-                 }
-             });
-         } else {
-             console.log('Party DNE');
-         }
-     });
- };
+exports.getPartyMembers = function (party, rcon, callback) {
+	partyExists(party, rcon, function (tf) {
+		if (tf) {
+			rcon.smembers(party, function (err, reply) {
+				if (err == undefined) {
+					console.log(MEMBERS + reply.length);
+					callback(reply);
+				} else {
+					throw new Error(ERROR_FAILED_SMEMBERS);
+				}
+			});
+		} else {
+			console.log('Party DNE');
+		}
+	});
+};
 
 function getPartyMembers(party, rcon, callback) {
-    partyExists(party, rcon, function(tf) {
-        if (tf) {
-            rcon.smembers(party, function(err, reply) {
-                if (err == undefined) {
-                    console.log(MEMBERS + reply.length);
-                    callback(reply);
-                } else {
-                    throw new Error(ERROR_FAILED_SMEMBERS);
-                }
-            });
-        } else {
-            console.log('Party DNE');
-        }
-    });
+	partyExists(party, rcon, function (tf) {
+		if (tf) {
+			rcon.smembers(party, function (err, reply) {
+				if (err == undefined) {
+					console.log(MEMBERS + reply.length);
+					callback(reply);
+				} else {
+					throw new Error(ERROR_FAILED_SMEMBERS);
+				}
+			});
+		} else {
+			console.log('Party DNE');
+		}
+	});
 }
