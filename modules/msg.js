@@ -14,6 +14,11 @@ module.exports = function(dev, backend, auth) {
 	//Msg export object
 	var msg = {};
 
+	//set local variables
+	msg.dev = dev;
+	msg.backend = backend;
+	msg.auth = auth;
+
 	//Send a single message to one user or channel
 	msg.reply = function(to, msg) {
 	    var pub = redis.createClient(6379, backend);
