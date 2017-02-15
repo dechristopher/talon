@@ -7,6 +7,7 @@ module.exports = function(dev, backend, auth) {
 	//core libraries
 	const redis = require('redis');
 	const gutil = require('gulp-util');
+	const os = require('os');
 
 	//import configuration
 	const log = require('./log');
@@ -49,6 +50,8 @@ module.exports = function(dev, backend, auth) {
 	    }
 	    cli.quit();
 	};
+
+	log('[' + gutil.colors.yellow('MESG') + '] Messaging initialized' + os.EOL);
 
 	return m;
 };
