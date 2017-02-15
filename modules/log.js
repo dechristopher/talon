@@ -4,10 +4,10 @@ Created by Andrew DeChristopher <drew@kiir.us> on 9/1/2016.
 
 const fs = require('fs');
 const os = require('os');
-const gutil = require('gulp-util');
+const c= require('chalk');
 const datetime = require('node-datetime');
 
-const LOG = '[' + gutil.colors.blue('LOG') + '] ';
+const LOG = '[' + c.blue('LOG') + '] ';
 
 // Wraps console.log for printing date in front
 // message: (string) message to log
