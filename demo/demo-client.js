@@ -34,12 +34,12 @@ const ERROR_BAD_DEMO = '[' + c.red('ERROR') + '] Invalid demo found: ';
 const DEMO = '[' + c.green('DEMO') + '] ';
 const DEMO_RED = '[' + c.red('DEMO') + '] ';
 
-var demoFolders = new ArrayList();
+let demoFolders = new ArrayList();
 
 const usnj1sock = 'us-nj1';
 const usnj2sock = 'us-nj2';
-var sock = '';
-var go = false;
+let sock = '';
+let go = false;
 
 log(DEMO + 'KIWI Demo Uploader - initializing..', '-demo-client');
 
@@ -78,7 +78,7 @@ function finished(filename) {
 
 // Returns size of file given by filename
 function getFileSizeInBytes(filename) {
-	var stats = fs.statSync(filename);
+	let stats = fs.statSync(filename);
 	return stats.size;
 }
 
@@ -106,7 +106,7 @@ function upload(filename) {
 	if (go) {
 		fs.exists(filename, function (exists) {
 			if (exists) {
-				var stream = ss.createStream();
+				let stream = ss.createStream();
 				fs.stat(__dirname + '/path/to/original/file.ext', function (err, stat) {
 					if (err) {
 						return console.error(err);
@@ -129,7 +129,7 @@ function upload(filename) {
 
 // Checks for demo files and uploads them a minute
 // after their file size has stopped increasing
-var checkForDemos = cron.job('*/30 * * * * *', function () {
+let checkForDemos = cron.job('*/30 * * * * *', function () {
 	log(DEMO + 'Checking directories...', '-demo-client');
     // Find new demo files
 	demoFolders.each(function (value) {
@@ -137,11 +137,11 @@ var checkForDemos = cron.job('*/30 * * * * *', function () {
 			if (err !== null) {
 				log(gutil.colors.red('Errors: ' + err), '-demo-client');
 			}
-			for (var i = 0; i < files.length; i++) {
+			for (let i = 0; i < files.length; i++) {
 				upload(files[i]);
 			}
             // Files is an array of filenames
-            /* for (var i = 0; i < files.length; i++) {
+            /* for (let i = 0; i < files.length; i++) {
                 if (!dList.has(files[i]) && contains(files[i], ".dem")) {
                     log(gutil.colors.blue('ADDED: ' + files[i]), '-demo-client');
                     dList.set(files[i], getFilesizeInBytes(files[i]));
@@ -154,10 +154,10 @@ var checkForDemos = cron.job('*/30 * * * * *', function () {
 	checkForDemos.stop();
 });
 
-var checkDemoGrowth = cron.job('*/20 * * * * *', function () {
+let checkDemoGrowth = cron.job('*/20 * * * * *', function () {
 	dList.forEach(function (value, key) {
         // Check for demo file growth
-		var currSize = getFileSizeInBytes(key);
+		let currSize = getFileSizeInBytes(key);
 		if (currSize > value) {
 			log('STILL RECORDING: ' + getDemoName(key));
 			dList.set(key, currSize);
@@ -177,7 +177,7 @@ var checkDemoGrowth = cron.job('*/20 * * * * *', function () {
 	});
 });
 
-var checkToDelete = cron.job('*/5 * * * * *', function () {
+let checkToDelete = cron.job('*/5 * * * * *', function () {
 	if (delList.count() > 0) {
 		log(DEMO + 'Checking for uploaded demos.', '-demo-client');
 		delList.forEach(function (value, key) {

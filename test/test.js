@@ -4,7 +4,7 @@ Created by Andrew DeChristopher <drew@kiir.us> on 6/1/2016.
 
 const redis = require('redis');
 const git = require('git-last-commit');
-var testCase = require('nodeunit').testCase;
+let testCase = require('nodeunit').testCase;
 const user = require('../modules/user.js');
 const party = require('../modules/party.js');
 const match = require('../modules/match.js');
@@ -22,9 +22,9 @@ git.getLastCommit(function (err, commit) {
 	}
 });
 
-var rcon;
-var testPlayer = user('testuser', 'STEAM_0:0:TESTING', 'TESTCHANNEL');
-var testMatch = match(1337, '8.8.8.8:27015', 'jR0mW3', 'team_drop', 'team_sparks', [testPlayer, testPlayer, testPlayer, testPlayer]);
+let rcon;
+let testPlayer = user('testuser', 'STEAM_0:0:TESTING', 'TESTCHANNEL');
+let testMatch = match(1337, '8.8.8.8:27015', 'jR0mW3', 'team_drop', 'team_sparks', [testPlayer, testPlayer, testPlayer, testPlayer]);
 
 // user.js test cases - NEEDS CONVERSION
 exports['Test user generator factory'] = function (test) {

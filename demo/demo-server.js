@@ -35,15 +35,15 @@ io.sockets.on('connection', function (socket) {
 	log(KIWI + 'Client connected', '-demo-server');
     // For uploads from US-NJ1
 	ss(socket).on('us-nj1', function (stream, data) {
-		var filename = path.basename(data.name).split('\\');
+		let filename = path.basename(data.name).split('\\');
 		filename = filename[filename.length - 1];
-		var filesize = data.size;
+		let filesize = data.size;
 		log(DEMO + NJ1 + 'Uploading: ' + filename + ' ~' + filesize + ' B', '-demo-server');
 		stream.pipe(fs.createWriteStream(cfg.demoDir + filename));
 	});
     // For uploads from US-NJ2
 	ss(socket).on('us-nj2', function (stream, data) {
-		var filename = path.basename(data.name).split('\\');
+		let filename = path.basename(data.name).split('\\');
 		filename = filename[filename.length - 1];
 		log(DEMO + NJ2 + 'Uploading: ' + filename + ' ~' + filesize + ' B', '-demo-server');
 		stream.pipe(fs.createWriteStream(cfg.demoDir + filename));
@@ -71,17 +71,17 @@ app.get('/', function (req, res, next) {
 // Request for demo ID (ex. http://demo.kiir.us/15 OR http://demo.kiir.us/582)
 app.get('/:id', function (req, res, next) {
 	try {
-		var id = req.params.id;
+		let id = req.params.id;
 		fs.exists(path.join(cfg.demoDir, 'kiwi-' + id + '.dem'), function (exists) {
 			if (exists) {
                 // res.download(path.join(cfg.demoDir, 'kiwi-' + id + '.dem'));
 
 				log(DOWN + 'Found demo @ ' + path.join(cfg.demoDir, 'kiwi-' + id + '.dem'), '-demo-server');
 
-				var file = path.join(cfg.demoDir, 'kiwi-' + id + '.dem');
-				var filename = path.basename(file);
-				var mimetype = mime.lookup(filename);
-				var filestream = fs.createReadStream(file);
+				let file = path.join(cfg.demoDir, 'kiwi-' + id + '.dem');
+				let filename = path.basename(file);
+				let mimetype = mime.lookup(filename);
+				let filestream = fs.createReadStream(file);
 
 				res.setHeader('Content-disposition', 'attachment; filename=' + filename);
 				res.setHeader('Content-type', mimetype);

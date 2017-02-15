@@ -14,10 +14,10 @@ const LOG = '[' + c.blue('LOG') + '] ';
 // logname: (string) name of sub-log file (defaults to global log file)
 // consoleOut: (bool) whether or not to print log to console (defaults to true)
 function log(message, logname, consoleOut) {
-	var time = datetime.create().format('m-d-y H:M:S');
-	var today = datetime.create().format('m-d-y');
-	var file = '';
-	var line = '';
+	let time = datetime.create().format('m-d-y H:M:S');
+	let today = datetime.create().format('m-d-y');
+	let file = '';
+	let line = '';
 
     // Handle logname argument
 	if (logname === undefined) {

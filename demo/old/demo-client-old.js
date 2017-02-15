@@ -1,31 +1,31 @@
 /**
  * Created by Drew on 5/23/2016.
  */
-var cron = require('cron');
-var S = require('string');
-var requestify = require('requestify');
-var recursive = require('recursive-readdir');
-var path = require('path');
-var HashMap = require('hashmap');
-var fs = require('fs');
-var datetime = require('node-datetime');
-var sys = require('sys');
-var exec = require('child_process').exec;
-var c = require('chalk');
+let cron = require('cron');
+let S = require('string');
+let requestify = require('requestify');
+let recursive = require('recursive-readdir');
+let path = require('path');
+let HashMap = require('hashmap');
+let fs = require('fs');
+let datetime = require('node-datetime');
+let sys = require('sys');
+let exec = require('child_process').exec;
+let c = require('chalk');
 
 // HashMap of demos and filesizes
-var dList = new HashMap();
+let dList = new HashMap();
 // HashMap of demos and check counters
-var checkdList = new HashMap();
+let checkdList = new HashMap();
 // HashMap of demos to check for on the server to delete if they've been uploaded
-var delList = new HashMap();
+let delList = new HashMap();
 
 log('~ TALON DEMO PARSER v0.7');
 
 // Wraps console.log for printing date in front
 function log(message) {
-	var dt = datetime.create();
-	var time = dt.format('m/d/y H:M:S');
+	let dt = datetime.create();
+	let time = dt.format('m/d/y H:M:S');
 	console.log('[' + time + '] ' + message);
 }
 
@@ -36,7 +36,7 @@ function contains(a, b) {
 
 // Returns size of file given by filename
 function getFilesizeInBytes(filename) {
-	var stats = fs.statSync(filename);
+	let stats = fs.statSync(filename);
 	return stats.size;
 }
 
@@ -98,15 +98,15 @@ function sendFileToDemoCDN(filename) {
 }
 
 function demoExistsOnCDN(Url, callback, filename) {
-	var http = require('http'),
+	let http = require('http'),
 		url = require('url');
-	var options = {
+	let options = {
 		method: 'HEAD',
 		host: url.parse(Url).host,
 		port: 80,
 		path: url.parse(Url).pathname
 	};
-	var req = http.request(options, function (r) {
+	let req = http.request(options, function (r) {
 		log('GOT: ' + r.statusCode);
 		callback(r.statusCode == 200, filename);
 	});
@@ -115,7 +115,7 @@ function demoExistsOnCDN(Url, callback, filename) {
 
 // Checks for demo files and uploads them a minute
 // after their file size has stopped increasing
-var checkForDemos = cron.job('*/20 * * * * *', function () {
+let checkForDemos = cron.job('*/20 * * * * *', function () {
 	log(c.green('Checking for demos...'));
     // Find new demo files
 	recursive('C:\\KIWI', /* [ignoreFunc], */ function (err, files) {
@@ -123,7 +123,7 @@ var checkForDemos = cron.job('*/20 * * * * *', function () {
 			log(c.red('Errors: ' + err));
 		}
         // Files is an array of filenames
-		for (var i = 0; i < files.length; i++) {
+		for (let i = 0; i < files.length; i++) {
 			if (!dList.has(files[i]) && contains(files[i], '.dem')) {
 				log(c.blue('ADDED: ' + files[i]));
 				dList.set(files[i], getFilesizeInBytes(files[i]));
@@ -133,10 +133,10 @@ var checkForDemos = cron.job('*/20 * * * * *', function () {
 	});
 });
 
-var checkDemoGrowth = cron.job('*/20 * * * * *', function () {
+let checkDemoGrowth = cron.job('*/20 * * * * *', function () {
 	dList.forEach(function (value, key) {
         // Check for demo file growth
-		var currSize = getFilesizeInBytes(key);
+		let currSize = getFilesizeInBytes(key);
 		if (currSize > value) {
 			log('STILL RECORDING: ' + getDemoName(key));
 			dList.set(key, currSize);
@@ -156,7 +156,7 @@ var checkDemoGrowth = cron.job('*/20 * * * * *', function () {
 	});
 });
 
-var checkToDelete = cron.job('*/5 * * * * *', function () {
+let checkToDelete = cron.job('*/5 * * * * *', function () {
 	if (delList.count() > 0) {
 		log('Checking for uploaded demos.');
 		delList.forEach(function (value, key) {

@@ -8,7 +8,7 @@ const log = require('./log');
 
 const TALN = '[' + c.magenta('TALN') + '] ';
 
-var flist = {};
+let flist = {};
 
 // Fill an arraylist list with lines from a file
 flist.fill = function (file, list, numSrv, displayname, err) {

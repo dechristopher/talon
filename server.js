@@ -60,40 +60,40 @@ const LOGIN = '[' + c.green('LOGIN') + '] ';
 const LOGOUT = '[' + c.magenta('LOGOUT') + '] ';
 
 // Has already connected
-var connectYet = false;
+let connectYet = false;
 
 // Number of backend connection retries
-var connectRet = 0;
+let connectRet = 0;
 
 // Local announcement variable
-var announcement = '';
+let announcement = '';
 
 // Declare queue variables
-var currQ = 0;
-var currS = 0;
+let currQ = 0;
+let currS = 0;
 
 // Declare HashMaps for all users
 // and queued users
-var pList = new HashMap();
-var qList = new HashMap();
+let pList = new HashMap();
+let qList = new HashMap();
 
 // Declare HashMaps for active users and
 // HBC offending users
-var hbCheck = new HashMap();
-var hbChance = new HashMap();
+let hbCheck = new HashMap();
+let hbChance = new HashMap();
 
 // Set up the server lists
-var servers = new ArrayList();
-var onlServers = new ArrayList();
+let servers = new ArrayList();
+let onlServers = new ArrayList();
 
 // Allowed talonPanel IPs
-var firewallIPs = new ArrayList();
+let firewallIPs = new ArrayList();
 
 // Total number of servers
-var totS = 0;
+let totS = 0;
 
 // Total number of firewall IPs
-var totIP = 0;
+let totIP = 0;
 
 // Initialize datadog metrics
 metrics.init({
@@ -127,7 +127,7 @@ totS = servers.size();
 flist.fill('conf/ips.txt', firewallIPs, totIP, 'Firewall IPs', ERROR_NO_FWIP_FILE);
 
 // Placeholder variable for redis connection
-var inm = redis.createClient(6379, cfg.backend);
+let inm = redis.createClient(6379, cfg.backend);
 
 // Auth with redis
 if (cfg.dev === false) {
@@ -137,7 +137,7 @@ if (cfg.dev === false) {
 log(TALN + 'TALON v' + pkg.version);
 log(TALN + 'Connecting to backend...');
 
-var retryConnect = cron.job('*/2 * * * * *', function () {
+let retryConnect = cron.job('*/2 * * * * *', function () {
 	if (connectRet === 5) {
 		log(TALN + 'FAILED TO CONNECT TO BACKEND!');
 		log(TALN + 'Shutting down...');
@@ -178,11 +178,11 @@ inm.on('error', function (error) {
 // Run this callback every time a message is received from a client
 inm.on('message', function (channel, message) {
     // Split the message into parts
-	var parts = message.split('￮');
-	var chan = parts[0];
-	var sid = parts[1];
-	var from = parts[2];
-	var command = parts[3];
+	let parts = message.split('￮');
+	let chan = parts[0];
+	let sid = parts[1];
+	let from = parts[2];
+	let command = parts[3];
 
     // Send message to be parsed
 	if (command === '') {
@@ -193,8 +193,8 @@ inm.on('message', function (channel, message) {
 });
 
 // Reports relevant app metrics to datadog
-var reportMetrics = cron.job('*/5 * * * * *', function () {
-	var memUsage = process.memoryUsage();
+let reportMetrics = cron.job('*/5 * * * * *', function () {
+	let memUsage = process.memoryUsage();
 	metrics.gauge('sys.memory', memUsage.rss);
 	metrics.gauge('players.online', pList.count());
 	metrics.gauge('players.queued', qList.count());
@@ -202,13 +202,13 @@ var reportMetrics = cron.job('*/5 * * * * *', function () {
 });
 
 // Unused debug BS
-// var showOnline = cron.job('*/15 * * * * *', function () {
+// let showOnline = cron.job('*/15 * * * * *', function () {
 // 	log('[P] (Q: ' + currQ + ' / O: ' + pList.count() + ')');
 // });
 
 // Checks player and server statuses every 10 seconds and
 // pops the queue if 10 players and >= 1 server is available.
-var parseQueue = cron.job('*/10 * * * * *', function () {
+let parseQueue = cron.job('*/10 * * * * *', function () {
     // Updates currS and currQ
 	currS = onlServers.size();
 	currQ = qList.count();
@@ -217,12 +217,12 @@ var parseQueue = cron.job('*/10 * * * * *', function () {
         // and people are queued
 		if (qList.count() >= cfg.qSize) {
             // Get all queued players and add to a JS array
-			var players = qList.values();
+			let players = qList.values();
             // Declare an empty array for the 10 (x) selected players
-			var selected = [];
+			let selected = [];
 
             // Select and rig teams to favor the KIWI squad ;)
-            // var rigIndex = 0;
+            // let rigIndex = 0;
 
             /* if (qList.has('drop')) {
                 selected[rigIndex] = qList.get('drop');
@@ -260,40 +260,40 @@ var parseQueue = cron.job('*/10 * * * * *', function () {
             } */
 
             // Select 10 payers randomly. Store in selected[].
-			for (var i = (0 /* + rigIndex */); i < (cfg.qSize); i++) {
+			for (let i = (0 /* + rigIndex */); i < (cfg.qSize); i++) {
 				selected[i] = players[tutil.random(0, players.length - 1)];
-				var tp = qList.search(selected[i]);
+				let tp = qList.search(selected[i]);
 				qList.remove(tp);
 				players = qList.values();
 			}
 
             // Pick a random server
-			var srvNum = tutil.random(0, onlServers.size() - 1);
-			var server = onlServers.get(srvNum);
+			let srvNum = tutil.random(0, onlServers.size() - 1);
+			let server = onlServers.get(srvNum);
 			onlServers.remove(server);
 
             // Build API call suffix
             // &p1=ABC&p2=ABC&p3=ABC&p4=ABC&p5=ABC&p6=ABC&p7=ABC&p8=ABC&p9=ABC&p10=ABC&t1n=team_drop&t2n=team_sparks&numPl=5
-			var call = buildCall(selected);
+			let call = buildCall(selected);
 
             // Concatenate the built API call with the required properties to make the full call
-			var apiCall = util.format(cfg.endpoints.matchCreate, cfg.api, server, call);
+			let apiCall = util.format(cfg.endpoints.matchCreate, cfg.api, server, call);
             // log("[Q] [POP] Built API call: " + apiCall, 'mm');
 
             // Send the API request
 			requestify.get(apiCall).then(function (response) {
-				var pass = response.getBody();
+				let pass = response.getBody();
                 // If the call succeeds
 				if (pass === 'failed') {
 					// Call 911
 					log(Q + '[POP] [S] FAILED >> ' + server, 'mm');
 				} else {
 					// Log everything
-					var now = datetime.create().format('m-d-y H:M:S');
+					let now = datetime.create().format('m-d-y H:M:S');
 					log(Q + '[POP] Match created @ ' + now, 'mm');
 					log(Q + '[POP] [S] >> ' + server + ' : ' + pass, 'mm');
                     // Pop the queue for all selected players
-					for (var k = 0; k < selected.length; k++) {
+					for (let k = 0; k < selected.length; k++) {
 						log(Q + '[POP] [P] >> ' + selected[k].channel + ' - ' + selected[k].sid + ' - ' + selected[k].nm, 'mm');
 						reply(selected[k].channel, 'p~' + server + '~' + pass);
 					}
@@ -312,13 +312,13 @@ var parseQueue = cron.job('*/10 * * * * *', function () {
 
 // Checks server status every 5 seconds for matches still
 // going on and adds/removes them from onlServers[]
-var parseServers = cron.job('*/5 * * * * *', function () {
+let parseServers = cron.job('*/5 * * * * *', function () {
 	totS = servers.size();
     // log("[S] Server Query...");
     // console.log(onlServers);
 	lupus(0, totS, function (n) {
-		var ip = servers.get(n);
-		var endpoint = util.format(cfg.endpoints.serverQuery, cfg.api, ip);
+		let ip = servers.get(n);
+		let endpoint = util.format(cfg.endpoints.serverQuery, cfg.api, ip);
 		requestify.get(endpoint).then(response => parseServerAPIResponse(response));
 	}, function () {
         // log("[S] Server Query: DONE", 'srv');
@@ -329,15 +329,15 @@ var parseServers = cron.job('*/5 * * * * *', function () {
 // 30 seconds. If not, removes them from qList and hbCheck
 //
 // PLEASE comment this
-var parseHeartbeats = cron.job('*/30 * * * * *', function () {
+let parseHeartbeats = cron.job('*/30 * * * * *', function () {
     // log('[HBC] >> RUNNING...', 'hb');
-	var i = 0;
+	let i = 0;
     // Check EVERY user
 	hbCheck.forEach(function (value, key) {
         // log('Checking ' + key + ' -> ' + value, 'hb');
 		if (value === false) {
 			if (hbChance.has(key)) {
-				var chance = hbChance.get(key);
+				let chance = hbChance.get(key);
 				if (chance === 0) {
 					hbCheck.remove(key);
 					hbChance.remove(key);
@@ -367,13 +367,13 @@ var parseHeartbeats = cron.job('*/30 * * * * *', function () {
 // Parse client commands
 function parse(channel, sid, from, input) {
     // Instantiate command variable
-	var command;
+	let command;
 
     // Check if command has args
 	if (input.indexOf('□') > -1) {
-		var parts = input.split('□');
+		let parts = input.split('□');
 		command = parts[0];
-		// var args = parts[1].split('￭');
+		// let args = parts[1].split('￭');
 	} else {
 		command = input;
 	}
@@ -383,7 +383,7 @@ function parse(channel, sid, from, input) {
         // User logs in
 		case 'li':
             // Create player object
-			var p = new Player(from, sid, channel);
+			let p = new Player(from, sid, channel);
             // log out all other instances of player
 			if (pList.has(p.nm)) {
 				pList.remove(p.nm);
@@ -441,7 +441,7 @@ function parse(channel, sid, from, input) {
             // https://kiir.us/api.php/?cmd=b&key=<apikey>&sid=(SID)
             /* case "ban":
                 requestify.get('https://kiir.us/api.php/?cmd=b&key=<apikey>&sid=STEAM_0:1:32732494').then(function(response) {
-                    var r = response.getBody();
+                    let r = response.getBody();
                     log("WEB: :" + r.toString() + ":");
                     reply(channel, r.toString());
                 });
@@ -463,11 +463,11 @@ function parse(channel, sid, from, input) {
             // User requests theirs or another player's stats
 		case 'stats':
             // Query stats API
-			var endpoint = util.format(cfg.endpoints.statsQuery, cfg.api, from);
+			let endpoint = util.format(cfg.endpoints.statsQuery, cfg.api, from);
 			requestify.get(endpoint).then(function (response) {
-				var r = response.getBody();
+				let r = response.getBody();
                 // kr~xp~wins~losses
-				var stats = r.split('~');
+				let stats = r.split('~');
                 // Cackyuhlate shite and send info to client
 				reply(channel, 's~' + tutil.rank(stats[1]) + '~KR:  ' + stats[0] + ' (+- 0.1)~XP:  ' + tutil.xptot(stats[1]) + '~' + stats[2] + '~' + stats[3]);
 			});
@@ -489,7 +489,7 @@ function parse(channel, sid, from, input) {
 
 // Send a single message to one user or channel
 function reply(to, msg) {
-	var pub = redis.createClient(6379, cfg.backend);
+	let pub = redis.createClient(6379, cfg.backend);
 	if (!cfg.dev) {
 		pub.auth(cfg.auth);
 	}
@@ -499,14 +499,14 @@ function reply(to, msg) {
 
 // Broadcast to all users and channels
 function bcast(msg) {
-	var pub = redis.createClient(6379, cfg.backend);
+	let pub = redis.createClient(6379, cfg.backend);
 	if (!cfg.dev) {
 		pub.auth(cfg.auth);
 	}
 
-	var players = pList.values();
+	let players = pList.values();
 
-	for (var i = 0; i < players.length; i++) {
+	for (let i = 0; i < players.length; i++) {
 		pub.publish(players[i].channel, msg);
         // log(players[i].channel + "/" + msg);
 	}
@@ -534,10 +534,10 @@ function procQueue(user, channel) {
 // list based on their hostname, active players and
 // online status
 function parseServerAPIResponse(response) {
-	var r;
-	var hostname;
-	var ip;
-	var players;
+	let r;
+	let hostname;
+	let ip;
+	let players;
 	if (tutil.contains(response.getBody(), '~')) {
         // console.log(response.getBody());
 		r = response.getBody().split('~');
@@ -627,8 +627,8 @@ function buildCall(selected) {
 }
 
 // Gets most recent announcement every 45 seconds and passes it to sendAnnouncement()
-var getAnnouncement = cron.job('*/45 * * * * *', function () {
-	var endpoint = util.format(cfg.endpoints.getAnnouncement, cfg.api);
+let getAnnouncement = cron.job('*/45 * * * * *', function () {
+	let endpoint = util.format(cfg.endpoints.getAnnouncement, cfg.api);
 	requestify.get(endpoint).then(response => sendAnnouncement(response.getBody()));
 });
 
@@ -651,10 +651,10 @@ function isPlayerInQueue(name) {
 // returns a formatted list of '-username [steamid] = [channel] = [hwid]'
 // bool refresh to add /refresh in the end of the kick URL
 function webPlayerList(refresh) {
-	var list = '';
+	let list = '';
 	if (pList.count() > 0) {
 		pList.forEach(function (value, key) {
-			var queued = isPlayerInQueue(key);
+			let queued = isPlayerInQueue(key);
 			if (refresh) {
 				list += '<b>-</b> ' + tutil.boolStar(queued) + key + ' ( ' + value.sid + ' || ' + value.channel + ' ) ( <a href=\'http://steamcommunity.com/profiles/' + tutil.sidTo64(value.sid) + '\'>Steam Profile</a> ) [ <a href=\'/kick/' + key + '/refresh\'>KICK</a> ]<br />';
 			} else {
@@ -669,9 +669,9 @@ function webPlayerList(refresh) {
 
 // Returns formatted list of servers
 function webServerList() {
-	var list = '[ ';
-	var br = 0;
-	for (var i = 0; i < servers.size(); i++) {
+	let list = '[ ';
+	let br = 0;
+	for (let i = 0; i < servers.size(); i++) {
 		list += servers.get(i);
 		if (i === (servers.size() - 1)) {
 			list += ' ]<br />';
@@ -689,7 +689,7 @@ function webServerList() {
 
 // Put together panel pages based on requested type
 function renderPanel(refresh, req) {
-	var panel = '<!DOCTYPE html><html><head>' +
+	let panel = '<!DOCTYPE html><html><head>' +
         '<title>talonPanel :: Dash</title>';
 	if (refresh) {
 		panel += '<meta http-equiv=\'Refresh\' content=\'5\'>';
@@ -770,7 +770,7 @@ app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
 // Checks if request IP is allowed to access talonPanel before
 // continuing to render talonPanel.
 app.use(function (req, res, next) {
-	var ip = req.connection.remoteAddress.toString().substring(7, req.connection.remoteAddress.toString().length);
+	let ip = req.connection.remoteAddress.toString().substring(7, req.connection.remoteAddress.toString().length);
 	if (firewall(ip)) {
 		next();
 	} else {
@@ -801,7 +801,7 @@ app.get('/refresh', function (req, res, next) {
 
 app.get('/kick/:username', function (req, res, next) {
 	try {
-		var username = req.params.username;
+		let username = req.params.username;
 		webKickPlayer(username);
 		res.redirect('http://' + req.hostname + ':' + cfg.port);
 		log(TP + '[' + req.ip + '] GET /kick/' + username, 'web');
@@ -812,7 +812,7 @@ app.get('/kick/:username', function (req, res, next) {
 
 app.get('/kick/:username/refresh', function (req, res, next) {
 	try {
-		var username = req.params.username;
+		let username = req.params.username;
 		webKickPlayer(username);
 		res.redirect('http://' + req.hostname + ':' + cfg.port + '/refresh');
 		log(TP + '[' + req.ip + '] GET /kick/' + username, 'web');
@@ -824,7 +824,7 @@ app.get('/kick/:username/refresh', function (req, res, next) {
 app.post('/ann', function (req, res, next) {
 	try {
 		log(TP + '[' + req.ip + '] POST /ann', 'web');
-		var endpoint = util.format(cfg.endpoints.setAnnouncement, cfg.api, req.body.announcement);
+		let endpoint = util.format(cfg.endpoints.setAnnouncement, cfg.api, req.body.announcement);
 		requestify.get(endpoint).then(response => sendAnnouncement(response.getBody()));
 		res.redirect('http://' + req.hostname + ':' + cfg.port);
 	} catch (err) {

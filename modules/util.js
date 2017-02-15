@@ -12,7 +12,7 @@ const log = require('./log');
 const TALN = '[' + c.magenta('TALN') + '] ';
 
 // Export object
-var util = {};
+let util = {};
 
 util.ascii = function () {
 	log(TALN);

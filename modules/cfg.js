@@ -13,7 +13,7 @@ const tutil = require('./util');
 // logging constants
 const CONF = '[' + c.green('CONF') + '] ';
 
-var cfg = {};
+let cfg = {};
 
 if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
 	dotenv.config({
@@ -95,7 +95,7 @@ let verifyConfig = function (c, silent) {
 		log(CONF + 'Validating configuration...');
 	}
 	Object.keys(c).forEach(function (key) {
-		var val = c[key];
+		let val = c[key];
 		if (cfg.debug) {
 			console.log(key, ':', val, typeof val);
 		}

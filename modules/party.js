@@ -41,7 +41,7 @@ const parties5 = 'parties:5';
 	RET: generated party ID "party:[7-digit alphanumeric id]"
  */
 exports.createParty = function (username, rcon, callback) {
-	var id = 'party:' + rstr.generate(7);
+	let id = 'party:' + rstr.generate(7);
     // Check if party with generated ID already exists
 	partyExists(id, rcon, function (tf) {
 		if (tf) {
@@ -142,7 +142,7 @@ function deleteParty(party, rcon, callback) {
 exports.isMemberOfParty = function (party, username, rcon, callback) {
 	rcon.sismember([party, username], function (err, reply) {
 		if (err == undefined) {
-			var tf = false;
+			let tf = false;
 			if (reply == 1) {
 				log(ISMEMBER + username + ' -> ' + party + ' >> true', 'party');
 				tf = true;
@@ -160,7 +160,7 @@ exports.isMemberOfParty = function (party, username, rcon, callback) {
 function isMemberOfParty(party, username, rcon, callback) {
 	rcon.sismember([party, username], function (err, reply) {
 		if (err == undefined) {
-			var tf = false;
+			let tf = false;
 			if (reply == 1) {
 				log(ISMEMBER + username + ' -> ' + party + ' >> true', 'party');
 				tf = true;
@@ -183,7 +183,7 @@ function isMemberOfParty(party, username, rcon, callback) {
 exports.partyExists = function (party, rcon, callback) {
 	rcon.exists(party, function (err, reply) {
 		if (err == undefined) {
-			var tf = false;
+			let tf = false;
 			if (reply == 1) {
 				log(EXISTS + party + ' >> true', 'party');
 				tf = true;
@@ -201,7 +201,7 @@ exports.partyExists = function (party, rcon, callback) {
 function partyExists(party, rcon, callback) {
 	rcon.exists(party, function (err, reply) {
 		if (err == undefined) {
-			var tf = false;
+			let tf = false;
 			if (reply == 1) {
 				log(EXISTS + party + ' >> true', 'party');
 				tf = true;

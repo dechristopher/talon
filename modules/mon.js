@@ -15,13 +15,13 @@ const util = require('./util');
 const mon = redis.createClient(6379, cfg.backend);
 mon.auth(cfg.auth);
 // messages that have been received this second
-var mts = 0;
-var mtm = 0;
+let mts = 0;
+let mtm = 0;
 // average messages per second
-var mps = 0;
-var mpm = 0;
+let mps = 0;
+let mpm = 0;
 
-var mpsGraph = '▓';
+let mpsGraph = '▓';
 
 log('~ TALON Monitor INITIALIZING ~');
 
@@ -31,10 +31,10 @@ mon.on('subscribe', function (channel, count) {
 });
 
 mon.on('message', function (channel, message) {
-	var parts = message.split('￮');
-	var chan = parts[0];
-	var from = parts[1];
-	var command = parts[2];
+	let parts = message.split('￮');
+	let chan = parts[0];
+	let from = parts[1];
+	let command = parts[2];
 
 	if (command === '') {
 		log('NULL: ' + channel + ' -> ' + from);
@@ -48,12 +48,12 @@ mon.on('message', function (channel, message) {
 });
 
 function parse(channel, from, input) {
-	var command;
+	let command;
 
 	if (input.indexOf('□') > -1) {
-		var parts = input.split('□');
+		let parts = input.split('□');
 		command = parts[0];
-		// var args = parts[1].split('￭');
+		// let args = parts[1].split('￭');
 	} else {
 		command = input;
 	}
@@ -62,12 +62,12 @@ function parse(channel, from, input) {
 }
 
 // Refreshes the console every second with up to date data
-var refreshScreen = cron.job('*/1 * * * * *', function () {
+let refreshScreen = cron.job('*/1 * * * * *', function () {
     // Clear window
 	clear();
     // Get current time
-	var dt = datetime.create();
-	var time = dt.format('H:M:S');
+	let dt = datetime.create();
+	let time = dt.format('H:M:S');
     // Print next window state
 	log('╔════════════════ TALON Monitor [' + time + '] ════════════════╗');
 	log('║ Listening :                                        talon ║');
@@ -79,8 +79,8 @@ var refreshScreen = cron.job('*/1 * * * * *', function () {
 });
 
 // Parses all messages that come in and gets average mps
-var parseDataSec = cron.job('*/1 * * * * *', function () {
-	var temp = mts;
+let parseDataSec = cron.job('*/1 * * * * *', function () {
+	let temp = mts;
 	mts = 0;
 
 	mps = (mps + temp) / 2;
@@ -108,8 +108,8 @@ var parseDataSec = cron.job('*/1 * * * * *', function () {
 	}
 });
 
-var parseDataMin = cron.job('00 */1 * * * *', function () {
-	var temp = mtm;
+let parseDataMin = cron.job('00 */1 * * * *', function () {
+	let temp = mtm;
 	mtm = 0;
 
 	mpm = (mpm + temp) / 2;

@@ -21,7 +21,7 @@ const msg = require('./msg');
 const M = '[' + c.blue('MTCH') + '] ';
 
 // matches export object
-var m = {};
+let m = {};
 
 // CLASS VARIABLES AND METHODS
 
@@ -36,17 +36,17 @@ m.jobCheckActive = cron.job('*/5 * * * * *', function () {
 		log('matches.js -> m.jobCheckActive(' + m.active.count() + ' matches)', 'debug');
 	}
 	m.active.forEach(function (value, key) {
-		var endpoint = util.format(cfg.endpoints.serverQuery, cfg.api, key);
+		let endpoint = util.format(cfg.endpoints.serverQuery, cfg.api, key);
 		r.get(endpoint).then(response => parseStatus(response));
 	});
 });
 
 // Parse API response and verify match end
 function parseStatus(response) {
-	var r;
-	var hostname;
-	var ipp;
-	var players;
+	let r;
+	let hostname;
+	let ipp;
+	let players;
 	if (util.contains(response.getBody(), '~')) {
 		r = response.getBody().split('~');
 		ipp = r[0];
@@ -61,12 +61,12 @@ function parseStatus(response) {
 		// 108.61.129.168:27015~KIWI::OFF~0
 		if (hostname === 'KIWI::OFF' && players === '1' /* && !onlServers.contains(ip) */ && hostname !== 'KIWI::LIVE') {
 			// broadcast match over to all players in match
-			var match = m.active.get(ipp);
-			var matchid = match.getMatchID();
-			var mplayers = match.getPlayers();
+			let match = m.active.get(ipp);
+			let matchid = match.getMatchID();
+			let mplayers = match.getPlayers();
 
 			// CHECK CLIENT FOR MATCH OVER MESSAGE SYNTAX!!
-			for (var i = 0; i < mplayers.length; i++) {
+			for (let i = 0; i < mplayers.length; i++) {
 				msg.reply(mplayers[i].channel, '[SOMETHING HERE]' + matchid);
 			}
 
