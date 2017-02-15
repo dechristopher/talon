@@ -3,10 +3,10 @@ Created by Andrew DeChristopher <drew@kiir.us> on 1/5/2017.
  */
 
 const fs = require('fs');
-const gutil = require('gulp-util');
+const c = require('chalk');
 const log = require('./log');
 
-const TALN = '[' + gutil.colors.magenta('TALN') + '] ';
+const TALN = '[' + c.magenta('TALN') + '] ';
 
 var flist = {};
 
