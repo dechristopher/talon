@@ -368,6 +368,8 @@ let parseHeartbeats = cron.job('*/30 * * * * *', function () {
 function parse(channel, sid, from, input) {
     // Instantiate command variable
 	let command;
+	let p;
+	let endpoint;
 
     // Check if command has args
 	if (input.indexOf('□') > -1) {
@@ -383,7 +385,7 @@ function parse(channel, sid, from, input) {
         // User logs in
 		case 'li':
             // Create player object
-			let p = new Player(from, sid, channel);
+			p = new Player(from, sid, channel);
             // log out all other instances of player
 			if (pList.has(p.nm)) {
 				pList.remove(p.nm);
@@ -463,7 +465,7 @@ function parse(channel, sid, from, input) {
             // User requests theirs or another player's stats
 		case 'stats':
             // Query stats API
-			let endpoint = util.format(cfg.endpoints.statsQuery, cfg.api, from);
+			endpoint = util.format(cfg.endpoints.statsQuery, cfg.api, from);
 			requestify.get(endpoint).then(function (response) {
 				let r = response.getBody();
                 // kr~xp~wins~losses
