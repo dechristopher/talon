@@ -4,14 +4,14 @@ Created by Andrew DeChristopher <drew@kiir.us> on 10/5/2016.
 
 // core libraries
 const dotenv = require('dotenv');
-const gutil = require('gulp-util');
+const c = require('chalk');
 
 // custom libraries
 const log = require('./log');
 const tutil = require('./util');
 
 // logging constants
-const CONF = '[' + gutil.colors.green('CONF') + '] ';
+const CONF = '[' + c.green('CONF') + '] ';
 
 var cfg = {};
 
