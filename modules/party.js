@@ -293,27 +293,3 @@ function getPartyMembers(party, rcon, callback) {
         }
     });
 }
-
-/*
-var testuser = user('testuser', 'STEAM_0:0:TESTING', 'TESTCHANNEL', 'OFI)*#BO*QBO@CLIb');
-console.log(testuser.getUsername() + ' - ' + testuser.getSteamID() + ' - ' + testuser.getChannel() + ' - ' + testuser.getHWID());
-*/
-
-/*rcon = redis.createClient(6379, 'kiir.us');
-const auth = "KIWICLIENTREDISPASSWORDTHATISWAYTOOLONGTOGUESSBUTSTILLFEASIBLETOGETBYDECRYPTINGOURCLIENTSOKUDOSTOYOUIFYOUDIDLOLJKPLEASETELLUSTHISISSCARY";
-rcon.auth(auth);
-
-rcon.select(2, function(err, res) {
-    if (err == undefined) {
-        console.log('Selected DB2');
-        getPlayersInParty('party:KTSotnN', rcon, function(reply){
-            console.log(reply);
-            reply.forEach(function(value) {
-              console.log(' - ' + value);
-            });
-            rcon.quit();
-        });
-    } else {
-        throw new Error(err);
-    }
-});*/
