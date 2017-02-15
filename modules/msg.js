@@ -53,6 +53,5 @@ module.exports = function(dev, backend, auth) {
 	    pub.quit();
 	};
 
-
 	return msg;
 };
