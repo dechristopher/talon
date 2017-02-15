@@ -5,7 +5,7 @@
   "repository": "https://github.com/dechristopher/talon.git",
   "main": "server.js",
   "scripts": {
-    "test": "nodeunit",
+    "test": "xo && nodeunit",
     "start": "TALON_DEV=false node server.js",
     "nofw": "TALON_DEV=false node server.js nofw",
     "dev": "TALON_DEV=true node server.js dev",
