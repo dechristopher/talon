@@ -5,7 +5,7 @@ Created by Andrew DeChristopher <drew@kiir.us> on 9/7/2016.
 // core libraries
 const redis = require('redis');
 const rstr = require('randomstring');
-const gutil = require('gulp-util');
+const c = require('chalk');
 const os = require('os');
 
 // custom libraries
@@ -13,19 +13,19 @@ const user = require('./user');
 const log = require('./log');
 
 // ERORS
-const ERROR_FAILED_CREATE = '[' + gutil.colors.red('ERROR') + '] Party created but didn\'t add user: ';
-const ERROR_FAILED_SADD = '[' + gutil.colors.red('ERROR') + '] Failed to add value to set: ';
-const ERROR_FAILED_SCARD = '[' + gutil.colors.red('ERROR') + '] Failed to get number of members of: ';
-const ERROR_FAILED_SISMEMBER = '[' + gutil.colors.red('ERROR') + '] Failed to check if value member of: ';
-const ERROR_FAILED_SMEMBERS = '[' + gutil.colors.red('ERROR') + '] Failed getting members of: ';
-const ERROR_FAILED_EXISTS = '[' + gutil.colors.red('ERROR') + '] Failed to check existence of key: ';
+const ERROR_FAILED_CREATE = '[' + c.red('ERROR') + '] Party created but didn\'t add user: ';
+const ERROR_FAILED_SADD = '[' + c.red('ERROR') + '] Failed to add value to set: ';
+const ERROR_FAILED_SCARD = '[' + c.red('ERROR') + '] Failed to get number of members of: ';
+const ERROR_FAILED_SISMEMBER = '[' + c.red('ERROR') + '] Failed to check if value member of: ';
+const ERROR_FAILED_SMEMBERS = '[' + c.red('ERROR') + '] Failed getting members of: ';
+const ERROR_FAILED_EXISTS = '[' + c.red('ERROR') + '] Failed to check existence of key: ';
 
 // PREFIXES
-const EXISTS = '[' + gutil.colors.cyan('EXISTS') + '] ';
-const ISMEMBER = '[' + gutil.colors.cyan('ISMEMBER') + '] ';
-const MEMBERS = '[' + gutil.colors.cyan('MEMBERS') + '] ';
-const PARTY = '[' + gutil.colors.green('PARTY') + '] ';
-const SUCCESS = '[' + gutil.colors.green('SUCCESS') + '] ';
+const EXISTS = '[' + c.cyan('EXISTS') + '] ';
+const ISMEMBER = '[' + c.cyan('ISMEMBER') + '] ';
+const MEMBERS = '[' + c.cyan('MEMBERS') + '] ';
+const PARTY = '[' + c.green('PARTY') + '] ';
+const SUCCESS = '[' + c.green('SUCCESS') + '] ';
 
 // Redis sets of parties
 const partiesG = 'parties';
