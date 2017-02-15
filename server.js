@@ -171,6 +171,9 @@ inm.on('connect', function() {
 inm.on('subscribe', function(channel, count) {
     pList.set("talon", new player("talon", "STEAM_0:1:39990", "ThIsIsAcHaNnElId"));
     log(TALN + "Connected! Listening: " + channel + os.EOL);
+
+	msg = msg(cfg.dev, cfg.backend, cfg.auth);
+    //msg.reply('talon', 'testing');
 });
 
 //Handles basic timeout errors. Needs work...
