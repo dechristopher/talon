@@ -12,7 +12,7 @@ const sp = require('stringpad');
 const cfg = require('./cfg');
 const util = require('./util');
 
-const mon = redis.createClient(6379, 'kiir.us');
+const mon = redis.createClient(6379, cfg.backend);
 mon.auth(cfg.auth);
 // messages that have been received this second
 var mts = 0;
