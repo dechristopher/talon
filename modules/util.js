@@ -5,6 +5,7 @@ Created by Andrew DeChristopher <drew@kiir.us> on 1/7/2017.
 // core libraries
 const str = require('string');
 const gutil = require('gulp-util');
+const c = require('chalk');
 const sidconvert = require('steamidconvert')();
 const log = require('./log');
 
@@ -16,16 +17,16 @@ var util = {};
 
 util.ascii = function () {
 	log(TALN);
-	log(TALN + ' ▄▄▄█████▓    ▄▄▄          ██▓        ▒█████      ███▄    █             ▄▄▄██▀▀▀     ██████ ');
-	log(TALN + ' ▓  ██▒ ▓▒   ▒████▄       ▓██▒       ▒██▒  ██▒    ██ ▀█   █               ▒██      ▒██    ▒ ');
-	log(TALN + ' ▒ ▓██░ ▒░   ▒██  ▀█▄     ▒██░       ▒██░  ██▒   ▓██  ▀█ ██▒              ░██      ░ ▓██▄   ');
-	log(TALN + ' ░ ▓██▓ ░    ░██▄▄▄▄██    ▒██░       ▒██   ██░   ▓██▒  ▐▌██▒           ▓██▄██▓       ▒   ██▒');
-	log(TALN + '   ▒██▒ ░     ▓█   ▓██▒   ░██████▒   ░ ████▓▒░   ▒██░   ▓██░    ██▓     ▓███▒      ▒██████▒▒');
-	log(TALN + '   ▒ ░░       ▒▒   ▓▒█░   ░ ▒░▓  ░   ░ ▒░▒░▒░    ░ ▒░   ▒ ▒     ▒▓▒     ▒▓▒▒░      ▒ ▒▓▒ ▒ ░');
-	log(TALN + '     ░         ▒   ▒▒ ░   ░ ░ ▒  ░     ░ ▒ ▒░    ░ ░░   ░ ▒░    ░▒      ▒ ░▒░      ░ ░▒  ░ ░');
-	log(TALN + '   ░           ░   ▒        ░ ░      ░ ░ ░ ▒        ░   ░ ░     ░       ░ ░ ░      ░  ░  ░  ');
-	log(TALN + '                   ░  ░       ░  ░       ░ ░              ░      ░      ░   ░            ░  ');
-	log(TALN + '                                                                 ░                          ');
+	log(TALN + c.red(' ▄▄▄█████▓ ') + c.yellow('   ▄▄▄       ') + c.green('   ██▓     ') + c.cyan('   ▒█████   ') + c.blue('   ███▄    █   ') + c.black('       ') + c.magenta('   ▄▄▄██▀▀▀ ') + c.white('    ██████ '));
+	log(TALN + c.red(' ▓  ██▒ ▓▒ ') + c.yellow('  ▒████▄     ') + c.green('  ▓██▒     ') + c.cyan('  ▒██▒  ██▒ ') + c.blue('   ██ ▀█   █   ') + c.black('       ') + c.magenta('     ▒██    ') + c.white('  ▒██    ▒ '));
+	log(TALN + c.red(' ▒ ▓██░ ▒░ ') + c.yellow('  ▒██  ▀█▄   ') + c.green('  ▒██░     ') + c.cyan('  ▒██░  ██▒ ') + c.blue('  ▓██  ▀█ ██▒  ') + c.black('       ') + c.magenta('     ░██    ') + c.white('  ░ ▓██▄   '));
+	log(TALN + c.red(' ░ ▓██▓ ░  ') + c.yellow('  ░██▄▄▄▄██  ') + c.green('  ▒██░     ') + c.cyan('  ▒██   ██░ ') + c.blue('  ▓██▒  ▐▌██▒  ') + c.black('       ') + c.magenta('  ▓██▄██▓   ') + c.white('    ▒   ██▒'));
+	log(TALN + c.red('   ▒██▒ ░  ') + c.yellow('   ▓█   ▓██▒ ') + c.green('  ░██████▒ ') + c.cyan('  ░ ████▓▒░ ') + c.blue('  ▒██░   ▓██░  ') + c.black('  ██▓  ') + c.magenta('   ▓███▒    ') + c.white('  ▒██████▒▒'));
+	log(TALN + c.red('   ▒ ░░    ') + c.yellow('   ▒▒   ▓▒█░ ') + c.green('  ░ ▒░▓  ░ ') + c.cyan('  ░ ▒░▒░▒░  ') + c.blue('  ░ ▒░   ▒ ▒   ') + c.black('  ▒▓▒  ') + c.magenta('   ▒▓▒▒░    ') + c.white('  ▒ ▒▓▒ ▒ ░'));
+	log(TALN + c.red('     ░     ') + c.yellow('    ▒   ▒▒ ░ ') + c.green('  ░ ░ ▒  ░ ') + c.cyan('    ░ ▒ ▒░  ') + c.blue('  ░ ░░   ░ ▒░  ') + c.black('  ░▒   ') + c.magenta('   ▒ ░▒░    ') + c.white('  ░ ░▒  ░ ░'));
+	log(TALN + c.red('   ░       ') + c.yellow('    ░   ▒    ') + c.green('    ░ ░    ') + c.cyan('  ░ ░ ░ ▒   ') + c.blue('     ░   ░ ░   ') + c.black('  ░    ') + c.magenta('   ░ ░ ░    ') + c.white('  ░  ░  ░  '));
+	log(TALN + c.red('           ') + c.yellow('        ░  ░ ') + c.green('      ░  ░ ') + c.cyan('      ░ ░   ') + c.blue('           ░   ') + c.black('   ░   ') + c.magenta('   ░   ░    ') + c.white('        ░  '));
+	log(TALN + c.red('           ') + c.yellow('             ') + c.green('           ') + c.cyan('            ') + c.blue('               ') + c.black('   ░   ') + c.magenta('            ') + c.white('           '));
 	log(TALN);
 };
 
