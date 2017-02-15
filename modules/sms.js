@@ -3,11 +3,11 @@ Created by Andrew DeChristopher <drew@kiir.us> on 10/5/2016.
  */
 
 let client = require('twilio');
-const gutil = require('gulp-util');
+const c = require('chalk');
 const cfg = require('./cfg');
 const log = require('./log');
 
-const SMS = '[' + gutil.colors.green('SMS') + '] ';
+const SMS = '[' + c.green('SMS') + '] ';
 
 client = client(cfg.accountSid, cfg.authToken);
 
