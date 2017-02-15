@@ -28,13 +28,11 @@ module.exports = function(dev, backend, auth) {
 	};
 
 	//Broadcast to all users and channels
-	msg.bcast = function(msg) {
-	    var pub = redis.createClient(6379, backend);
-	    if (!dev) {
-	        pub.auth(auth);
-	    }
-	    var players = pList.values();
-	    for (var i = 0; i < players.length; i++) {
+	msg.bcast = function(msg, pList) {
+	    let pub = redis.createClient(6379, backend);
+	    if (!dev) { pub.auth(auth); }
+	    let players = pList.values();
+	    for (let i = 0; i < players.length; i++) {
 	        pub.publish(players[i].channel, msg);
 	    }
 	    pub.quit();
