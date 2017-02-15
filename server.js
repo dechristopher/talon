@@ -156,16 +156,13 @@ inm.on('connect', function() {
     if(!connectYet){
         //Begin...
         process.title = 'TALON BACKEND v' + package.version;
-
 		tutil.ascii();
         log(TALN + 'Copyright 2015-2017 KIWI GAMING (of Kiirus Technologies Inc.)');
 
         //log('Connected!');
         retryConnect.stop();
-
         //Start timers and program loop
         startLoop();
-
         connectYet = true;
     }
 });
