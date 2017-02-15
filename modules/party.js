@@ -10,6 +10,7 @@ const os = require('os');
 
 // custom libraries
 const user = require('./user');
+const log = require('./log');
 
 // ERORS
 const ERROR_FAILED_CREATE = '[' + gutil.colors.red('ERROR') + '] Party created but didn\'t add user: ';
@@ -45,24 +46,24 @@ exports.createParty = function (username, rcon, callback) {
 	partyExists(id, rcon, function (tf) {
 		if (tf) {
             // Somehow generated existing party id, so recursively retry until success.
-			console.log('RETRYING');
+			log('RETRYING', 'party');
 			return createParty(username, callback);
 		}
             // Add user to new party set
 		rcon.sadd([id, username], function (err, reply) {
 			if (err == undefined) {
 				if (reply == 1) {
-					console.log(PARTY + id + ' created. Added: ' + username + '. Adding to party sets.');
+					log(PARTY + id + ' created. Added: ' + username + '. Adding to party sets.', 'party');
                             // Add new party to global parties set
 					rcon.sadd([partiesG, id], function (err, reply) {
 						if (err == undefined) {
 							if (reply == 1) {
-								console.log(PARTY + id + ' added to global parties set.');
+								log(PARTY + id + ' added to global parties set.', 'party');
                                     // Add new party to parties:1 set
 								rcon.sadd([parties1, id], function (err, reply) {
 									if (err == undefined) {
 										if (reply == 1) {
-											console.log(PARTY + id + ' added to parties:1.');
+											log(PARTY + id + ' added to parties:1.', 'party');
                                                 // Final checks to ensure user in party
 											isMemberOfParty(id, username, rcon, function (tf) {
 												if (tf) {
@@ -143,10 +144,10 @@ exports.isMemberOfParty = function (party, username, rcon, callback) {
 		if (err == undefined) {
 			var tf = false;
 			if (reply == 1) {
-				console.log(ISMEMBER + username + ' -> ' + party + ' >> true');
+				log(ISMEMBER + username + ' -> ' + party + ' >> true', 'party');
 				tf = true;
 			} else {
-				console.log(ISMEMBER + username + ' -> ' + party + ' >> false');
+				log(ISMEMBER + username + ' -> ' + party + ' >> false', 'party');
 				tf = false;
 			}
 			callback(tf);
@@ -161,10 +162,10 @@ function isMemberOfParty(party, username, rcon, callback) {
 		if (err == undefined) {
 			var tf = false;
 			if (reply == 1) {
-				console.log(ISMEMBER + username + ' -> ' + party + ' >> true');
+				log(ISMEMBER + username + ' -> ' + party + ' >> true', 'party');
 				tf = true;
 			} else {
-				console.log(ISMEMBER + username + ' -> ' + party + ' >> false');
+				log(ISMEMBER + username + ' -> ' + party + ' >> false', 'party');
 				tf = false;
 			}
 			callback(tf);
@@ -184,10 +185,10 @@ exports.partyExists = function (party, rcon, callback) {
 		if (err == undefined) {
 			var tf = false;
 			if (reply == 1) {
-				console.log(EXISTS + party + ' >> true');
+				log(EXISTS + party + ' >> true', 'party');
 				tf = true;
 			} else {
-				console.log(EXISTS + party + ' >> false');
+				log(EXISTS + party + ' >> false', 'party');
 				tf = false;
 			}
 			callback(tf);
@@ -202,10 +203,10 @@ function partyExists(party, rcon, callback) {
 		if (err == undefined) {
 			var tf = false;
 			if (reply == 1) {
-				console.log(EXISTS + party + ' >> true');
+				log(EXISTS + party + ' >> true', 'party');
 				tf = true;
 			} else {
-				console.log(EXISTS + party + ' >> false');
+				log(EXISTS + party + ' >> false', 'party');
 				tf = false;
 			}
 			callback(tf);
@@ -225,14 +226,14 @@ exports.getNumPartyMembers = function (party, rcon, callback) {
 		if (tf) {
 			rcon.scard(party, function (err, reply) {
 				if (err == undefined) {
-					console.log(MEMBERS + reply);
+					log(MEMBERS + reply, 'party');
 					callback(reply);
 				} else {
 					throw new Error(ERROR_FAILED_SCARD);
 				}
 			});
 		} else {
-			console.log('Party DNE');
+			log('Party DNE', 'party');
 		}
 	});
 };
@@ -242,14 +243,14 @@ function getNumPartyMembers(party, rcon, callback) {
 		if (tf) {
 			rcon.scard(party, function (err, reply) {
 				if (err == undefined) {
-					console.log(MEMBERS + reply);
+					log(MEMBERS + reply, 'party');
 					callback(reply);
 				} else {
 					throw new Error(ERROR_FAILED_SCARD);
 				}
 			});
 		} else {
-			console.log('Party DNE');
+			log('Party DNE', 'party');
 		}
 	});
 }
@@ -264,14 +265,14 @@ exports.getPartyMembers = function (party, rcon, callback) {
 		if (tf) {
 			rcon.smembers(party, function (err, reply) {
 				if (err == undefined) {
-					console.log(MEMBERS + reply.length);
+					log(MEMBERS + reply.length, 'party');
 					callback(reply);
 				} else {
 					throw new Error(ERROR_FAILED_SMEMBERS);
 				}
 			});
 		} else {
-			console.log('Party DNE');
+			log('Party DNE', 'party');
 		}
 	});
 };
@@ -281,14 +282,14 @@ function getPartyMembers(party, rcon, callback) {
 		if (tf) {
 			rcon.smembers(party, function (err, reply) {
 				if (err == undefined) {
-					console.log(MEMBERS + reply.length);
+					log(MEMBERS + reply.length, 'party');
 					callback(reply);
 				} else {
 					throw new Error(ERROR_FAILED_SMEMBERS);
 				}
 			});
 		} else {
-			console.log('Party DNE');
+			log('Party DNE', 'party');
 		}
 	});
 }
