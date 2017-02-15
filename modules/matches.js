@@ -4,7 +4,7 @@ Created by Andrew DeChristopher <drew@kiir.us> on 2/6/2017.
 
 // core libraries
 const cron = require('cron');
-const gutil = require('gulp-util');
+const c = require('chalk');
 const HashMap = require('hashmap');
 const r = require('requestify');
 
@@ -18,7 +18,7 @@ const util = require('./util');
 const msg = require('./msg');
 
 // logging constants
-const M = '[' + gutil.colors.blue('MTCH') + '] ';
+const M = '[' + c.blue('MTCH') + '] ';
 
 // matches export object
 var m = {};
