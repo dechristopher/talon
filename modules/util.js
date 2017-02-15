@@ -4,13 +4,12 @@ Created by Andrew DeChristopher <drew@kiir.us> on 1/7/2017.
 
 // core libraries
 const str = require('string');
-const gutil = require('gulp-util');
 const c = require('chalk');
 const sidconvert = require('steamidconvert')();
 const log = require('./log');
 
 // logging constants
-const TALN = '[' + gutil.colors.magenta('TALN') + '] ';
+const TALN = '[' + c.magenta('TALN') + '] ';
 
 // Export object
 var util = {};
