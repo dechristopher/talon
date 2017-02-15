@@ -21,11 +21,11 @@ const sms = require('../modules/sms');
 const cfg = require('../modules/cfg');
 
 // Define ERRORS and other constants
-const KIWI = '[' + gutil.colors.green('KIWI') + '] ';
-const DEMO = '[' + gutil.colors.green('DEMO') + '] ';
-const DOWN = '[' + gutil.colors.cyan('DOWN') + '] ';
-const NJ1 = '[' + gutil.colors.magenta('NJ1') + '] ';
-const NJ2 = '[' + gutil.colors.magenta('NJ2') + '] ';
+const KIWI = '[' + c.green('KIWI') + '] ';
+const DEMO = '[' + c.green('DEMO') + '] ';
+const DOWN = '[' + c.cyan('DOWN') + '] ';
+const NJ1 = '[' + c.magenta('NJ1') + '] ';
+const NJ2 = '[' + c.magenta('NJ2') + '] ';
 
 // Log startup
 log(KIWI + 'Demo Transit Server', '-demo-server');
