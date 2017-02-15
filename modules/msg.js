@@ -12,43 +12,43 @@ module.exports = function(dev, backend, auth) {
 	const log = require('./log');
 
 	//Msg export object
-	let msg = {};
+	let m = {};
 
 	//set local variables
-	msg.dev = dev;
-	msg.backend = backend;
-	msg.auth = auth;
+	m.dev = dev;
+	m.backend = backend;
+	m.auth = auth;
 
 	//Send a single message to one user or channel
-	msg.reply = function(to, msg) {
-	    let pub = redis.createClient(6379, backend);
-	    if (!dev) { pub.auth(auth); }
-	    pub.publish(to, msg);
-	    pub.quit();
+	m.reply = function(to, msg) {
+	    let cli = redis.createClient(6379, m.backend);
+	    if (!m.dev) { cli.auth(m.auth); }
+	    cli.publish(to, msg);
+	    cli.quit();
 	};
 
 	//Broadcast to all users and channels
-	msg.bcast = function(msg, pList) {
-	    let pub = redis.createClient(6379, backend);
-	    if (!dev) { pub.auth(auth); }
+	m.bcast = function(msg, pList) {
+	    let cli = redis.createClient(6379, m.backend);
+	    if (!m.dev) { cli.auth(m.auth); }
 	    let players = pList.values();
 	    for (let i = 0; i < players.length; i++) {
-	        pub.publish(players[i].channel, msg);
+	        cli.publish(players[i].channel, msg);
 	    }
-	    pub.quit();
+	    cli.quit();
 	};
 
 	//Broadcast excluding a single user or channel.
-	msg.bcastex = function(msg, ex, pList) {
-	    let pub = redis.createClient(6379, backend);
-	    if (!dev) { pub.auth(auth); }
+	m.bcastex = function(msg, ex, pList) {
+	    let cli = redis.createClient(6379, m.backend);
+	    if (!m.dev) { cli.auth(m.auth); }
 	    let players = pList.values();
 	    for (let i = 0; i < players.length; i++) {
 	        let p = players[i];
-	        if (p != ex) { pub.publish(p.channel, msg); }
+	        if (p != ex) { cli.publish(p.channel, msg); }
 	    }
-	    pub.quit();
+	    cli.quit();
 	};
 
-	return msg;
+	return m;
 };
