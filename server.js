@@ -5,8 +5,8 @@ TODO Roll over the Player class to the user factory
 
 GOODLUCK
 TRIFORCE
-   ▲
-  ▲ ▲
+   ▲
+  ▲ ▲
 PRAY FOR
 NO CRASH
 */
