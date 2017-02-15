@@ -21,10 +21,8 @@ module.exports = function(dev, backend, auth) {
 
 	//Send a single message to one user or channel
 	msg.reply = function(to, msg) {
-	    var pub = redis.createClient(6379, backend);
-	    if (!dev) {
-	        pub.auth(auth);
-	    }
+	    let pub = redis.createClient(6379, backend);
+	    if (!dev) { pub.auth(auth); }
 	    pub.publish(to, msg);
 	    pub.quit();
 	};
