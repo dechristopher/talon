@@ -2,22 +2,26 @@
 Created by Andrew DeChristopher <drew@kiir.us> on 6/1/2016.
  */
 
+const redis = require('redis');
+const git = require('git-last-commit');
+var testCase = require('nodeunit').testCase;
 const user = require('../modules/user.js');
 const party = require('../modules/party.js');
 const match = require('../modules/match.js');
 const cfg = require('../modules/cfg.js');
-const sms = require('../modules/sms.js');
-const redis = require('redis');
-const git = require('git-last-commit');
+const util = require('../modules/util.js');
+// const sms = require('../modules/sms.js');
 
 git.getLastCommit(function (err, commit) {
   // read commit object properties
   // console.log('SENDING ADMIN SMS');
   // sms.sendAdminSms('[KIWI] Commits pushed to Talon repo. Running test suite >> [ ' + commit.branch + ' -> ' + commit.shortHash + ' ( ' + commit.author.name + ' <' + commit.author.email + '> ) ] ' + commit.subject);
 	console.log('Last commit:', commit.shortHash);
+	if (err) {
+		console.error(err);
+	}
 });
 
-var testCase = require('nodeunit').testCase;
 var rcon;
 var testPlayer = user('testuser', 'STEAM_0:0:TESTING', 'TESTCHANNEL');
 var testMatch = match(1337, '8.8.8.8:27015', 'jR0mW3', 'team_drop', 'team_sparks', [testPlayer, testPlayer, testPlayer, testPlayer]);
@@ -39,14 +43,14 @@ exports['Test user generator factory'] = function (test) {
 	test.strictEqual(testuser.getChannel(), 'TESTCHANNEL', 'Tests that getChannel() function returns proper channel.');
 
     // Perform checks to see if constructor logic returns undefined fields
-	test.strictEqual(testuser2.getUsername(), Object.undefined, 'Tests that getUsername() function returns undefined when blank arguments are passed to the user constructor.');
-	test.strictEqual(testuser2.getSteamID(), Object.undefined, 'Tests that getSteamID() function returns undefined when blank arguments are passed to the user constructor.');
-	test.strictEqual(testuser2.getChannel(), Object.undefined, 'Tests that getChannel() function returns undefined when blank arguments are passed to the user constructor.');
+	test.strictEqual(testuser2.getUsername(), undefined, 'Tests that getUsername() function returns undefined when blank arguments are passed to the user constructor.');
+	test.strictEqual(testuser2.getSteamID(), undefined, 'Tests that getSteamID() function returns undefined when blank arguments are passed to the user constructor.');
+	test.strictEqual(testuser2.getChannel(), undefined, 'Tests that getChannel() function returns undefined when blank arguments are passed to the user constructor.');
 
     // Perform tests on blank constructor to verify Object.undefined returns
-	test.strictEqual(testuser3.getUsername(), Object.undefined, 'Tests that getUsername() function returns undefined when no arguments are passed to the user constructor.');
-	test.strictEqual(testuser3.getSteamID(), Object.undefined, 'Tests that getSteamID() function returns undefined when no arguments are passed to the user constructor.');
-	test.strictEqual(testuser3.getChannel(), Object.undefined, 'Tests that getChannel() function returns undefined when no arguments are passed to the user constructor.');
+	test.strictEqual(testuser3.getUsername(), undefined, 'Tests that getUsername() function returns undefined when no arguments are passed to the user constructor.');
+	test.strictEqual(testuser3.getSteamID(), undefined, 'Tests that getSteamID() function returns undefined when no arguments are passed to the user constructor.');
+	test.strictEqual(testuser3.getChannel(), undefined, 'Tests that getChannel() function returns undefined when no arguments are passed to the user constructor.');
 
 	test.done();
 };
@@ -58,6 +62,7 @@ exports.parties = testCase({
 		rcon.auth(cfg.auth);
 		rcon.select(2, function (err, res) {
 			if (err == undefined) {
+				util.devnull(res);
 				callback();
 			} else {
 				throw new Error(err);
