@@ -33,7 +33,7 @@ const io = require('socket.io')(server);
 const bodyParser = require('body-parser');
 
 //import configuration
-const package = require('./package.json');
+const pkg = require('./package.json');
 const cfg = require('./modules/cfg');
 
 //datadog api
@@ -136,7 +136,7 @@ if (cfg.dev === false) {
     inm.auth(cfg.auth);
 }
 
-log(TALN + 'TALON v' + package.version);
+log(TALN + 'TALON v' + pkg.version);
 
 log(TALN + 'Connecting to backend...');
 
@@ -155,7 +155,7 @@ retryConnect.start();
 inm.on('connect', function() {
     if(!connectYet){
         //Begin...
-        process.title = 'TALON BACKEND v' + package.version;
+        process.title = 'TALON BACKEND v' + pkg.version;
 		tutil.ascii();
         log(TALN + 'Copyright 2015-2017 KIWI GAMING (of Kiirus Technologies Inc.)');
 
@@ -727,7 +727,7 @@ function renderPanel(refresh, req) {
         "<h3>Players:</h3>" + webPlayerList(refresh).toString() + "<br />" +
         "<hr>" + "<h3>Announcement</h3>" + "<p>" + announcement + "</p>" +
         "<form action='/ann' method='post'><input type='text' name='announcement' value='' placeholder='Set announcement message here'/><input type='submit' name='submit' value='Submit'/></form>" +
-        "<hr>" + "TALON v" + package.version;
+        "<hr>" + "TALON v" + pkg.version;
     if (refresh) {
         panel += " (<a href='http:\/\/" + req.hostname + ":" + cfg.port + "'>No refresh</a>)";
     } else {
