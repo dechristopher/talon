@@ -8,7 +8,7 @@ const ss = require('socket.io-stream');
 const fs = require('fs');
 const path = require('path');
 const mime = require('mime');
-const gutil = require('gulp-util');
+const c = require('chalk');
 
 // demo webservice libraries
 const express = require('express');
