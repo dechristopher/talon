@@ -45,6 +45,7 @@
     "twilio": "^2.11.0"
   },
   "devDependencies": {
-    "jshint": "^2.9.2"
+    "jshint": "^2.9.2",
+    "xo": "^0.17.1"
   }
 }
