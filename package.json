@@ -5,7 +5,7 @@
   "repository": "https://github.com/dechristopher/talon.git",
   "main": "server.js",
   "scripts": {
-    "test": "xo && nodeunit",
+    "test": "xo server.js && nodeunit",
     "start": "TALON_DEV=false node server.js",
     "nofw": "TALON_DEV=false node server.js nofw",
     "dev": "TALON_DEV=true node server.js dev",
@@ -47,5 +47,13 @@
   "devDependencies": {
     "jshint": "^2.9.2",
     "xo": "^0.17.1"
+  },
+  "xo": {
+    "rules": {
+      "new-cap": ["error", {
+			    "newIsCap": false,
+			    "capIsNew": false
+		  }]
+    }
   }
 }
