@@ -4,55 +4,47 @@ Created by Andrew DeChristopher <drew@kiir.us> on 4/22/2016.
 TODO Roll over the Player class to the user factory
 
 GOODLUCK
-TRIFORCE
-   ▲
-  ▲ ▲
 PRAY FOR
 NO CRASH
 */
 
 // core libraries
-const ArrayList = require('arraylist');
-const cron = require('cron');
-const datetime = require('node-datetime');
-const fs = require('fs');
-const HashMap = require('hashmap');
-const lupus = require('lupus');
-const moment = require('moment');
 const os = require('os');
-const redis = require('redis');
-const requestify = require('requestify');
-const gutil = require('gulp-util');
 const util = require('util');
 
 // talonPanel libraries
-const express = require('express');
-const app = express();
-const server = require('http').Server(app);
-const io = require('socket.io')(server);
+let server = require('http');
+const app = require('express')();
+// const io = require('socket.io')(server);
 const bodyParser = require('body-parser');
+
+// npm libraries
+const ArrayList = require('arraylist');
+const cron = require('cron');
+const datetime = require('node-datetime');
+const HashMap = require('hashmap');
+const lupus = require('lupus');
+const redis = require('redis');
+const requestify = require('requestify');
+const gutil = require('gulp-util');
+
+// datadog api
+const metrics = require('datadog-metrics');
 
 // import configuration
 const pkg = require('./package.json');
 const cfg = require('./modules/cfg');
 
-// datadog api
-const metrics = require('datadog-metrics');
-metrics.init({
-	host: 'talon',
-	prefix: 'talon.'
-});
-
 // custom libraries
 const tutil = require('./modules/util');
 const flist = require('./modules/flist');
-const player = require('./modules/player');
-const user = require('./modules/user');
-const match = require('./modules/match');
-const matches = require('./modules/matches');
+const Player = require('./modules/player');
+// const user = require('./modules/user');
+// const match = require('./modules/match');
+// const matches = require('./modules/matches');
 const log = require('./modules/log');
-const sms = require('./modules/sms');
-var msg = require('./modules/msg');
+// const sms = require('./modules/sms');
+let msg = require('./modules/msg');
 
 // Define ERRORS and other constants
 const ERROR_NO_FWIP_FILE = '[' + gutil.colors.red('ERROR') + '] Given ip file does not exist: ';
@@ -103,9 +95,15 @@ var totS = 0;
 // Total number of firewall IPs
 var totIP = 0;
 
+// Initialize datadog metrics
+metrics.init({
+	host: 'talon',
+	prefix: 'talon.'
+});
+
 // Populate server pool and connect to REDIS
 if (process.argv.length > 2) {
-	if (process.argv[2] == 'dev') {
+	if (process.argv[2] === 'dev') {
 		log(TALN + 'D E V E L O P M E N T    M O D E');
 		cfg.region = 0;
 		flist.fill(cfg.servers[cfg.region], servers, totS, 'Servers', ERROR_NO_SERV_FILE);
@@ -115,7 +113,7 @@ if (process.argv.length > 2) {
 	} else {
 		flist.fill(cfg.servers[cfg.region], servers, totS, 'Servers', ERROR_NO_SERV_FILE);
 	}
-	if (process.argv[2] == 'nofw') {
+	if (process.argv[2] === 'nofw') {
 		cfg.firewallEnabled = false;
 	}
 } else {
@@ -137,14 +135,13 @@ if (cfg.dev === false) {
 }
 
 log(TALN + 'TALON v' + pkg.version);
-
 log(TALN + 'Connecting to backend...');
 
 var retryConnect = cron.job('*/2 * * * * *', function () {
-	if (connectRet == 5) {
+	if (connectRet === 5) {
 		log(TALN + 'FAILED TO CONNECT TO BACKEND!');
 		log(TALN + 'Shutting down...');
-		process.exit();
+		throw new Error('FAILED TO CONNECT TO BACKEND!');
 	}
 	log(TALN + 'Connecting to backend...');
 	connectRet++;
@@ -169,11 +166,8 @@ inm.on('connect', function () {
 
 // Subscribe local talon redis client to global message queue
 inm.on('subscribe', function (channel, count) {
-	pList.set('talon', new player('talon', 'STEAM_0:1:39990', 'ThIsIsAcHaNnElId'));
-	log(TALN + 'Connected! Listening: ' + channel + ' (' + count + ')');
-
-	msg = msg(cfg.dev, cfg.backend, cfg.auth);
-    // msg.reply('talon', 'testing');
+	pList.set('talon', new Player('talon', 'STEAM_0:1:39990', 'ThIsIsAcHaNnElId'));
+	log(TALN + 'Connected! Listening: ' + channel + ' (' + count + ')' + os.EOL);
 });
 
 // Handles basic timeout errors. Needs work...
@@ -191,10 +185,10 @@ inm.on('message', function (channel, message) {
 	var command = parts[3];
 
     // Send message to be parsed
-	if (command !== '') {
-		parse(chan, sid, from, command);
-	} else {
+	if (command === '') {
 		log('NULL: ' + channel + ' -> ' + from);
+	} else {
+		parse(chan, sid, from, command);
 	}
 });
 
@@ -208,9 +202,9 @@ var reportMetrics = cron.job('*/5 * * * * *', function () {
 });
 
 // Unused debug BS
-var showOnline = cron.job('*/15 * * * * *', function () {
-	log('[P] (Q: ' + currQ + ' / O: ' + pList.count() + ')');
-});
+// var showOnline = cron.job('*/15 * * * * *', function () {
+// 	log('[P] (Q: ' + currQ + ' / O: ' + pList.count() + ')');
+// });
 
 // Checks player and server statuses every 10 seconds and
 // pops the queue if 10 players and >= 1 server is available.
@@ -290,8 +284,11 @@ var parseQueue = cron.job('*/10 * * * * *', function () {
 			requestify.get(apiCall).then(function (response) {
 				var pass = response.getBody();
                 // If the call succeeds
-				if (pass != 'failed') {
-                    // Log everything
+				if (pass === 'failed') {
+					// Call 911
+					log(Q + '[POP] [S] FAILED >> ' + server, 'mm');
+				} else {
+					// Log everything
 					var now = datetime.create().format('m-d-y H:M:S');
 					log(Q + '[POP] Match created @ ' + now, 'mm');
 					log(Q + '[POP] [S] >> ' + server + ' : ' + pass, 'mm');
@@ -300,10 +297,6 @@ var parseQueue = cron.job('*/10 * * * * *', function () {
 						log(Q + '[POP] [P] >> ' + selected[k].channel + ' - ' + selected[k].sid + ' - ' + selected[k].nm, 'mm');
 						reply(selected[k].channel, 'p~' + server + '~' + pass);
 					}
-                // Else if the call fails
-				} else {
-                    // Call 911
-					log(Q + '[POP] [S] FAILED >> ' + server, 'mm');
 				}
 			});
 
@@ -343,9 +336,7 @@ var parseHeartbeats = cron.job('*/30 * * * * *', function () {
 	hbCheck.forEach(function (value, key) {
         // log('Checking ' + key + ' -> ' + value, 'hb');
 		if (value === false) {
-			if (!hbChance.has(key)) {
-				hbChance.set(key, 2);
-			} else {
+			if (hbChance.has(key)) {
 				var chance = hbChance.get(key);
 				if (chance === 0) {
 					hbCheck.remove(key);
@@ -356,6 +347,8 @@ var parseHeartbeats = cron.job('*/30 * * * * *', function () {
 					hbChance.set(key, chance - 1);
 					i++;
 				}
+			} else {
+				hbChance.set(key, 2);
 			}
 			if (qList.has(key)) {
 				qList.remove(key);
@@ -380,7 +373,7 @@ function parse(channel, sid, from, input) {
 	if (input.indexOf('□') > -1) {
 		var parts = input.split('□');
 		command = parts[0];
-		var args = parts[1].split('￭');
+		// var args = parts[1].split('￭');
 	} else {
 		command = input;
 	}
@@ -390,7 +383,7 @@ function parse(channel, sid, from, input) {
         // User logs in
 		case 'li':
             // Create player object
-			var p = new player(from, sid, channel);
+			var p = new Player(from, sid, channel);
             // log out all other instances of player
 			if (pList.has(p.nm)) {
 				pList.remove(p.nm);
@@ -483,7 +476,7 @@ function parse(channel, sid, from, input) {
             // Test basic message replying
 		case 'reply':
 			reply(channel, 'Talon is replying properly, ' + from + ' [' + channel + ']');
-			log('REPLY: ' + channel + ' [' + from + '] -> ' + 'SENT');
+			log('REPLY: ' + channel + ' [' + from + '] -> SENT');
 			break;
 
             // Return unknown command (In other words just echo back message)
@@ -521,37 +514,19 @@ function bcast(msg) {
 	pub.quit();
 }
 
-// Broadcast excluding a single user or channel.
-function bcastex(msg, ex) {
-	var pub = redis.createClient(6379, cfg.backend);
-	if (!cfg.dev) {
-		pub.auth(cfg.auth);
-	}
-
-	var players = pList.values();
-
-	for (var i = 0; i < players.length; i++) {
-		var p = players[i];
-		if (p != ex) {
-			pub.publish(p.channel, msg);
-		}
-	}
-	pub.quit();
-}
-
 // Process the queue command
 function procQueue(user, channel) {
     // User leaves queue
 	if (qList.has(user)) {
 		qList.remove(user);
 		currQ = qList.count();
-		log(Q + '[?-] ' + user, 'mm');
+		log(Q + '[?-] ' + user + ' - ' + channel, 'mm');
 		return false;
         // User joins queue
 	}
 	qList.set(user, pList.get(user));
 	currQ = qList.count();
-	log(Q + '[?+] ' + user, 'mm');
+	log(Q + '[?+] ' + user + ' - ' + channel, 'mm');
 	return true;
 }
 
@@ -608,13 +583,13 @@ function parseServerAPIResponse(response) {
 
 function buildCall(selected) {
 	let call = '';
-	if (cfg.qSize == 10) {
+	if (cfg.qSize === 10) {
 		for (let j = 1; j <= cfg.qSize; j++) {
 			call += '&p' + j + '=' + selected[j - 1].sid;
 		}
 		call += '&t1n=team_' + selected[0].nm;
 		call += '&t2n=team_' + selected[5].nm;
-	} else if (cfg.qSize == 8) {
+	} else if (cfg.qSize === 8) {
 		call += '&p1=' + selected[0].sid;
 		call += '&p2=' + selected[1].sid;
 		call += '&p3=' + selected[2].sid;
@@ -625,7 +600,7 @@ function buildCall(selected) {
 		call += '&p9=' + selected[7].sid;
 		call += '&t1n=team_' + selected[0].nm;
 		call += '&t2n=team_' + selected[4].nm;
-	} else if (cfg.qSize == 6) {
+	} else if (cfg.qSize === 6) {
 		call += '&p1=' + selected[0].sid;
 		call += '&p2=' + selected[1].sid;
 		call += '&p3=' + selected[2].sid;
@@ -634,14 +609,14 @@ function buildCall(selected) {
 		call += '&p8=' + selected[5].sid;
 		call += '&t1n=team_' + selected[0].nm;
 		call += '&t2n=team_' + selected[3].nm;
-	} else if (cfg.qSize == 4) {
+	} else if (cfg.qSize === 4) {
 		call += '&p1=' + selected[0].sid;
 		call += '&p2=' + selected[1].sid;
 		call += '&p6=' + selected[2].sid;
 		call += '&p7=' + selected[3].sid;
 		call += '&t1n=team_' + selected[0].nm;
 		call += '&t2n=team_' + selected[2].nm;
-	} else if (cfg.qSize == 2) {
+	} else if (cfg.qSize === 2) {
 		call += '&p1=' + selected[0].sid;
 		call += '&p6=' + selected[1].sid;
 		call += '&t1n=team_' + selected[0].nm;
@@ -660,11 +635,11 @@ var getAnnouncement = cron.job('*/45 * * * * *', function () {
 // Sends out announcement to all connected clients
 function sendAnnouncement(anno) {
 	if (pList.size() > 1) {
-	    // Set local announcement variable
-	    announcement = anno;
-	    // Then broadcast it
-	    bcast('a~' + anno);
-    	log(ANNO + '[SENT] ' + anno);
+		// Set local announcement variable
+		announcement = anno;
+		// Then broadcast it
+		bcast('a~' + anno);
+		log(ANNO + '[SENT] ' + anno);
 	}
 }
 
@@ -698,13 +673,13 @@ function webServerList() {
 	var br = 0;
 	for (var i = 0; i < servers.size(); i++) {
 		list += servers.get(i);
-		if (i != (servers.size() - 1)) {
-			list += ', ';
-		} else {
+		if (i === (servers.size() - 1)) {
 			list += ' ]<br />';
+		} else {
+			list += ', ';
 		}
 		br++;
-		if (br == 3) {
+		if (br === 3) {
 			list += '<br />';
 			br = 0;
 		}
@@ -722,18 +697,18 @@ function renderPanel(refresh, req) {
 	panel += '<link href=\'https://fonts.googleapis.com/css?family=Exo+2\' rel=\'stylesheet\'>' +
         '<style>body{ -webkit-font-smoothing: antialiased; font-family: \'Exo 2\', sans-serif;} input[type=\'text\']{width: 300px;}</style>' +
         '</head><body>' +
-        '<h2>talonPanel</h2>' + '<hr><br />' +
+        '<h2>talonPanel</h2><hr><br />' +
         'Total servers: ' + totS.toString() + '<br />' + webServerList().toString() + '<br /><hr>' +
         'Online players: ' + pList.count() + '<br />' +
         'Queued players: ' + qList.count() + '<br /><hr>' +
         '<h3>Players:</h3>' + webPlayerList(refresh).toString() + '<br />' +
-        '<hr>' + '<h3>Announcement</h3>' + '<p>' + announcement + '</p>' +
+        '<hr><h3>Announcement</h3><p>' + announcement + '</p>' +
         '<form action=\'/ann\' method=\'post\'><input type=\'text\' name=\'announcement\' value=\'\' placeholder=\'Set announcement message here\'/><input type=\'submit\' name=\'submit\' value=\'Submit\'/></form>' +
-        '<hr>' + 'TALON v' + pkg.version;
+        '<hr>TALON v' + pkg.version;
 	if (refresh) {
-		panel += ' (<a href=\'http:\/\/' + req.hostname + ':' + cfg.port + '\'>No refresh</a>)';
+		panel += ' (<a href=\'http://' + req.hostname + ':' + cfg.port + '\'>No refresh</a>)';
 	} else {
-		panel += ' (<a href=\'http:\/\/' + req.hostname + ':' + cfg.port + '/refresh\'>Auto refresh</a>)';
+		panel += ' (<a href=\'http://' + req.hostname + ':' + cfg.port + '/refresh\'>Auto refresh</a>)';
 	}
 	panel += '</body></html>';
 	return panel;
@@ -760,6 +735,11 @@ function startLoop() {
 
     // Starts message listener
 	inm.subscribe('talon');
+
+	msg = msg(cfg.dev, cfg.backend, cfg.auth);
+
+	// Init talonPanel server
+	server = server.Server(app);
 
     // Log TP express server start
 	server.listen(cfg.port, function () {
