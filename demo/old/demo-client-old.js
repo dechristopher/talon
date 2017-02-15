@@ -11,7 +11,7 @@ var fs = require('fs');
 var datetime = require('node-datetime');
 var sys = require('sys');
 var exec = require('child_process').exec;
-var gutil = require('gulp-util');
+var c = require('chalk');
 
 // HashMap of demos and filesizes
 var dList = new HashMap();
@@ -58,13 +58,13 @@ function getDemoName(filename) {
 // Echos some bs on rsync
 function puts(error, stdout, stderr) {
 	if (stdout !== null) {
-		log(gutil.colors.green(stdout));
+		log(c.green(stdout));
 	}
 	if (stderr !== null) {
-		log(gutil.colors.red(stderr));
+		log(c.red(stderr));
 	}
 	if (error !== null) {
-		log(gutil.colors.red(error));
+		log(c.red(error));
 	}
 }
 
@@ -75,21 +75,21 @@ function deleteDemo(code, filename) {
 		fs.exists(filename, function (exists) {
 			if (exists) {
                 // Show in green
-				log(gutil.colors.green('DELETING LOCAL DEMO: ' + filename));
+				log(c.green('DELETING LOCAL DEMO: ' + filename));
 				fs.unlink(filename);
 				delList.remove(filename);
 				checkdList.remove(filename);
 				dList.remove(filename);
 			} else {
                 // Show in red
-				log(gutil.colors.red('LOCAL DEMO NOT FOUND: ' + filename));
+				log(c.red('LOCAL DEMO NOT FOUND: ' + filename));
 				delList.remove(filename);
 				checkdList.remove(filename);
 				dList.remove(filename);
 			}
 		});
 	} else {
-		log(gutil.colors.red('Demo not found on server: 404'));
+		log(c.red('Demo not found on server: 404'));
 	}
 }
 
@@ -116,16 +116,16 @@ function demoExistsOnCDN(Url, callback, filename) {
 // Checks for demo files and uploads them a minute
 // after their file size has stopped increasing
 var checkForDemos = cron.job('*/20 * * * * *', function () {
-	log(gutil.colors.green('Checking for demos...'));
+	log(c.green('Checking for demos...'));
     // Find new demo files
 	recursive('C:\\KIWI', /* [ignoreFunc], */ function (err, files) {
 		if (err !== null) {
-			log(gutil.colors.red('Errors: ' + err));
+			log(c.red('Errors: ' + err));
 		}
         // Files is an array of filenames
 		for (var i = 0; i < files.length; i++) {
 			if (!dList.has(files[i]) && contains(files[i], '.dem')) {
-				log(gutil.colors.blue('ADDED: ' + files[i]));
+				log(c.blue('ADDED: ' + files[i]));
 				dList.set(files[i], getFilesizeInBytes(files[i]));
 				checkdList.set(files[i], 0);
 			}
