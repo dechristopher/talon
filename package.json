@@ -56,11 +56,17 @@
           "newIsCap": false,
           "capIsNew": false
         }
-  	  ],
-  	  "max-nested-callbacks": ["warn", 6],
-  		"max-params": ["warn", {
-  			"max": 6
-  		}]
+      ],
+      "max-nested-callbacks": [
+        "warn",
+        6
+      ],
+      "max-params": [
+        "warn",
+        {
+          "max": 6
+        }
+      ]
     }
   }
 }
