@@ -1,0 +1,26 @@
+KIWI INFRASTRUCTURE (Minimum viable)
+-----------------------------------------------------
+
+1x 1GB Droplet (GOOD)
+	- redis (locked down to only feapp srv)
+	- mysql (api data & stats)
+	- web (site & apis)
+
+1x 1GB Droplet (feapp)
+	- talon
+	- caching app
+	- prod cd pipeline
+
+1x 2GB Droplet (broker)
+	- mqtt broker (gateway to clients)
+	- dev cd pipeline
+
+
+CD PIPELINES
+-----------------------------------------------------
+
+Production
+	- Runs only on command
+	- Spins up docker container and THEN gracefully shuts down old container
+		- Pulls all persisted info from Redis
+		- Continues job
