@@ -19,10 +19,8 @@ const app = require('express')();
 const bodyParser = require('body-parser');
 
 // npm libraries
-const ArrayList = require('arraylist');
 const cron = require('cron');
 const datetime = require('node-datetime');
-const HashMap = require('hashmap');
 const lupus = require('lupus');
 const redis = require('redis');
 const requestify = require('requestify');
@@ -61,36 +59,6 @@ const HBC = '[' + c.yellow('HBC') + '] ';
 const ANNO = '[' + c.magenta('A') + '] ';
 const LOGIN = '[' + c.green('LOGIN') + '] ';
 const LOGOUT = '[' + c.magenta('LOGOUT') + '] ';
-
-// Local announcement variable
-let announcement = '';
-
-// Declare queue variables
-let currQ = 0;
-let currS = 0;
-
-// Declare HashMaps for all users
-// and queued users
-let pList = new HashMap();
-let qList = new HashMap();
-
-// Declare HashMaps for active users and
-// HBC offending users
-let hbCheck = new HashMap();
-let hbChance = new HashMap();
-
-// Set up the server lists
-let servers = new ArrayList();
-let onlServers = new ArrayList();
-
-// Allowed talonPanel IPs
-let firewallIPs = new ArrayList();
-
-// Total number of servers
-let totS = 0;
-
-// Total number of firewall IPs
-let totIP = 0;
 
 // Initialize datadog metrics
 metrics.init({
