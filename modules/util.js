@@ -36,6 +36,10 @@ util.random = function (min, max) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
+util.rString = function (size) {
+	return rs.generate(size);
+};
+
 // Does absolutely nothing
 util.devnull = function (data) {
 	return data;
