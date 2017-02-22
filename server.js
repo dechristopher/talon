@@ -71,25 +71,25 @@ if (process.argv.length > 2) {
 	if (process.argv[2] === 'dev') {
 		log(TALN + 'D E V E L O P M E N T    M O D E');
 		cfg.region = 0;
-		flist.fill(cfg.servers[cfg.region], servers, totS, 'Servers', ERROR_NO_SERV_FILE);
+		flist.fill(cfg.servers[cfg.region], d.servers, d.totS, 'Servers', ERROR_NO_SERV_FILE);
 		cfg.backend = cfg.backendDev;
 		cfg.dev = true;
 		cfg.firewallEnabled = false;
 	} else {
-		flist.fill(cfg.servers[cfg.region], servers, totS, 'Servers', ERROR_NO_SERV_FILE);
+		flist.fill(cfg.servers[cfg.region], d.servers, d.totS, 'Servers', ERROR_NO_SERV_FILE);
 	}
 	if (process.argv[2] === 'nofw') {
 		cfg.firewallEnabled = false;
 	}
 } else {
-	flist.fill(cfg.servers[cfg.region], servers, totS, 'Servers', ERROR_NO_SERV_FILE);
+	flist.fill(cfg.servers[cfg.region], d.servers, d.totS, 'Servers', ERROR_NO_SERV_FILE);
 }
 
 // Update total servers number
-totS = servers.size();
+d.totS = d.servers.size();
 
 // Populate allowed panel IPs from list
-flist.fill('conf/ips.txt', firewallIPs, totIP, 'Firewall IPs', ERROR_NO_FWIP_FILE);
+flist.fill('conf/ips.txt', d.firewallIPs, d.totIP, 'Firewall IPs', ERROR_NO_FWIP_FILE);
 
 // Placeholder variable for redis connection
 let inm = redis.createClient(6379, cfg.backend);
@@ -131,7 +131,7 @@ inm.on('connect', function () {
 
 // Subscribe local talon redis client to global message queue
 inm.on('subscribe', function (channel, count) {
-	pList.set('talon', new Player('talon', 'STEAM_0:1:39990', 'ThIsIsAcHaNnElId'));
+	d.pList.set('talon', new Player('talon', 'STEAM_0:1:39990', 'ThIsIsAcHaNnElId'));
 	log(TALN + 'Connected! Listening: ' + channel + ' (' + count + ')' + os.EOL);
 });
 
@@ -161,89 +161,53 @@ inm.on('message', function (channel, message) {
 let reportMetrics = cron.job('*/5 * * * * *', function () {
 	let memUsage = process.memoryUsage();
 	metrics.gauge('sys.memory', memUsage.rss);
-	metrics.gauge('players.online', pList.count());
-	metrics.gauge('players.queued', qList.count());
-	metrics.gauge('servers.count', onlServers.size());
+	metrics.gauge('players.online', d.pList.count());
+	metrics.gauge('players.queued', d.qList.count());
+	metrics.gauge('servers.count', d.onlServers.size());
 });
 
 // Unused debug BS
 // let showOnline = cron.job('*/15 * * * * *', function () {
-// 	log('[P] (Q: ' + currQ + ' / O: ' + pList.count() + ')');
+// 	log('[P] (Q: ' + d.currQ + ' / O: ' + d.pList.count() + ')');
 // });
 
 // Checks player and server statuses every 10 seconds and
 // pops the queue if 10 players and >= 1 server is available.
 let parseQueue = cron.job('*/10 * * * * *', function () {
-    // Updates currS and currQ
-	currS = onlServers.size();
-	currQ = qList.count();
+    // Updates d.currS and d.currQ
+	d.currS = d.onlServers.size();
+	d.currQ = d.qList.count();
     // If server are available
-	if (onlServers.size() >= 1) {
+	if (d.onlServers.size() >= 1) {
         // and people are queued
-		if (qList.count() >= cfg.qSize) {
+		if (d.qList.count() >= cfg.qSize) {
             // Get all queued players and add to a JS array
-			let players = qList.values();
+			let players = d.qList.values();
+
             // Declare an empty array for the 10 (x) selected players
 			let selected = [];
-
-            // Select and rig teams to favor the KIWI squad ;)
-            // let rigIndex = 0;
-
-            /* if (qList.has('drop')) {
-                selected[rigIndex] = qList.get('drop');
-                qList.remove('drop');
-                players = qList.values();
-                rigIndex++;
-            }
-
-            if (qList.has('Sparks')) {
-                selected[rigIndex] = qList.get('Sparks');
-                qList.remove('Sparks');
-                players = qList.values();
-                rigIndex++;
-            }
-
-            if (qList.has('Rogean')) {
-                selected[rigIndex] = qList.get('Rogean');
-                qList.remove('Rogean');
-                players = qList.values();
-                rigIndex++;
-            }
-
-            if (qList.has('twitch')) {
-                selected[rigIndex] = qList.get('twitch');
-                qList.remove('twitch');
-                players = qList.values();
-                rigIndex++;
-            }
-
-            if (qList.has('otters')) {
-                selected[rigIndex] = qList.get('otters');
-                qList.remove('otters');
-                players = qList.values();
-                rigIndex++;
-            } */
 
             // Select 10 payers randomly. Store in selected[].
 			for (let i = (0 /* + rigIndex */); i < (cfg.qSize); i++) {
 				selected[i] = players[tutil.random(0, players.length - 1)];
-				let tp = qList.search(selected[i]);
-				qList.remove(tp);
-				players = qList.values();
+				let tp = d.qList.search(selected[i]);
+				d.qList.remove(tp);
+				players = d.qList.values();
 			}
 
             // Pick a random server
-			let srvNum = tutil.random(0, onlServers.size() - 1);
-			let server = onlServers.get(srvNum);
-			onlServers.remove(server);
+			let srvNum = tutil.random(0, d.onlServers.size() - 1);
+			let server = d.onlServers.get(srvNum);
+			d.onlServers.remove(server);
 
             // Build API call suffix
             // &p1=ABC&p2=ABC&p3=ABC&p4=ABC&p5=ABC&p6=ABC&p7=ABC&p8=ABC&p9=ABC&p10=ABC&t1n=team_drop&t2n=team_sparks&numPl=5
+            // object with generated api call and t1n and t2n
 			let call = buildCall(selected);
 
             // Concatenate the built API call with the required properties to make the full call
-			let apiCall = util.format(cfg.endpoints.matchCreate, cfg.api, server, call);
-            // log("[Q] [POP] Built API call: " + apiCall, 'mm');
+			let apiCall = util.format(cfg.endpoints.matchCreate, cfg.api, server, call.gen);
+			log(Q + '[POP] Built API call: ' + apiCall, 'mm');
 
             // Send the API request
 			requestify.get(apiCall).then(function (response) {
@@ -265,24 +229,24 @@ let parseQueue = cron.job('*/10 * * * * *', function () {
 				}
 			});
 
-            // Update currQ to reflect queue pop
-			currQ = qList.count();
+            // Update d.currQ to reflect queue pop
+			d.currQ = d.qList.count();
 		} else {
-			log(Q + '(S: ' + currS + '/' + totS + ') :: (P: ' + currQ + '/' + cfg.qSize + ') --> Waiting...', 'mm');
+			log(Q + '(S: ' + d.currS + '/' + d.totS + ') :: (P: ' + d.currQ + '/' + cfg.qSize + ') --> Waiting...', 'mm');
 		}
 	} else {
-		log(Q + '(S: ' + currS + '/' + totS + ') :: (P: ' + currQ + '/' + cfg.qSize + ') --> No servers!', 'mm');
+		log(Q + '(S: ' + d.currS + '/' + d.totS + ') :: (P: ' + d.currQ + '/' + cfg.qSize + ') --> No servers!', 'mm');
 	}
 });
 
 // Checks server status every 5 seconds for matches still
-// going on and adds/removes them from onlServers[]
+// going on and adds/removes them from d.onlServers[]
 let parseServers = cron.job('*/5 * * * * *', function () {
-	totS = servers.size();
+	d.totS = d.servers.size();
     // log("[S] Server Query...");
-    // console.log(onlServers);
-	lupus(0, totS, function (n) {
-		let ip = servers.get(n);
+    // console.log(d.onlServers);
+	lupus(0, d.totS, function (n) {
+		let ip = d.servers.get(n);
 		let endpoint = util.format(cfg.endpoints.serverQuery, cfg.api, ip);
 		requestify.get(endpoint).then(response => parseServerAPIResponse(response));
 	}, function () {
@@ -291,39 +255,39 @@ let parseServers = cron.job('*/5 * * * * *', function () {
 });
 
 // Checks to see if a user has sent heartbeats in the past
-// 30 seconds. If not, removes them from qList and hbCheck
+// 30 seconds. If not, removes them from d.qList and d.hbCheck
 //
 // PLEASE comment this
 let parseHeartbeats = cron.job('*/30 * * * * *', function () {
     // log('[HBC] >> RUNNING...', 'hb');
 	let i = 0;
     // Check EVERY user
-	hbCheck.forEach(function (value, key) {
+	d.hbCheck.forEach(function (value, key) {
         // log('Checking ' + key + ' -> ' + value, 'hb');
 		if (value === false) {
-			if (hbChance.has(key)) {
-				let chance = hbChance.get(key);
+			if (d.hbChance.has(key)) {
+				let chance = d.hbChance.get(key);
 				if (chance === 0) {
-					hbCheck.remove(key);
-					hbChance.remove(key);
-					pList.remove(key);
+					d.hbCheck.remove(key);
+					d.hbChance.remove(key);
+					d.pList.remove(key);
 					log(HBC + 'REM >> ' + key, 'hb');
 				} else {
-					hbChance.set(key, chance - 1);
+					d.hbChance.set(key, chance - 1);
 					i++;
 				}
 			} else {
-				hbChance.set(key, 2);
+				d.hbChance.set(key, 2);
 			}
-			if (qList.has(key)) {
-				qList.remove(key);
-				currQ = qList.count();
-				bcast('q~' + currQ + '~' + currS);
-				bcast('l~' + currQ + '~' + key);
+			if (d.qList.has(key)) {
+				d.qList.remove(key);
+				d.currQ = d.qList.count();
+				bcast('q~' + d.currQ + '~' + d.currS);
+				bcast('l~' + d.currQ + '~' + key);
 			}
             // log('[HBC] >> ' + key + ' >> OFFLINE', 'hb');
 		} else {
-			hbCheck.set(key, false);
+			d.hbCheck.set(key, false);
 		}
 	});
 	log(HBC + '>> OFFENDERS: ' + i, 'hb');
@@ -352,16 +316,16 @@ function parse(channel, sid, from, input) {
             // Create player object
 			p = new Player(from, sid, channel);
             // log out all other instances of player
-			if (pList.has(p.nm)) {
-				pList.remove(p.nm);
-				if (qList.has(p.nm)) {
-					qList.remove(p.nm);
-					currQ = qList.count();
+			if (d.pList.has(p.nm)) {
+				d.pList.remove(p.nm);
+				if (d.qList.has(p.nm)) {
+					d.qList.remove(p.nm);
+					d.currQ = d.qList.count();
 				}
 			}
             // Then set their playerID and add them to HBC
-			pList.set(p.nm, p);
-			hbCheck.set(p.nm, true);
+			d.pList.set(p.nm, p);
+			d.hbCheck.set(p.nm, true);
 			log(LOGIN + p.nm + ' : [' + p.channel + ' - ' + p.sid + ']', 'auth');
 			metrics.increment('talon.user.login');
 			break;
@@ -369,14 +333,14 @@ function parse(channel, sid, from, input) {
             // User logs out
 		case 'lo':
             // Pillage their user object
-			if (pList.has(from)) {
-				pList.remove(from);
-				if (qList.has(from)) {
-					hbCheck.remove(from);
-					qList.remove(from);
-					currQ = qList.count();
-					bcast('q~' + currQ + '~' + currS);
-					bcast('l~' + currQ + '~' + from);
+			if (d.pList.has(from)) {
+				d.pList.remove(from);
+				if (d.qList.has(from)) {
+					d.hbCheck.remove(from);
+					d.qList.remove(from);
+					d.currQ = d.qList.count();
+					bcast('q~' + d.currQ + '~' + d.currS);
+					bcast('l~' + d.currQ + '~' + from);
 				}
 				log(LOGOUT + from + ' : [' + channel + ' - ' + sid + ']', 'auth');
 			}
@@ -391,8 +355,8 @@ function parse(channel, sid, from, input) {
             // User heartbeat packet
 		case 'hb':
             // Set their HBCheck to true for another 30 seconds
-			if (pList.has(from)) {
-				hbCheck.set(from, true);
+			if (d.pList.has(from)) {
+				d.hbCheck.set(from, true);
 				log(HB + '>> ' + from + tutil.boolStar(isPlayerInQueue(from)), 'hb');
 				reply(channel + '-hb', 'hb');
 			}
@@ -401,7 +365,7 @@ function parse(channel, sid, from, input) {
             // Return number of queued players
 		case 'rq':
             // log("RQ -> " + from);
-			reply(channel, 'q~' + currQ + '~' + currS);
+			reply(channel, 'q~' + d.currQ + '~' + d.currS);
 			break;
 
             // UNIMPLEMENTED
@@ -417,12 +381,12 @@ function parse(channel, sid, from, input) {
             // User sends queue join/leave request
 		case 'queue':
 			if (procQueue(from, channel)) {
-				bcast('q~' + currQ + '~' + currS);
-				bcast('j~' + currQ + '~' + from);
+				bcast('q~' + d.currQ + '~' + d.currS);
+				bcast('j~' + d.currQ + '~' + from);
 				log(Q + '[+] ' + from, 'mm');
 			} else {
-				bcast('q~' + currQ + '~' + currS);
-				bcast('l~' + currQ + '~' + from);
+				bcast('q~' + d.currQ + '~' + d.currS);
+				bcast('l~' + d.currQ + '~' + from);
 				log(Q + '[-] ' + from, 'mm');
 			}
 			break;
@@ -471,7 +435,7 @@ function bcast(msg) {
 		pub.auth(cfg.auth);
 	}
 
-	let players = pList.values();
+	let players = d.pList.values();
 
 	for (let i = 0; i < players.length; i++) {
 		pub.publish(players[i].channel, msg);
@@ -484,15 +448,15 @@ function bcast(msg) {
 // Process the queue command
 function procQueue(user, channel) {
     // User leaves queue
-	if (qList.has(user)) {
-		qList.remove(user);
-		currQ = qList.count();
+	if (d.qList.has(user)) {
+		d.qList.remove(user);
+		d.currQ = d.qList.count();
 		log(Q + '[?-] ' + user + ' - ' + channel, 'mm');
 		return false;
         // User joins queue
 	}
-	qList.set(user, pList.get(user));
-	currQ = qList.count();
+	d.qList.set(user, d.pList.get(user));
+	d.currQ = d.qList.count();
 	log(Q + '[?+] ' + user + ' - ' + channel, 'mm');
 	return true;
 }
@@ -515,13 +479,13 @@ function parseServerAPIResponse(response) {
         //
         // 108.61.129.168:27015~KIWI::OFF~0
         //
-		if (((players !== '1' || tutil.contains(hostname, 'LIVE')) || tutil.contains(response.getBody(), 'offline')) && onlServers.contains(ip)) {
-			onlServers.remove(ip);
+		if (((players !== '1' || tutil.contains(hostname, 'LIVE')) || tutil.contains(response.getBody(), 'offline')) && d.onlServers.contains(ip)) {
+			d.onlServers.remove(ip);
 			log(SRV + '[-] > ' + ip, 'srv');
 		}
         // Online or freshly spawned check
-		if (hostname === 'KIWI::OFF' && players === '1' && !onlServers.contains(ip) && hostname !== 'KIWI::LIVE') {
-			onlServers.add(ip);
+		if (hostname === 'KIWI::OFF' && players === '1' && !d.onlServers.contains(ip) && hostname !== 'KIWI::LIVE') {
+			d.onlServers.add(ip);
 			log(SRV + '[+] > ' + ip, 'srv');
 		}
 	} else {
@@ -531,65 +495,71 @@ function parseServerAPIResponse(response) {
 		hostname = '';
 		players = '';
 
-		if (onlServers.contains(ip)) {
-			onlServers.remove(ip);
+		if (d.onlServers.contains(ip)) {
+			d.onlServers.remove(ip);
 			log(SRV + '[-] > ' + ip, 'srv');
 		}
 	}
 
     // console.log('[S] > ' + ip + ' : "' + hostname + '" : ' + players);
-    // console.log('[S] Online Servers:', onlServers);
+    // console.log('[S] Online Servers:', d.onlServers);
 
-	currS = onlServers.size();
-	bcast('q~' + currQ + '~' + currS);
+	d.currS = d.onlServers.size();
+	bcast('q~' + d.currQ + '~' + d.currS);
 
 	if (cfg.displayServers) {
-		log('[S] >> AVAILABLE: ' + onlServers.length, 'srv');
+		log('[S] >> AVAILABLE: ' + d.onlServers.length, 'srv');
 	}
 }
 
 function buildCall(selected) {
-	let call = '';
+	let call = {};
+	call.gen = '';
 	if (cfg.qSize === 10) {
 		for (let j = 1; j <= cfg.qSize; j++) {
-			call += '&p' + j + '=' + selected[j - 1].sid;
+			call.gen += '&p' + j + '=' + selected[j - 1].sid;
 		}
-		call += '&t1n=team_' + selected[0].nm;
-		call += '&t2n=team_' + selected[5].nm;
+		call.gen += '&t1n=team_' + selected[0].nm;
+		call.gen += '&t2n=team_' + selected[5].nm;
+		call.t1n = 'team_' + selected[0].nm;
+		call.t2n = 'team_' + selected[5].nm;
 	} else if (cfg.qSize === 8) {
-		call += '&p1=' + selected[0].sid;
-		call += '&p2=' + selected[1].sid;
-		call += '&p3=' + selected[2].sid;
-		call += '&p4=' + selected[3].sid;
-		call += '&p6=' + selected[4].sid;
-		call += '&p7=' + selected[5].sid;
-		call += '&p8=' + selected[6].sid;
-		call += '&p9=' + selected[7].sid;
-		call += '&t1n=team_' + selected[0].nm;
-		call += '&t2n=team_' + selected[4].nm;
+		call.gen += '&p1=' + selected[0].sid;
+		call.gen += '&p2=' + selected[1].sid;
+		call.gen += '&p3=' + selected[2].sid;
+		call.gen += '&p4=' + selected[3].sid;
+		call.gen += '&p6=' + selected[4].sid;
+		call.gen += '&p7=' + selected[5].sid;
+		call.gen += '&p8=' + selected[6].sid;
+		call.gen += '&p9=' + selected[7].sid;
+		call.gen += '&t1n=team_' + selected[0].nm;
+		call.gen += '&t2n=team_' + selected[4].nm;
 	} else if (cfg.qSize === 6) {
-		call += '&p1=' + selected[0].sid;
-		call += '&p2=' + selected[1].sid;
-		call += '&p3=' + selected[2].sid;
-		call += '&p6=' + selected[3].sid;
-		call += '&p7=' + selected[4].sid;
-		call += '&p8=' + selected[5].sid;
-		call += '&t1n=team_' + selected[0].nm;
-		call += '&t2n=team_' + selected[3].nm;
+		call.gen += '&p1=' + selected[0].sid;
+		call.gen += '&p2=' + selected[1].sid;
+		call.gen += '&p3=' + selected[2].sid;
+		call.gen += '&p6=' + selected[3].sid;
+		call.gen += '&p7=' + selected[4].sid;
+		call.gen += '&p8=' + selected[5].sid;
+		call.gen += '&t1n=team_' + selected[0].nm;
+		call.gen += '&t2n=team_' + selected[3].nm;
 	} else if (cfg.qSize === 4) {
-		call += '&p1=' + selected[0].sid;
-		call += '&p2=' + selected[1].sid;
-		call += '&p6=' + selected[2].sid;
-		call += '&p7=' + selected[3].sid;
-		call += '&t1n=team_' + selected[0].nm;
-		call += '&t2n=team_' + selected[2].nm;
+		call.gen += '&p1=' + selected[0].sid;
+		call.gen += '&p2=' + selected[1].sid;
+		call.gen += '&p6=' + selected[2].sid;
+		call.gen += '&p7=' + selected[3].sid;
+		call.gen += '&t1n=team_' + selected[0].nm;
+		call.gen += '&t2n=team_' + selected[2].nm;
 	} else if (cfg.qSize === 2) {
-		call += '&p1=' + selected[0].sid;
-		call += '&p6=' + selected[1].sid;
-		call += '&t1n=team_' + selected[0].nm;
-		call += '&t2n=team_' + selected[1].nm;
+		call.gen += '&p1=' + selected[0].sid;
+		call.gen += '&p6=' + selected[1].sid;
+		call.gen += '&t1n=team_' + selected[0].nm;
+		call.gen += '&t2n=team_' + selected[1].nm;
+		call.t1n = 'team_' + selected[0].nm;
+		call.t2n = 'team_' + selected[1].nm;
 	}
-	call += '&numPl=' + (cfg.qSize / 2);
+	call.gen += '&numPl=' + (cfg.qSize / 2);
+	log(Q + 'Generated teams.');
 	return call;
 }
 
@@ -601,9 +571,9 @@ let getAnnouncement = cron.job('*/45 * * * * *', function () {
 
 // Sends out announcement to all connected clients
 function sendAnnouncement(anno) {
-	if (pList.size() > 1) {
+	if (d.pList.size() > 1) {
 		// Set local announcement variable
-		announcement = anno;
+		d.announcement = anno;
 		// Then broadcast it
 		bcast('a~' + anno);
 		log(ANNO + '[SENT] ' + anno);
@@ -612,15 +582,15 @@ function sendAnnouncement(anno) {
 
 // Bool if player is currently in queue
 function isPlayerInQueue(name) {
-	return qList.has(name);
+	return d.qList.has(name);
 }
 
 // returns a formatted list of '-username [steamid] = [channel] = [hwid]'
 // bool refresh to add /refresh in the end of the kick URL
 function webPlayerList(refresh) {
 	let list = '';
-	if (pList.count() > 0) {
-		pList.forEach(function (value, key) {
+	if (d.pList.count() > 0) {
+		d.pList.forEach(function (value, key) {
 			let queued = isPlayerInQueue(key);
 			if (refresh) {
 				list += '<b>-</b> ' + tutil.boolStar(queued) + key + ' ( ' + value.sid + ' || ' + value.channel + ' ) ( <a href=\'http://steamcommunity.com/profiles/' + tutil.sidTo64(value.sid) + '\'>Steam Profile</a> ) [ <a href=\'/kick/' + key + '/refresh\'>KICK</a> ]<br />';
@@ -638,9 +608,9 @@ function webPlayerList(refresh) {
 function webServerList() {
 	let list = '[ ';
 	let br = 0;
-	for (let i = 0; i < servers.size(); i++) {
-		list += servers.get(i);
-		if (i === (servers.size() - 1)) {
+	for (let i = 0; i < d.servers.size(); i++) {
+		list += d.servers.get(i);
+		if (i === (d.servers.size() - 1)) {
 			list += ' ]<br />';
 		} else {
 			list += ', ';
@@ -665,11 +635,11 @@ function renderPanel(refresh, req) {
         '<style>body{ -webkit-font-smoothing: antialiased; font-family: \'Exo 2\', sans-serif;} input[type=\'text\']{width: 300px;}</style>' +
         '</head><body>' +
         '<h2>talonPanel</h2><hr><br />' +
-        'Total servers: ' + totS.toString() + '<br />' + webServerList().toString() + '<br /><hr>' +
-        'Online players: ' + pList.count() + '<br />' +
-        'Queued players: ' + qList.count() + '<br /><hr>' +
+        'Total servers: ' + d.totS.toString() + '<br />' + webServerList().toString() + '<br /><hr>' +
+        'Online players: ' + d.pList.count() + '<br />' +
+        'Queued players: ' + d.qList.count() + '<br /><hr>' +
         '<h3>Players:</h3>' + webPlayerList(refresh).toString() + '<br />' +
-        '<hr><h3>Announcement</h3><p>' + announcement + '</p>' +
+        '<hr><h3>Announcement</h3><p>' + d.announcement + '</p>' +
         '<form action=\'/ann\' method=\'post\'><input type=\'text\' name=\'announcement\' value=\'\' placeholder=\'Set announcement message here\'/><input type=\'submit\' name=\'submit\' value=\'Submit\'/></form>' +
         '<hr>TALON v' + pkg.version;
 	if (refresh) {
@@ -684,9 +654,9 @@ function renderPanel(refresh, req) {
 // Disconnect player from backend and
 // remove from queue if necessary
 function webKickPlayer(username) {
-	pList.remove(username);
+	d.pList.remove(username);
 	if (isPlayerInQueue(username)) {
-		qList.remove(username);
+		d.qList.remove(username);
 	}
 	log(TP + '[KICK] ' + username, 'web');
 }
@@ -723,7 +693,7 @@ function startLoop() {
 // Checks if given IP is in allowed talonPanel IPs.
 function firewall(ip) {
 	if (cfg.firewallEnabled) {
-		return firewallIPs.contains(ip);
+		return d.firewallIPs.contains(ip);
 	}
 	return true;
 }
