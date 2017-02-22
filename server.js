@@ -1,7 +1,7 @@
 /*
 Created by Andrew DeChristopher <drew@kiir.us> on 4/22/2016.
 
-TODO Roll over the Player class to the user factory
+TODO Roll over the Player class to the user factory <-
 
 GOODLUCK
 PRAY FOR
