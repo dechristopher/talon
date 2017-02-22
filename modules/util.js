@@ -5,7 +5,8 @@ Created by Andrew DeChristopher <drew@kiir.us> on 1/7/2017.
 // core libraries
 const str = require('string');
 const c = require('chalk');
-const sidconvert = require('steamidconvert')();
+const sidc = require('steamidconvert')();
+const rs = require('randomstring');
 const log = require('./log');
 
 // logging constants
@@ -57,7 +58,7 @@ util.stringToBool = function (string) {
 
 // return steamid64 representation of normal steamid
 util.sidTo64 = function (steamid) {
-	return sidconvert.convertTo64(steamid);
+	return sidc.convertTo64(steamid);
 };
 
 // Returns an asterisk if true
