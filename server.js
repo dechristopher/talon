@@ -31,6 +31,9 @@ const c = require('chalk');
 // datadog api
 const metrics = require('datadog-metrics');
 
+// data storage
+let d = require('./modules/data');
+
 // import configuration
 const pkg = require('./package.json');
 const cfg = require('./modules/cfg');
