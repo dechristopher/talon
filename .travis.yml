@@ -1,6 +1,15 @@
 language: node_js
 notifications:
   slack: kiirus:kYXYWFfVV7FGS9R0rMj1l11a
+  webhooks:
+    urls:
+      - https://hooks.kiir.us/pipeline-dev
+      - https://hooks.kiir.us/pipeline-prod
+    on_success: never # default: always
+    on_failure: always # default: always
+    on_start: never   # default: never
+    on_cancel: never # default: always
+    on_error: never # default: always
 node_js:
  - "6.7.0"
 before_install:
