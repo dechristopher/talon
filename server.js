@@ -31,6 +31,9 @@ const metrics = require('datadog-metrics');
 
 // data storage
 let d = require('./modules/data');
+const match = require('./modules/match');
+const Player = require('./modules/player');
+// const user = require('./modules/user');
 
 // import configuration
 const pkg = require('./package.json');
@@ -39,10 +42,7 @@ const cfg = require('./modules/cfg');
 // custom libraries
 const tutil = require('./modules/util');
 const flist = require('./modules/flist');
-const Player = require('./modules/player');
-// const user = require('./modules/user');
-// const match = require('./modules/match');
-// const matches = require('./modules/matches');
+const matches = require('./modules/matches');
 const log = require('./modules/log');
 // const sms = require('./modules/sms');
 let msg = require('./modules/msg');
