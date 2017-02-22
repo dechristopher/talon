@@ -2,7 +2,7 @@
 Created by Andrew DeChristopher <drew@kiir.us> on 1/25/2017.
  */
 
-const match = (mid, mip, pw, t1n, t2n, pl) => {
+let match = (mid, mip, pw, t1n, t2n, pl) => {
     // ID of the match
 	let matchid = Object.undefined;
 	if (mid !== '') {
