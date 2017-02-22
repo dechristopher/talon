@@ -62,12 +62,6 @@ const ANNO = '[' + c.magenta('A') + '] ';
 const LOGIN = '[' + c.green('LOGIN') + '] ';
 const LOGOUT = '[' + c.magenta('LOGOUT') + '] ';
 
-// Has already connected
-let connectYet = false;
-
-// Number of backend connection retries
-let connectRet = 0;
-
 // Local announcement variable
 let announcement = '';
 
