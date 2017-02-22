@@ -31,6 +31,9 @@ const c = require('chalk');
 // datadog api
 const metrics = require('datadog-metrics');
 
+// data storage
+let d = require('./modules/data');
+
 // import configuration
 const pkg = require('./package.json');
 const cfg = require('./modules/cfg');
@@ -138,19 +141,19 @@ log(TALN + 'TALON v' + pkg.version);
 log(TALN + 'Connecting to backend...');
 
 let retryConnect = cron.job('*/2 * * * * *', function () {
-	if (connectRet === 5) {
+	if (d.connectRet === 5) {
 		log(TALN + 'FAILED TO CONNECT TO BACKEND!');
 		log(TALN + 'Shutting down...');
 		throw new Error('FAILED TO CONNECT TO BACKEND!');
 	}
 	log(TALN + 'Connecting to backend...');
-	connectRet++;
+	d.connectRet++;
 });
 
 retryConnect.start();
 
 inm.on('connect', function () {
-	if (!connectYet) {
+	if (!d.connectYet) {
         // Begin...
 		process.title = 'TALON BACKEND v' + pkg.version;
 		tutil.ascii();
@@ -160,7 +163,7 @@ inm.on('connect', function () {
 		retryConnect.stop();
         // Start timers and program loop
 		startLoop();
-		connectYet = true;
+		d.connectYet = true;
 	}
 });
 
