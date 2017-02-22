@@ -421,6 +421,12 @@ function parse(channel, sid, from, input) {
 // Send a single message to one user or channel
 function reply(to, msg) {
 	let pub = redis.createClient(6379, cfg.backend);
+
+	pub.on('error', function (error) {
+		console.log(error);
+		reply(to, msg);
+	});
+
 	if (!cfg.dev) {
 		pub.auth(cfg.auth);
 	}
