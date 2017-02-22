@@ -39,6 +39,8 @@ let match = (mid, mip, pw, t1n, t2n, pl) => {
 		players = pl;
 	}
 
+	//console.log('generated match object: ', matchid, matchip, matchpw, teamOneName, teamTwoName, players);
+
     // Return anonymous functions as "internal methods"
 	return {
 		getMatchID: () => {
