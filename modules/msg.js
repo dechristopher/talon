@@ -26,7 +26,7 @@ module.exports = function (dev, backend, auth, cl) {
 	m.reply = function (to, msg) {
 		let cli = redis.createClient(6379, m.backend);
 		cli.on('error', function (error) {
-			console.log(error);
+			console.log('[', caller, ']', error);
 			m.reply(to, msg);
 		});
 		if (!m.dev) {
@@ -65,7 +65,7 @@ module.exports = function (dev, backend, auth, cl) {
 		cli.quit();
 	};
 
-	log('[' + c.yellow('MESG') + '] Messaging initialized');
+	log('[' + c.yellow('MESG') + '] [' + caller + '] Messaging initialized');
 
 	return m;
 };
