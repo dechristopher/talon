@@ -3,13 +3,16 @@ Created by Andrew DeChristopher <drew@kiir.us> on 2/10/2017.
 */
 
 // Export msg module
-module.exports = function (dev, backend, auth) {
+module.exports = function (dev, backend, auth, cl) {
 	// core libraries
 	const redis = require('redis');
 	const c = require('chalk');
 
 	// import configuration
 	const log = require('./log');
+
+	// calling class or module
+	let caller = cl;
 
 	// Msg export object
 	let m = {};
