@@ -47,7 +47,6 @@ m.jobListActive = cron.job('*/45 * * * * *', function () {
 	log(M + m.active.count() + ' Running Matches');
 });
 
-
 // Parse API response and verify match end
 function parseStatus(response) {
 	let si;
