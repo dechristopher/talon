@@ -429,7 +429,7 @@ function reply(to, msg) {
 
 	pub.on('error', function (error) {
 		console.log(error);
-		//reply(to, msg);
+		// reply(to, msg);
 	});
 
 	if (!cfg.dev) {
@@ -445,7 +445,7 @@ function bcast(msg) {
 
 	pub.on('error', function (error) {
 		console.log(error);
-		//reply(msg);
+		// reply(msg);
 	});
 
 	if (!cfg.dev) {
