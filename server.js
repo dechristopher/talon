@@ -19,6 +19,7 @@ const app = require('express')();
 const bodyParser = require('body-parser');
 
 // npm libraries
+require("better-stack-traces").register();
 const cron = require('cron');
 const datetime = require('node-datetime');
 const lupus = require('lupus');
