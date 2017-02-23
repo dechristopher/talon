@@ -19,7 +19,7 @@ const app = require('express')();
 const bodyParser = require('body-parser');
 
 // npm libraries
-require("better-stack-traces").register();
+require('better-stack-traces').register();
 const cron = require('cron');
 const datetime = require('node-datetime');
 const lupus = require('lupus');
@@ -429,7 +429,7 @@ function reply(to, msg) {
 
 	pub.on('error', function (error) {
 		console.log(error);
-		reply(to, msg);
+		//reply(to, msg);
 	});
 
 	if (!cfg.dev) {
@@ -445,7 +445,7 @@ function bcast(msg) {
 
 	pub.on('error', function (error) {
 		console.log(error);
-		reply(msg);
+		//reply(msg);
 	});
 
 	if (!cfg.dev) {
