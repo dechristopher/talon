@@ -11,7 +11,7 @@ notifications:
     on_cancel: never # default: always
     on_error: never # default: always
 node_js:
- - "6.7.0"
+ - "7.6.0"
 before_install:
  - "wget https://cdn.kiir.us/ci/.env"
  - "npm install nodeunit -g"
