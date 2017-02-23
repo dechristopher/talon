@@ -45,7 +45,7 @@ const flist = require('./modules/flist');
 const matches = require('./modules/matches');
 const log = require('./modules/log');
 // const sms = require('./modules/sms');
-let msg = require('./modules/msg');
+let msg = require('./modules/msg')(cfg.dev, cfg.backend, cfg.auth, 'main');
 
 // Define ERRORS and other constants
 const ERROR_NO_FWIP_FILE = '[' + c.red('ERROR') + '] Given ip file does not exist: ';
