@@ -45,7 +45,7 @@ const flist = require('./modules/flist');
 const matches = require('./modules/matches');
 const log = require('./modules/log');
 // const sms = require('./modules/sms');
-let msg = require('./modules/msg')(cfg.dev, cfg.backend, cfg.auth, 'main');
+let msg = require('./modules/msg');
 
 // Define ERRORS and other constants
 const ERROR_NO_FWIP_FILE = '[' + c.red('ERROR') + '] Given ip file does not exist: ';
@@ -441,6 +441,12 @@ function reply(to, msg) {
 // Broadcast to all users and channels
 function bcast(msg) {
 	let pub = redis.createClient(6379, cfg.backend);
+
+	pub.on('error', function (error) {
+		console.log(error);
+		reply(msg);
+	});
+
 	if (!cfg.dev) {
 		pub.auth(cfg.auth);
 	}
@@ -683,7 +689,7 @@ function startLoop() {
     // Starts message listener
 	inm.subscribe('talon');
 
-	msg = msg(cfg.dev, cfg.backend, cfg.auth);
+	msg = msg(cfg.dev, cfg.backend, cfg.auth, 'main');
 
 	// Init talonPanel server
 	server = server.Server(app);
