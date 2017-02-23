@@ -15,7 +15,7 @@ const cfg = require('./cfg');
 // custom libraries
 const log = require('./log');
 const tutil = require('./util');
-const msg = require('./msg')(cfg.dev, cfg.backend, cfg.auth);
+const msg = require('./msg')(cfg.dev, cfg.backend, cfg.auth, 'matches');
 
 // logging constants
 const M = '[' + c.blue('MTCH') + '] ';
