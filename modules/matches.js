@@ -3,11 +3,11 @@ Created by Andrew DeChristopher <drew@kiir.us> on 2/6/2017.
  */
 
 // core libraries
+const util = require('util');
 const cron = require('cron');
 const c = require('chalk');
 const HashMap = require('hashmap');
 const r = require('requestify');
-const util = require('util');
 
 // import configuration
 const cfg = require('./cfg');
