@@ -39,6 +39,10 @@ module.exports = function (dev, backend, auth, cl) {
 	// Broadcast to all users and channels
 	m.bcast = function (msg, pList) {
 		let cli = redis.createClient(6379, m.backend);
+		cli.on('error', function (error) {
+			console.log('[', caller, ']', error);
+			m.bcast(msg, pList);
+		});
 		if (!m.dev) {
 			cli.auth(m.auth);
 		}
@@ -52,6 +56,10 @@ module.exports = function (dev, backend, auth, cl) {
 	// Broadcast excluding a single user or channel.
 	m.bcastex = function (msg, ex, pList) {
 		let cli = redis.createClient(6379, m.backend);
+		cli.on('error', function (error) {
+			console.log('[', caller, ']', error);
+			m.bcastex(msg, ex, pList);
+		});
 		if (!m.dev) {
 			cli.auth(m.auth);
 		}
