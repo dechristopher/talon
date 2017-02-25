@@ -699,9 +699,6 @@ function startLoop() {
 	server.listen(cfg.port, function () {
 		log(TP + 'talonPanel μSrvc started.', 'web');
 		log(TP + 'Express server started.', 'web');
-        /* db.select(1, function () {
-            console.log('[SYS] Connected to database');
-        }); */
 	});
 }
 
