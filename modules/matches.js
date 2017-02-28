@@ -15,6 +15,7 @@ const cfg = require('./cfg');
 // custom libraries
 const log = require('./log');
 const tutil = require('./util');
+const slack = require('./slack');
 const msg = require('./msg')(cfg.dev, cfg.backend, cfg.auth, 'matches');
 
 // logging constants
@@ -22,6 +23,8 @@ const M = '[' + c.blue('MTCH') + '] ';
 
 // matches export object
 let m = {};
+
+slack.postMatch('PUG', 19, '192.168.1.1:27015', 'bSiQpooxifbW', 'Js9aKuQ', 'Cache', 'team_drop', 'team_nowis', ['drop', 'otters', 'sinaj', 'bamsta', 'no0ne', 'skatt', 'shmee', 'e0r', 'max', 'nowis']);
 
 // CLASS VARIABLES AND METHODS
 
