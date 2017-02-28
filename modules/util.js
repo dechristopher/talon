@@ -126,4 +126,24 @@ util.xptot = function (xp) {
 	}
 };
 
+util.genPayload = function (type, id, ip, pass, hash, map, t1n, t2n, players) {
+	let formattedPlayers = util.formatPlayers(t1n, t2n, players);
+	let payload = "{\"channel\": \"#kiwi-matches\", \"username\": \"kiwi-match\", \"text\": \"[Match #" + id + " (" + hash + ") (" + type + ") (11:44 AM)] : <https://kiir.us/match/" + id + "|Match page>\", \"attachments\":[" +
+      "{" +
+         "\"fallback\":\"password " + pass + "; connect " + ip + ";\"," +
+         "\"pretext\":\"password " + pass + "; connect " + ip + ";\"," +
+         "\"color\":\"#33CC00\"," +
+         "\"fields\":[" +
+            "{" +
+               "\"title\":\"" + t1n + " vs " + t2n + "  -->  " + map + "\"," +
+               "\"value\":\"" + formattedPlayers + "\"," +
+               "\"short\":false" +
+            "}" +
+         "]" +
+      "}" +
+   "]}";
+
+   return payload;
+};
+
 module.exports = util;
