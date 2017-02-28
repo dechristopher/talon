@@ -5,7 +5,6 @@ Created by Andrew DeChristopher <drew@kiir.us> on 2/27/2017.
 // https://hooks.slack.com/services/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
 
 // core libraries
-const util = require('util');
 const c = require('chalk');
 const r = require('requestify');
 
@@ -24,18 +23,18 @@ log(SLACK + 'PRETTY!!!!');
 let slack = {};
 
 slack.postMatch = function (type, id, ip, pass, hash, map, t1n, t2n, players) {
-	payload = tutil.genPayload(type, id, ip, pass, hash, map, t1n, t2n, players);
+	let payload = tutil.genPayload(type, id, ip, pass, hash, map, t1n, t2n, players);
 	log(SLACK + payload);
-    r.post(cfg.matchesWebhook, {
-        payload: payload
-    }, {dataType: 'form-url-encoded'})
-    .then(function(response) {
+	r.post(cfg.matchesWebhook, {
+		payload: payload
+	}, {dataType: 'form-url-encoded'})
+    .then(function (response) {
         // Get the response body (JSON parsed or jQuery object for XMLs)
         // response.getBody();
         //
         // // Get the raw response body
         // response.body;
-    });
+});
 };
 
 module.exports = slack;
