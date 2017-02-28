@@ -27,7 +27,7 @@ module.exports = function (dev, backend, auth, cl) {
 		let cli = redis.createClient(6379, m.backend);
 		cli.on('error', function (error) {
 			console.log('[', caller, ']', error);
-			//m.reply(to, msg);
+			// m.reply(to, msg);
 		});
 		if (!m.dev) {
 			cli.auth(m.auth);
@@ -41,7 +41,7 @@ module.exports = function (dev, backend, auth, cl) {
 		let cli = redis.createClient(6379, m.backend);
 		cli.on('error', function (error) {
 			console.log('[', caller, ']', error);
-			//m.bcast(msg, pList);
+			// m.bcast(msg, pList);
 		});
 		if (!m.dev) {
 			cli.auth(m.auth);
@@ -58,7 +58,7 @@ module.exports = function (dev, backend, auth, cl) {
 		let cli = redis.createClient(6379, m.backend);
 		cli.on('error', function (error) {
 			console.log('[', caller, ']', error);
-			//m.bcastex(msg, ex, pList);
+			// m.bcastex(msg, ex, pList);
 		});
 		if (!m.dev) {
 			cli.auth(m.auth);
