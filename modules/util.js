@@ -127,37 +127,50 @@ util.xptot = function (xp) {
 };
 
 util.formatPlayers = function (t1n, t2n, players) {
-	let formatted = t1n + ' ::  [ ';
+	let formatted = '*' + t1n + '* ::  _[_ ';
 
 	for (let i = 0; i < 5; i++) {
 		formatted += ' <https://kiir.us/username/' + players[i] + '|' + players[i] + '> ';
 	}
 
-	formatted += ' ]\n' + t2n + ' :: [ ';
+	formatted += ' _]_\n*' + t2n + '* :: _[_ ';
 
 	for (let j = 5; j < 10; j++) {
 		formatted += ' <https://kiir.us/username/' + players[j] + '|' + players[j] + '> ';
 	}
 
-	formatted += ' ]';
+	formatted += ' _]_';
 	return formatted;
 };
 
 util.genPayload = function (type, id, ip, pass, hash, map, t1n, t2n, players) {
 	let formattedPlayers = util.formatPlayers(t1n, t2n, players);
-	let payload = '{"channel": "#kiwi-matches", "username": "kiwi-match", "text": "[Match #' + id + ' (' + hash + ') (' + type + ') (11:44 AM)] : <https://kiir.us/match/' + id + '|Match page>", "attachments":[' +
-      '{' +
-         '"fallback":"password ' + pass + '; connect ' + ip + ';",' +
-         '"pretext":"password ' + pass + '; connect ' + ip + ';",' +
-         '"color":"#33CC00",' +
-         '"fields":[' +
-            '{' +
-               '"title":"' + t1n + ' vs ' + t2n + '  -->  ' + map + '",' +
-               '"value":"' + formattedPlayers + '",' +
-               '"short":false' +
-            '}' +
-         ']' +
-      '}' +
+	let payload = '{"channel": "#kiwi-matches", "username": "kiwi-match", "mrkdwn": true, "text": "[  Match #' + id + '  (_' + hash + '_)  (' + type + ')  (11:44 AM)  ] : <https://kiir.us/match/' + id + '|Match page>", "attachments":[' +
+		'{' +
+		   '"fallback":"",' +
+		   '"pretext":"",' +
+		   '"color":"#33CCFF",' +
+		   '"fields":[' +
+			  '{' +
+				  '"title":"password ' + pass + '; connect ' + ip + ';",' +
+				  '"value":"",' +
+				  '"short":false' +
+			  '}' +
+		   ']' +
+		'},' +
+		'{' +
+			'"fallback":"",' +
+			'"pretext":"",' +
+			'"color":"#33CC00",' +
+			'"fields":[' +
+				'{' +
+				   '"title":"' + t1n + ' vs ' + t2n + '  -->  ' + map + '",' +
+				   '"value":"' + formattedPlayers + '",' +
+				   '"short":false' +
+				'}' +
+			'],' +
+			'"mrkdwn_in": ["fields"]' +
+		'}' +
    ']}';
 
 	return payload;
