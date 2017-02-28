@@ -68,6 +68,9 @@ cfg.auth = process.env.TALON_REDIS_PW;
 // Unused datadog key, just to make sure it exists
 cfg.datadog = process.env.DATADOG_API_KEY;
 
+// Slack webhook URL for kiwi-matches channel
+cfg.matchesWebhook = process.env.SLACK_MATCHES_WEBHOOK;
+
 // Server lists with region-based indexes
 cfg.servers = [
 	'conf/dev-servers.txt',
