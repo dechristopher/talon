@@ -126,6 +126,23 @@ util.xptot = function (xp) {
 	}
 };
 
+util.formatPlayers = function(t1n, t2n, players) {
+	let formatted = t1n + ' ::  [ ';
+
+	for (let i = 0; i < 5; i++) {
+		formatted += ' <https://kiir.us/username/' + players[i] + '|' + players[i] + '> ';
+	}
+
+	formatted += ' ]\n' + t2n + ' :: [ ';
+
+	for (let j = 5; j < 10; j++) {
+		formatted += ' <https://kiir.us/username/' + players[j] + '|' + players[j] + '> ';
+	}
+
+	formatted += ' ]';
+	return formatted;
+};
+
 util.genPayload = function (type, id, ip, pass, hash, map, t1n, t2n, players) {
 	let formattedPlayers = util.formatPlayers(t1n, t2n, players);
 	let payload = "{\"channel\": \"#kiwi-matches\", \"username\": \"kiwi-match\", \"text\": \"[Match #" + id + " (" + hash + ") (" + type + ") (11:44 AM)] : <https://kiir.us/match/" + id + "|Match page>\", \"attachments\":[" +
