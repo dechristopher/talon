@@ -34,7 +34,7 @@ slack.postMatch = function (type, id, ip, pass, hash, map, t1n, t2n, players) {
         //
         // // Get the raw response body
         // response.body;
-});
+	});
 };
 
 module.exports = slack;
