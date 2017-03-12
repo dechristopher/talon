@@ -2,7 +2,7 @@
 Created by Andrew DeChristopher <drew@kiir.us> on 1/25/2017.
  */
 
-let match = (mid, mip, pw, t1n, t2n, pl) => {
+let match = (mid, mip, pw, mhash, map, t1n, t2n, pl) => {
     // ID of the match
 	let matchid = Object.undefined;
 	if (mid !== '') {
@@ -19,6 +19,18 @@ let match = (mid, mip, pw, t1n, t2n, pl) => {
 	let matchpw = Object.undefined;
 	if (pw !== '') {
 		matchpw = pw;
+	}
+
+	// Hash of match
+	let mmatchhash = Object.undefined;
+	if (mhash !== '') {
+		matchhash = mhash;
+	}
+
+	// Map of match
+	let mmatchmap = Object.undefined;
+	if (map !== '') {
+		matchmap = map;
 	}
 
     // Name of team one
@@ -39,8 +51,6 @@ let match = (mid, mip, pw, t1n, t2n, pl) => {
 		players = pl;
 	}
 
-	// console.log('generated match object: ', matchid, matchip, matchpw, teamOneName, teamTwoName, players);
-
     // Return anonymous functions as "internal methods"
 	return {
 		getMatchID: () => {
@@ -51,6 +61,12 @@ let match = (mid, mip, pw, t1n, t2n, pl) => {
 		},
 		getMatchPassword: () => {
 			return matchpw;
+		},
+		getMatchHash: () => {
+			return matchhash;
+		},
+		getMatchMap: () => {
+			return matchmap;
 		},
 		getTeamOneName: () => {
 			return teamOneName;
