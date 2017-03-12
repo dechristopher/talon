@@ -24,7 +24,7 @@ const M = '[' + c.blue('MTCH') + '] ';
 // matches export object
 let m = {};
 
-slack.postMatch('PUG', 19, '192.168.1.1:27015', 'bSiQpooxifbW', 'Js9aKuQ', 'Cache', 'team_drop', 'team_nowis', ['drop', 'otters', 'sinaj', 'bamsta', 'no0ne', 'skatt', 'shmee', 'e0r', 'max', 'nowis']);
+// slack.postMatch('PUG', 19, '192.168.1.1:27015', 'bSiQpooxifbW', 'Js9aKuQ', 'Cache', 'team_drop', 'team_nowis', ['drop', 'otters', 'sinaj', 'bamsta', 'no0ne', 'skatt', 'shmee', 'e0r', 'max', 'nowis']);
 
 // CLASS VARIABLES AND METHODS
 
@@ -103,6 +103,7 @@ m.add = function (ipp, match) {
 	if (!m.active.has(ipp)) {
 		m.active.set(ipp, match);
 		log(M + '[START] > ' + ipp, 'match');
+		slack.postMatch("PUG", match.getMatchID(), match.getMatchIP(), match.getMatchPassword(), match.getMatchHash(), match.getMatchMap(), match.getTeamOneName(), match.getTeamTwoName(), match.getPlayers());
 
 		if (cfg.debug) {
 			log('matches.js -> m.add(' + ipp + ') -> true', 'debug');
