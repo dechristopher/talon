@@ -24,7 +24,7 @@ let slack = {};
 
 slack.postMatch = function (type, id, ip, pass, hash, map, t1n, t2n, players) {
 	let payload = tutil.genPayload(type, id, ip, pass, hash, map, t1n, t2n, players);
-	log(SLACK + payload);
+	//log(SLACK + payload);
 	r.post(cfg.matchesWebhook, {
 		payload: payload
 	}, {dataType: 'form-url-encoded'})
