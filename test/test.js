@@ -24,7 +24,7 @@ git.getLastCommit(function (err, commit) {
 
 let rcon;
 let testPlayer = user('testuser', 'STEAM_0:0:TESTING', 'TESTCHANNEL');
-let testMatch = match(1337, '8.8.8.8:27015', 'jR0mW3', 'team_drop', 'team_sparks', [testPlayer, testPlayer, testPlayer, testPlayer]);
+let testMatch = match(1337, '8.8.8.8:27015', 'jR0mW3', 'Hw0va9w', 'de_cache', 'team_drop', 'team_sparks', [testPlayer, testPlayer, testPlayer, testPlayer]);
 
 // user.js test cases - NEEDS CONVERSION
 exports['Test user generator factory'] = function (test) {
@@ -114,6 +114,16 @@ exports.match = testCase({
 	testGetMatchPassword: function (test) {
     		test.expect(1);
     		test.strictEqual(testMatch.getMatchPassword(), 'jR0mW3', 'Tests that match id is returned properly.');
+    		test.done();
+	},
+	testGetMatchHash: function (test) {
+    		test.expect(1);
+    		test.strictEqual(testMatch.getMatchHash(), 'Hw0va9w', 'Tests that match id is returned properly.');
+    		test.done();
+	},
+	testGetMatchMap: function (test) {
+    		test.expect(1);
+    		test.strictEqual(testMatch.getMatchMap(), 'de_cache', 'Tests that match id is returned properly.');
     		test.done();
 	},
 	testGetTeamOneName: function (test) {
