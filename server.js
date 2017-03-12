@@ -212,24 +212,28 @@ let parseQueue = cron.job('*/10 * * * * *', function () {
 
             // Send the API request
 			requestify.get(apiCall).then(function (response) {
-				let pass = response.getBody();
+				let resp = response.getBody();
                 // If the call succeeds
-				if (pass === 'failed') {
+				if (resp === 'failed') {
 					// Call 911
 					log(Q + '[POP] [S] FAILED >> ' + server, 'mm');
 				} else {
+					resp = resp.split('~');
+					let mID = resp[0];
+					let pass = resp[1];
+					let mMap = resp[2];
 					// Log everything
 					let now = datetime.create().format('m-d-y H:M:S');
 					log(Q + '[POP] Match created @ ' + now, 'mm');
 					log(Q + '[POP] [S] >> ' + server + ' : ' + pass, 'mm');
 					// Generate match object and add to match tracking system
-					let mID = tutil.rString(7);
-					let genMatch = match(mID, server, pass, call.t1n, call.t2n, selected);
+					let mHash = tutil.rString(7);
+					let genMatch = match(mID, server, pass, mHash, mMap, call.t1n, call.t2n, selected);
 					matches.add(server, genMatch);
                     // Pop the queue for all selected players
 					for (let k = 0; k < selected.length; k++) {
 						log(Q + '[POP] [P] >> ' + selected[k].channel + ' - ' + selected[k].sid + ' - ' + selected[k].nm, 'mm');
-						reply(selected[k].channel, 'p~' + server + '~' + pass + '~' + mID);
+						reply(selected[k].channel, 'p~' + server + '~' + pass + '~' + mHash);
 					}
 				}
 			});
