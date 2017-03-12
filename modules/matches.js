@@ -103,7 +103,7 @@ m.add = function (ipp, match) {
 	if (!m.active.has(ipp)) {
 		m.active.set(ipp, match);
 		log(M + '[START] > ' + ipp, 'match');
-		slack.postMatch("PUG", match.getMatchID(), match.getMatchIP(), match.getMatchPassword(), match.getMatchHash(), match.getMatchMap(), match.getTeamOneName(), match.getTeamTwoName(), match.getPlayers());
+		slack.postMatch('PUG', match.getMatchID(), match.getMatchIP(), match.getMatchPassword(), match.getMatchHash(), match.getMatchMap(), match.getTeamOneName(), match.getTeamTwoName(), match.getPlayers());
 
 		if (cfg.debug) {
 			log('matches.js -> m.add(' + ipp + ') -> true', 'debug');
