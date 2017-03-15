@@ -16,8 +16,6 @@ const tutil = require('./util');
 // logging constants
 const SLACK = '[' + c.yellow('S') + c.green('L') + c.cyan('A') + c.magenta('C') + c.red('K') + ']';
 
-log(SLACK + 'PRETTY!!!!');
-
 let slack = {};
 
 slack.postMatch = function (type, id, ip, pass, hash, map, t1n, t2n, players) {
