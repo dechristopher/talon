@@ -2,8 +2,6 @@
 Created by Andrew DeChristopher <drew@kiir.us> on 2/27/2017.
  */
 
-// https://hooks.slack.com/services/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
-
 // core libraries
 const c = require('chalk');
 const r = require('requestify');
