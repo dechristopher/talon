@@ -4,33 +4,33 @@
 # talon
 This repository contains the talon backend (server.js) and a few supporting services (modules/ & demo/) outlined below to facilitate the smooth operation of the KIWI PUG Platform. Unit testing coming soon to a theater near you!
 
-####Production####
+#### Production
 Run: `git clone (thisrepo) talon && cd talon && npm install && npm start`
 
-####Development####
+#### Development
 Run: `git clone (thisrepo) talon && cd talon && npm install && npm run dev`
 
-####Demo CDN manager (server)####
+#### Demo CDN manager (server)
 Run: `git clone (thisrepo) talon && cd talon && npm install && npm run demo-server`
 
-####Demo Client (client)####
+#### Demo Client (client)
 Run: `git clone (thisrepo) talon && cd talon && npm install && npm run demo-client-(region)`
 
 ---
 
-####server.js####
+#### server.js
 TALON, the backend of the KIWI PUG Platform, manages client-server communication, processes heartbeats, manages the queues, and
 facilitates messaging, friends, and lobbies.
 
 ---
 
-####demo/demo-client.js####
+#### demo/demo-client.js
 Checks the CS:GO game server directories for demo files and uploads them to the demo CDN if they stop growing in file size.  
 
-####demo/demo-server.js####
+#### demo/demo-server.js
 Runs on the demo CDN and accepts all file transfers from the demo-client.js instances on the game servers.
 
 ---
 
-####modules/mon.js [DEPRECATED]####
+#### modules/mon.js [DEPRECATED]
 A lightweight node app that can be used from anywhere to monitor basic backend throughput in messages per second and minute.
