@@ -63,27 +63,27 @@ const LOGOUT = '[' + c.magenta('LOGOUT') + '] ';
 
 // Initialize datadog metrics
 metrics.init({
-	host: 'talon',
-	prefix: 'talon.'
+    host: 'talon',
+    prefix: 'talon.'
 });
 
 // Populate server pool and connect to REDIS
 if (process.argv.length > 2) {
-	if (process.argv[2] === 'dev') {
-		log(TALN + 'D E V E L O P M E N T    M O D E');
-		cfg.region = 0;
-		flist.fill(cfg.servers[cfg.region], d.servers, d.totS, 'Servers', ERROR_NO_SERV_FILE);
-		cfg.backend = cfg.backendDev;
-		cfg.dev = true;
-		cfg.firewallEnabled = false;
-	} else {
-		flist.fill(cfg.servers[cfg.region], d.servers, d.totS, 'Servers', ERROR_NO_SERV_FILE);
-	}
-	if (process.argv[2] === 'nofw') {
-		cfg.firewallEnabled = false;
-	}
+    if (process.argv[2] === 'dev') {
+        log(TALN + 'D E V E L O P M E N T    M O D E');
+        cfg.region = 0;
+        flist.fill(cfg.servers[cfg.region], d.servers, d.totS, 'Servers', ERROR_NO_SERV_FILE);
+        cfg.backend = cfg.backendDev;
+        cfg.dev = true;
+        cfg.firewallEnabled = false;
+    } else {
+        flist.fill(cfg.servers[cfg.region], d.servers, d.totS, 'Servers', ERROR_NO_SERV_FILE);
+    }
+    if (process.argv[2] === 'nofw') {
+        cfg.firewallEnabled = false;
+    }
 } else {
-	flist.fill(cfg.servers[cfg.region], d.servers, d.totS, 'Servers', ERROR_NO_SERV_FILE);
+    flist.fill(cfg.servers[cfg.region], d.servers, d.totS, 'Servers', ERROR_NO_SERV_FILE);
 }
 
 // Update total servers number
