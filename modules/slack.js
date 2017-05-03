@@ -20,7 +20,7 @@ let slack = {};
 
 slack.postMatch = function (type, id, ip, pass, hash, map, t1n, t2n, players) {
 	let payload = tutil.genPayload(type, id, ip, pass, hash, map, t1n, t2n, players);
-	//log(SLACK + payload);
+	// log(SLACK + payload);
 	r.post(cfg.matchesWebhook, {
 		payload: payload
 	}, {dataType: 'form-url-encoded'})
@@ -30,8 +30,8 @@ slack.postMatch = function (type, id, ip, pass, hash, map, t1n, t2n, players) {
         //
         // // Get the raw response body
         // response.body;
-        log(SLACK + 'Posted match to slack...');
-	});
+	log(SLACK + 'Posted match to slack...');
+});
 };
 
 module.exports = slack;
