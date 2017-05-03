@@ -154,33 +154,34 @@ util.formatPlayers = function (t1n, t2n, players) {
 
 util.genPayload = function (type, id, ip, pass, hash, map, t1n, t2n, players) {
 	let formattedPlayers = util.formatPlayers(t1n, t2n, players);
-	let payload = '{"channel": "#kiwi-matches", "username": "kiwi-match", "mrkdwn": true, "text": "[  Match #' + id + '  (_' + hash + '_)  (' + type + ')  (11:44 AM)  ] : <https://kiir.us/match/' + id + '|Match page>", "attachments":[' +
-		'{' +
-		   '"fallback":"",' +
-		   '"pretext":"",' +
-		   '"color":"#33CCFF",' +
-		   '"fields":[' +
-			  '{' +
-				  '"title":"password ' + pass + '; connect ' + ip + ';",' +
-				  '"value":"",' +
-				  '"short":false' +
-			  '}' +
-		   ']' +
-		'},' +
-		'{' +
-			'"fallback":"",' +
-			'"pretext":"",' +
-			'"color":"#33CC00",' +
-			'"fields":[' +
-				'{' +
-				   '"title":"' + t1n + ' vs ' + t2n + '  -->  ' + map + '",' +
-				   '"value":"' + formattedPlayers + '",' +
-				   '"short":false' +
-				'}' +
-			'],' +
-			'"mrkdwn_in": ["fields"]' +
-		'}' +
-   ']}';
+	let time = datetime.create().format('m-d-y H:M');
+	let payload = '{"channel": "#kiwi-matches", "username": "kiwi-match", "mrkdwn": true, "text": "[  Match #' + id + '  (' + hash + ')  (' + type + ')  (' + time + ')  ] : <https://kiir.us/match/' + id + '|Match page>", "attachments":[' +
+        '{' +
+        '"fallback":"",' +
+        '"pretext":"",' +
+        '"color":"#33CCFF",' +
+        '"fields":[' +
+        '{' +
+        '"title":"password ' + pass + '; connect ' + ip + ';",' +
+        '"value":"",' +
+        '"short":false' +
+        '}' +
+        ']' +
+        '},' +
+        '{' +
+        '"fallback":"",' +
+        '"pretext":"",' +
+        '"color":"#33CC00",' +
+        '"fields":[' +
+        '{' +
+        '"title":"' + t1n + ' vs ' + t2n + '  -->  ' + map + '",' +
+        '"value":"' + formattedPlayers + '",' +
+        '"short":false' +
+        '}' +
+        '],' +
+        '"mrkdwn_in": ["fields"]' +
+        '}' +
+        ']}';
 
 	return payload;
 };
