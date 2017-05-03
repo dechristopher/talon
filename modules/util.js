@@ -16,146 +16,146 @@ const TALN = '[' + c.magenta('TALN') + '] ';
 // Export object
 let util = {};
 
-util.ascii = function () {
-	log(TALN);
-	log(TALN + c.red(' ▄▄▄█████▓ ') + c.yellow('   ▄▄▄       ') + c.green('   ██▓     ') + c.cyan('   ▒█████   ') + c.blue('   ███▄    █   ') + c.black('       ') + c.magenta('   ▄▄▄██▀▀▀ ') + c.white('    ██████ '));
-	log(TALN + c.red(' ▓  ██▒ ▓▒ ') + c.yellow('  ▒████▄     ') + c.green('  ▓██▒     ') + c.cyan('  ▒██▒  ██▒ ') + c.blue('   ██ ▀█   █   ') + c.black('       ') + c.magenta('     ▒██    ') + c.white('  ▒██    ▒ '));
-	log(TALN + c.red(' ▒ ▓██░ ▒░ ') + c.yellow('  ▒██  ▀█▄   ') + c.green('  ▒██░     ') + c.cyan('  ▒██░  ██▒ ') + c.blue('  ▓██  ▀█ ██▒  ') + c.black('       ') + c.magenta('     ░██    ') + c.white('  ░ ▓██▄   '));
-	log(TALN + c.red(' ░ ▓██▓ ░  ') + c.yellow('  ░██▄▄▄▄██  ') + c.green('  ▒██░     ') + c.cyan('  ▒██   ██░ ') + c.blue('  ▓██▒  ▐▌██▒  ') + c.black('       ') + c.magenta('  ▓██▄██▓   ') + c.white('    ▒   ██▒'));
-	log(TALN + c.red('   ▒██▒ ░  ') + c.yellow('   ▓█   ▓██▒ ') + c.green('  ░██████▒ ') + c.cyan('  ░ ████▓▒░ ') + c.blue('  ▒██░   ▓██░  ') + c.black('  ██▓  ') + c.magenta('   ▓███▒    ') + c.white('  ▒██████▒▒'));
-	log(TALN + c.red('   ▒ ░░    ') + c.yellow('   ▒▒   ▓▒█░ ') + c.green('  ░ ▒░▓  ░ ') + c.cyan('  ░ ▒░▒░▒░  ') + c.blue('  ░ ▒░   ▒ ▒   ') + c.black('  ▒▓▒  ') + c.magenta('   ▒▓▒▒░    ') + c.white('  ▒ ▒▓▒ ▒ ░'));
-	log(TALN + c.red('     ░     ') + c.yellow('    ▒   ▒▒ ░ ') + c.green('  ░ ░ ▒  ░ ') + c.cyan('    ░ ▒ ▒░  ') + c.blue('  ░ ░░   ░ ▒░  ') + c.black('  ░▒   ') + c.magenta('   ▒ ░▒░    ') + c.white('  ░ ░▒  ░ ░'));
-	log(TALN + c.red('   ░       ') + c.yellow('    ░   ▒    ') + c.green('    ░ ░    ') + c.cyan('  ░ ░ ░ ▒   ') + c.blue('     ░   ░ ░   ') + c.black('  ░    ') + c.magenta('   ░ ░ ░    ') + c.white('  ░  ░  ░  '));
-	log(TALN + c.red('           ') + c.yellow('        ░  ░ ') + c.green('      ░  ░ ') + c.cyan('      ░ ░   ') + c.blue('           ░   ') + c.black('   ░   ') + c.magenta('   ░   ░    ') + c.white('        ░  '));
-	log(TALN + c.red('           ') + c.yellow('             ') + c.green('           ') + c.cyan('            ') + c.blue('               ') + c.black('   ░   ') + c.magenta('            ') + c.white('           '));
-	log(TALN);
+util.ascii = function() {
+    log(TALN);
+    log(TALN + c.red(' ▄▄▄█████▓ ') + c.yellow('   ▄▄▄       ') + c.green('   ██▓     ') + c.cyan('   ▒█████   ') + c.blue('   ███▄    █   ') + c.black('       ') + c.magenta('   ▄▄▄██▀▀▀ ') + c.white('    ██████ '));
+    log(TALN + c.red(' ▓  ██▒ ▓▒ ') + c.yellow('  ▒████▄     ') + c.green('  ▓██▒     ') + c.cyan('  ▒██▒  ██▒ ') + c.blue('   ██ ▀█   █   ') + c.black('       ') + c.magenta('     ▒██    ') + c.white('  ▒██    ▒ '));
+    log(TALN + c.red(' ▒ ▓██░ ▒░ ') + c.yellow('  ▒██  ▀█▄   ') + c.green('  ▒██░     ') + c.cyan('  ▒██░  ██▒ ') + c.blue('  ▓██  ▀█ ██▒  ') + c.black('       ') + c.magenta('     ░██    ') + c.white('  ░ ▓██▄   '));
+    log(TALN + c.red(' ░ ▓██▓ ░  ') + c.yellow('  ░██▄▄▄▄██  ') + c.green('  ▒██░     ') + c.cyan('  ▒██   ██░ ') + c.blue('  ▓██▒  ▐▌██▒  ') + c.black('       ') + c.magenta('  ▓██▄██▓   ') + c.white('    ▒   ██▒'));
+    log(TALN + c.red('   ▒██▒ ░  ') + c.yellow('   ▓█   ▓██▒ ') + c.green('  ░██████▒ ') + c.cyan('  ░ ████▓▒░ ') + c.blue('  ▒██░   ▓██░  ') + c.black('  ██▓  ') + c.magenta('   ▓███▒    ') + c.white('  ▒██████▒▒'));
+    log(TALN + c.red('   ▒ ░░    ') + c.yellow('   ▒▒   ▓▒█░ ') + c.green('  ░ ▒░▓  ░ ') + c.cyan('  ░ ▒░▒░▒░  ') + c.blue('  ░ ▒░   ▒ ▒   ') + c.black('  ▒▓▒  ') + c.magenta('   ▒▓▒▒░    ') + c.white('  ▒ ▒▓▒ ▒ ░'));
+    log(TALN + c.red('     ░     ') + c.yellow('    ▒   ▒▒ ░ ') + c.green('  ░ ░ ▒  ░ ') + c.cyan('    ░ ▒ ▒░  ') + c.blue('  ░ ░░   ░ ▒░  ') + c.black('  ░▒   ') + c.magenta('   ▒ ░▒░    ') + c.white('  ░ ░▒  ░ ░'));
+    log(TALN + c.red('   ░       ') + c.yellow('    ░   ▒    ') + c.green('    ░ ░    ') + c.cyan('  ░ ░ ░ ▒   ') + c.blue('     ░   ░ ░   ') + c.black('  ░    ') + c.magenta('   ░ ░ ░    ') + c.white('  ░  ░  ░  '));
+    log(TALN + c.red('           ') + c.yellow('        ░  ░ ') + c.green('      ░  ░ ') + c.cyan('      ░ ░   ') + c.blue('           ░   ') + c.black('   ░   ') + c.magenta('   ░   ░    ') + c.white('        ░  '));
+    log(TALN + c.red('           ') + c.yellow('             ') + c.green('           ') + c.cyan('            ') + c.blue('               ') + c.black('   ░   ') + c.magenta('            ') + c.white('           '));
+    log(TALN);
 };
 
 // Generate a random integer within
 // an interval inclusively
-util.random = function (min, max) {
-	return Math.floor(Math.random() * (max - min + 1)) + min;
+util.random = function(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-util.rString = function (size) {
-	return rs.generate(size);
+util.rString = function(size) {
+    return rs.generate(size);
 };
 
 // Does absolutely nothing
-util.devnull = function (data) {
-	return data;
+util.devnull = function(data) {
+    return data;
 };
 
 // Wrapper for indexOf
 // Checks if a string A contains an
 // instance of string B
-util.contains = function (a, b) {
-	return str(a).contains(b);
+util.contains = function(a, b) {
+    return str(a).contains(b);
 };
 
-util.stringToBool = function (string) {
-	switch (string) {
-		case 'true':
-		case 'yes':
-		case '1':
-			return true;
-		case 'false':
-		case 'no':
-		case '0':
-		case null:
-			return false;
-		default:
-			return Boolean(string);
-	}
+util.stringToBool = function(string) {
+    switch (string) {
+        case 'true':
+        case 'yes':
+        case '1':
+            return true;
+        case 'false':
+        case 'no':
+        case '0':
+        case null:
+            return false;
+        default:
+            return Boolean(string);
+    }
 };
 
 // return steamid64 representation of normal steamid
-util.sidTo64 = function (steamid) {
-	return sidc.convertTo64(steamid);
+util.sidTo64 = function(steamid) {
+    return sidc.convertTo64(steamid);
 };
 
 // Returns an asterisk if true
-util.boolStar = function (bool) {
-	return (bool ? '*' : '');
+util.boolStar = function(bool) {
+    return (bool ? '*' : '');
 };
 
-util.rank = function (xp) {
-	if (xp < 27) {
-		return '♟ Pawn';
-	} else if (xp >= 27 && xp < 45) {
-		return '♙ Pawn+';
-	} else if (xp >= 45 && xp < 70) {
-		return '♞ Knight';
-	} else if (xp >= 70 && xp < 105) {
-		return '♘ Knight+';
-	} else if (xp >= 105 && xp < 136) {
-		return '♝ Bishop';
-	} else if (xp >= 136 && xp < 180) {
-		return '♗ Bishop+';
-	} else if (xp >= 180 && xp < 221) {
-		return '♜ Rook';
-	} else if (xp >= 221 && xp < 270) {
-		return '♖ Rook+';
-	} else if (xp >= 270 && xp < 330) {
-		return '♛ Queen';
-	} else if (xp >= 330 && xp < 420) {
-	return '♕ Queen+';
-} else if (xp >= 420 && xp < 461) {
-	return '♔ King';
-} else if (xp >= 461) {
-	return 'Ⓛ Legend';
-}
+util.rank = function(xp) {
+    if (xp < 27) {
+        return '♟ Pawn';
+    } else if (xp >= 27 && xp < 45) {
+        return '♙ Pawn+';
+    } else if (xp >= 45 && xp < 70) {
+        return '♞ Knight';
+    } else if (xp >= 70 && xp < 105) {
+        return '♘ Knight+';
+    } else if (xp >= 105 && xp < 136) {
+        return '♝ Bishop';
+    } else if (xp >= 136 && xp < 180) {
+        return '♗ Bishop+';
+    } else if (xp >= 180 && xp < 221) {
+        return '♜ Rook';
+    } else if (xp >= 221 && xp < 270) {
+        return '♖ Rook+';
+    } else if (xp >= 270 && xp < 330) {
+        return '♛ Queen';
+    } else if (xp >= 330 && xp < 420) {
+        return '♕ Queen+';
+    } else if (xp >= 420 && xp < 461) {
+        return '♔ King';
+    } else if (xp >= 461) {
+        return 'Ⓛ Legend';
+    }
 };
 
-util.xptot = function (xp) {
-	if (xp < 27) {
-		return xp + ' / 27';
-	} else if (xp >= 27 && xp < 45) {
-		return xp + ' / 45';
-	} else if (xp >= 45 && xp < 70) {
-		return xp + ' / 70';
-	} else if (xp >= 70 && xp < 105) {
-		return xp + ' / 205';
-	} else if (xp >= 105 && xp < 136) {
-		return xp + ' / 136';
-	} else if (xp >= 136 && xp < 180) {
-		return xp + ' / 180';
-	} else if (xp >= 180 && xp < 221) {
-		return xp + ' / 221';
-	} else if (xp >= 221 && xp < 270) {
-		return xp + ' / 270';
-	} else if (xp >= 270 && xp < 330) {
-		return xp + ' / 330';
-	} else if (xp >= 330 && xp < 420) {
-	return xp + ' / 420';
-} else if (xp >= 420 && xp < 461) {
-	return xp + ' / 460';
-} else if (xp >= 461) {
-	return xp;
-}
+util.xptot = function(xp) {
+    if (xp < 27) {
+        return xp + ' / 27';
+    } else if (xp >= 27 && xp < 45) {
+        return xp + ' / 45';
+    } else if (xp >= 45 && xp < 70) {
+        return xp + ' / 70';
+    } else if (xp >= 70 && xp < 105) {
+        return xp + ' / 205';
+    } else if (xp >= 105 && xp < 136) {
+        return xp + ' / 136';
+    } else if (xp >= 136 && xp < 180) {
+        return xp + ' / 180';
+    } else if (xp >= 180 && xp < 221) {
+        return xp + ' / 221';
+    } else if (xp >= 221 && xp < 270) {
+        return xp + ' / 270';
+    } else if (xp >= 270 && xp < 330) {
+        return xp + ' / 330';
+    } else if (xp >= 330 && xp < 420) {
+        return xp + ' / 420';
+    } else if (xp >= 420 && xp < 461) {
+        return xp + ' / 460';
+    } else if (xp >= 461) {
+        return xp;
+    }
 };
 
-util.formatPlayers = function (t1n, t2n, players) {
-	let formatted = '*' + t1n + '* ::  _[_ ';
+util.formatPlayers = function(t1n, t2n, players) {
+    let formatted = '*' + t1n + '* ::  _[_ ';
 
-	for (let i = 0; i < 5; i++) {
-		formatted += ' <https://kiir.us/username/' + players[i] + '|' + players[i] + '> ';
-	}
+    for (let i = 0; i < 5; i++) {
+        formatted += ' <https://kiir.us/username/' + players[i] + '|' + players[i] + '> ';
+    }
 
-	formatted += ' _]_\n*' + t2n + '* :: _[_ ';
+    formatted += ' _]_\n*' + t2n + '* :: _[_ ';
 
-	for (let j = 5; j < 10; j++) {
-		formatted += ' <https://kiir.us/username/' + players[j] + '|' + players[j] + '> ';
-	}
+    for (let j = 5; j < 10; j++) {
+        formatted += ' <https://kiir.us/username/' + players[j] + '|' + players[j] + '> ';
+    }
 
-	formatted += ' _]_';
-	return formatted;
+    formatted += ' _]_';
+    return formatted;
 };
 
-util.genPayload = function (type, id, ip, pass, hash, map, t1n, t2n, players) {
-	let formattedPlayers = util.formatPlayers(t1n, t2n, players);
-	let time = datetime.create().format('m-d-y H:M');
-	let payload = '{"channel": "#kiwi-matches", "username": "kiwi-match", "mrkdwn": true, "text": "[  Match #' + id + '  (' + hash + ')  (' + type + ')  (' + time + ')  ] : <https://kiir.us/match/' + id + '|Match page>", "attachments":[' +
+util.genPayload = function(type, id, ip, pass, hash, map, t1n, t2n, players) {
+    let formattedPlayers = util.formatPlayers(t1n, t2n, players);
+    let time = datetime.create().format('m-d-y H:M');
+    let payload = '{"channel": "#kiwi-matches", "username": "kiwi-match", "mrkdwn": true, "text": "[  Match #' + id + '  (' + hash + ')  (' + type + ')  (' + time + ')  ] : <https://kiir.us/match/' + id + '|Match page>", "attachments":[' +
         '{' +
         '"fallback":"",' +
         '"pretext":"",' +
@@ -183,7 +183,7 @@ util.genPayload = function (type, id, ip, pass, hash, map, t1n, t2n, players) {
         '}' +
         ']}';
 
-	return payload;
+    return payload;
 };
 
 module.exports = util;
