@@ -55,9 +55,17 @@ util.contains = function (a, b) {
 
 util.stringToBool = function (string) {
 	switch (string) {
-		case 'true': case 'yes': case '1': return true;
-		case 'false': case 'no': case '0': case null: return false;
-		default: return Boolean(string);
+		case 'true':
+		case 'yes':
+		case '1':
+			return true;
+		case 'false':
+		case 'no':
+		case '0':
+		case null:
+			return false;
+		default:
+			return Boolean(string);
 	}
 };
 
@@ -91,12 +99,12 @@ util.rank = function (xp) {
 	} else if (xp >= 270 && xp < 330) {
 		return '♛ Queen';
 	} else if (xp >= 330 && xp < 420) {
-		return '♕ Queen+';
-	} else if (xp >= 420 && xp < 461) {
-		return '♔ King';
-	} else if (xp >= 461) {
-		return 'Ⓛ Legend';
-	}
+	return '♕ Queen+';
+} else if (xp >= 420 && xp < 461) {
+	return '♔ King';
+} else if (xp >= 461) {
+	return 'Ⓛ Legend';
+}
 };
 
 util.xptot = function (xp) {
@@ -119,12 +127,12 @@ util.xptot = function (xp) {
 	} else if (xp >= 270 && xp < 330) {
 		return xp + ' / 330';
 	} else if (xp >= 330 && xp < 420) {
-		return xp + ' / 420';
-	} else if (xp >= 420 && xp < 461) {
-		return xp + ' / 460';
-	} else if (xp >= 461) {
-		return xp;
-	}
+	return xp + ' / 420';
+} else if (xp >= 420 && xp < 461) {
+	return xp + ' / 460';
+} else if (xp >= 461) {
+	return xp;
+}
 };
 
 util.formatPlayers = function (t1n, t2n, players) {
