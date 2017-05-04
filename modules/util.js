@@ -139,13 +139,13 @@ util.formatPlayers = function(t1n, t2n, players) {
     let formatted = '*' + t1n + '* ::  _[_ ';
 
     for (let i = 0; i < 5; i++) {
-        formatted += ' <https://kiir.us/username/' + players[i] + '|' + players[i] + '> ';
+        formatted += ' <https://kiir.us/username/' + players[i].nm + '|' + players[i].nm + '> ';
     }
 
     formatted += ' _]_\n*' + t2n + '* :: _[_ ';
 
     for (let j = 5; j < 10; j++) {
-        formatted += ' <https://kiir.us/username/' + players[j] + '|' + players[j] + '> ';
+        formatted += ' <https://kiir.us/username/' + players[j].nm + '|' + players[j].nm + '> ';
     }
 
     formatted += ' _]_';
