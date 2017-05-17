@@ -23,23 +23,8 @@ modRcon.cmd = function(ip, pass, command, callback) {
 
     conn.connect().then(() => {
         console.log(RCON, 'Connected!', command, '->', ip);
-        return conn.command(command).then(() => {
-            callback();
-        });
-    }).catch(console.error);
-};
-
-// Run a command an return the output
-modRcon.cmdOut = function(ip, pass, command) {
-    let conn = rcon({
-        address: ip,
-        password: pass
-    });
-
-    conn.connect().then(() => {
-        console.log(RCON, 'Connected!', command, '->', ip);
         return conn.command(command).then(out => {
-            return out;
+            callback(out);
         });
     }).catch(console.error);
 };
