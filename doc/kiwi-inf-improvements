@@ -1,0 +1,36 @@
+Create PHP-based RCON microservice in a docker container for communication directly to servers from talon. Call it SPARK
+        - Simple PHP Async Rcon Kommander
+        - One-off command firing with responses sent back
+        - Use Symfony and phpdotenv for configs
+
+        Headers:
+                - API_KEY: an API key to authorize requests
+
+        Endpoints:
+                - POST /rcon - sends a command over RCON to a single server.
+                        Expects JSON request payload:
+                                {
+                                        "address": "192.168.1.5",
+                                        "port": "27015",
+                                        "command": "loadmatch_url kiir.us/matches/5.json"
+                                }
+                        Response:
+                                {
+                                        "command": "<copy of command sent for validation>",
+                                        "output": "<any command output>"
+                                }
+                - POST /restart - restarts a given server using the "exit" command over rcon
+                        Expects JSON request payload:
+                                {
+                                        "address": "192.168.1.5",
+                                        "port": "27015"
+                                }
+                        Response:
+                                N/A
+
+DECIDED TO USE node-srcds-rcon package from NPM.
+        - No longer need PHP microservice
+
+Create node-based notification microservice in a docker container for sending SMS to players when matches pop or for broadcasts. Call it using HTTP from the backend.
+
+KIWI link shortener (kiir.us/l/[whatever]) - follow codecourse tut
