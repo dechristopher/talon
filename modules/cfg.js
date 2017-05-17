@@ -16,14 +16,14 @@ const CONF = '[' + c.green('CONF') + '] ';
 let cfg = {};
 
 if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
-	dotenv.config({
-		path: '.env'
-	});
+    dotenv.config({
+        path: '.env'
+    });
 } else {
-	dotenv.config({
-		path: '.env.test',
-		silent: true
-	});
+    dotenv.config({
+        path: '.env.test',
+        silent: true
+    });
 }
 
 // Dev mode enabled
@@ -68,19 +68,22 @@ cfg.auth = process.env.TALON_REDIS_PW;
 // Unused datadog key, just to make sure it exists
 cfg.datadog = process.env.DATADOG_API_KEY;
 
+// Gameserver RCON password
+cfg.rconpass = process.env.GAMESERVER_RCON_PASSWORD;
+
 // Slack webhook URL for kiwi-matches channel
 cfg.matchesWebhook = process.env.SLACK_MATCHES_WEBHOOK;
 
 // Server lists with region-based indexes
 cfg.servers = [
-	'conf/dev-servers.txt',
-	'conf/us-e-servers.txt'
+    'conf/dev-servers.txt',
+    'conf/us-e-servers.txt'
 ];
 
 // Admin phone numbers for important SMS notifications
 cfg.adminNumbers = [
-	'5089306274',
-	'8103577576'
+    '5089306274',
+    '8103577576'
 ];
 
 // Directory used by demo-server.js to dump uploaded demos
@@ -93,33 +96,33 @@ cfg.sendingNumber = process.env.TWILIO_NUMBER;
 
 // Verifies that all values in an object are set properly
 // Has a much wider use case than simply verifying the cfg
-let verifyConfig = function (c, silent) {
-	if (!silent) {
-		log(CONF + 'Validating configuration...');
-	}
-	Object.keys(c).forEach(function (key) {
-		let val = c[key];
-		if (cfg.debug) {
-			console.log(key, ':', val, typeof val);
-		}
+let verifyConfig = function(c, silent) {
+    if (!silent) {
+        log(CONF + 'Validating configuration...');
+    }
+    Object.keys(c).forEach(function(key) {
+        let val = c[key];
+        if (cfg.debug) {
+            console.log(key, ':', val, typeof val);
+        }
         // console.log(key, ':', val, typeof val);
-		if (typeof val === 'object') {
-			verifyConfig(val, true);
-		} else if (val === undefined) {
-			log(CONF + 'UNSPECIFIED CONFIGURATION (undefined) -> cfg.' + key + ' -> ' + val);
-			throw new Error('UNSPECIFIED CONFIGURATION (undefined) -> cfg.' + key + ' -> ' + val);
-		} else if (typeof val !== 'string' && typeof val !== 'number' && typeof val !== 'boolean') {
-			log(CONF + 'UNSPECIFIED CONFIGURATION (unset) -> cfg.' + key + ' -> ' + val);
-			throw new Error('UNSPECIFIED CONFIGURATION (unset) -> cfg.' + key + ' -> ' + val);
-		} else if (typeof val === 'number' && isNaN(val)) {
-			log(CONF + 'UNSPECIFIED CONFIGURATION (NaN) -> cfg.' + key + ' -> ' + val);
-			throw new Error('UNSPECIFIED CONFIGURATION (NaN) -> cfg.' + key + ' -> ' + val);
-		}
-	});
-	if (!silent) {
-		log(CONF + 'Validated configuration!');
-	}
-	return true;
+        if (typeof val === 'object') {
+            verifyConfig(val, true);
+        } else if (val === undefined) {
+            log(CONF + 'UNSPECIFIED CONFIGURATION (undefined) -> cfg.' + key + ' -> ' + val);
+            throw new Error('UNSPECIFIED CONFIGURATION (undefined) -> cfg.' + key + ' -> ' + val);
+        } else if (typeof val !== 'string' && typeof val !== 'number' && typeof val !== 'boolean') {
+            log(CONF + 'UNSPECIFIED CONFIGURATION (unset) -> cfg.' + key + ' -> ' + val);
+            throw new Error('UNSPECIFIED CONFIGURATION (unset) -> cfg.' + key + ' -> ' + val);
+        } else if (typeof val === 'number' && isNaN(val)) {
+            log(CONF + 'UNSPECIFIED CONFIGURATION (NaN) -> cfg.' + key + ' -> ' + val);
+            throw new Error('UNSPECIFIED CONFIGURATION (NaN) -> cfg.' + key + ' -> ' + val);
+        }
+    });
+    if (!silent) {
+        log(CONF + 'Validated configuration!');
+    }
+    return true;
 };
 
 // Run the config verification
