@@ -43,6 +43,7 @@ const cfg = require('./modules/cfg');
 // custom libraries
 const tutil = require('./modules/util');
 const flist = require('./modules/flist');
+const rcon = require('./modules/helpers/rcon');
 const matches = require('./modules/matches');
 const log = require('./modules/log');
 // const sms = require('./modules/sms');
@@ -696,8 +697,6 @@ function startLoop() {
     inm.subscribe('talon');
 
     msg = msg(cfg.dev, cfg.backend, cfg.auth, 'main');
-
-    const rcon = require('./modules/helpers/rcon');
 
     // Init talonPanel server
     server = server.Server(app);
