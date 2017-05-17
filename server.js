@@ -697,6 +697,8 @@ function startLoop() {
 
     msg = msg(cfg.dev, cfg.backend, cfg.auth, 'main');
 
+    const rcon = require('./modules/helpers/rcon');
+
     // Init talonPanel server
     server = server.Server(app);
 
