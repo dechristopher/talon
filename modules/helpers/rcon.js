@@ -14,7 +14,7 @@ const RCON = '[' + c.green('RCON') + '] ';
 
 let modRcon = {};
 
-// Run a one-off command with a provided callback
+// Run a one-off command with a provided callback with parameters (output)
 modRcon.cmd = function(ip, pass, command, callback) {
     let conn = rcon({
         address: ip,
