@@ -12,15 +12,36 @@ const rcon = require('srcds-rcon');
 // logging constant
 const RCON = '[' + c.green('RCON') + '] ';
 
-let conn = rcon({
-    address: 'us-ch1.kiir.us',
-    password: 'lkjh209gu09cyvl4no89gsd'
-});
+let modRcon = {};
 
-conn.connect().then(() => {
-    console.log(RCON, 'connected');
-    conn.command('status').then(status => console.log(`status is is \n${status}`));
-    return conn.command('sv_password KIWISARETASTY').then(() => {
-        console.log(RCON, 'changed password');
+// Run a one-off command with a provided callback
+modRcon.cmd = function(ip, pass, command, callback) {
+    let conn = rcon({
+        address: ip,
+        password: pass
     });
-}).catch(console.error);
+
+    conn.connect().then(() => {
+        console.log(RCON, 'Connected!', command, '->', ip);
+        return conn.command(command).then(() => {
+            callback();
+        });
+    }).catch(console.error);
+};
+
+// Run a command an return the output
+modRcon.cmdOut = function(ip, pass, command) {
+    let conn = rcon({
+        address: ip,
+        password: pass
+    });
+
+    conn.connect().then(() => {
+        console.log(RCON, 'Connected!', command, '->', ip);
+        return conn.command(command).then(out => {
+            return out;
+        });
+    }).catch(console.error);
+};
+
+module.exports = modRcon;
