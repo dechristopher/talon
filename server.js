@@ -777,6 +777,16 @@ app.get('/kick/:username/refresh', function(req, res, next) {
     }
 });
 
+app.post('/api/matchover', function(req, res, next) {
+    try {
+        let matchid = req.params.matchid;
+        let winner = req.teams.winner;
+        log(TP + '[' + req.ip + '] POST /api/matchover');
+    } catch (err) {
+        next(err);
+    }
+});
+
 app.post('/ann', function(req, res, next) {
     try {
         log(TP + '[' + req.ip + '] POST /ann', 'web');
