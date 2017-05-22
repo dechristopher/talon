@@ -70,7 +70,7 @@ function parseStatus(response) {
 
         // Server has restarted, thusly match has ended
         // 108.61.129.168:27015~KIWI::OFF~0
-        if (hostname === 'KIWI::OFF' && players === '1' && hostname !== 'KIWI::LIVE') {
+        if (hostname === 'KIWI::OFF' && (players === '1' || players === '0') && hostname !== 'KIWI::LIVE') {
             // log(M + 'met criteria');
             // broadcast match over to all players in match
             let thisMatch = m.active.get(ipp);
