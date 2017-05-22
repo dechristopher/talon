@@ -43,6 +43,7 @@ const cfg = require('./modules/cfg');
 // custom libraries
 const tutil = require('./modules/util');
 const flist = require('./modules/flist');
+const rcon = require('./modules/helpers/rcon');
 const matches = require('./modules/matches');
 const log = require('./modules/log');
 // const sms = require('./modules/sms');
